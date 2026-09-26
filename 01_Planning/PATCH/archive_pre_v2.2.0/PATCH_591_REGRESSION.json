@@ -1,0 +1,17 @@
+{
+  "version": "1.0.591",
+  "root_cause": "Request-package storage and AI-observation storage used separate path logic. PATCH 589 updated the former but the latter still appended /Responses.",
+  "tests": {
+    "module1_compile": true,
+    "588_provider_alias_canonicalization": true,
+    "589_no_R_history": true,
+    "590_AZR0001_two_answers": true,
+    "590_single_answer_blocked": true,
+    "591_no_Responses_folder": true,
+    "591_observation_directly_in_Current": true,
+    "591_same_provider_current_filename": true,
+    "operational_Rx_terminology_removed": true,
+    "centralized_workspace_policy": true,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

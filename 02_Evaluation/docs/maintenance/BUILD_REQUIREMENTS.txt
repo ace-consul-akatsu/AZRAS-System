@@ -1,0 +1,23 @@
+AZRAS Evaluation — EXE Build Requirements
+PATCH 138
+
+Required for the current main.py -> Module 3–7 runtime graph:
+- Python
+- PyInstaller
+- numpy
+- pandas
+- reportlab
+
+Why these are required:
+- numpy: dynamic thermal model service
+- pandas: dynamic thermal model / PV energy service
+- reportlab: Module report PDF generation
+
+PATCH 138 changes:
+- build_AZRAS_Evaluation.bat checks these packages before starting PyInstaller.
+- If a dependency is missing, the BAT stops with a clear message.
+- Runtime/calculation code is unchanged.
+
+Note:
+Libraries used only by currently non-reachable Planning/analysis services
+(e.g. cv2, fitz, pypdf) are not made mandatory for this Evaluation EXE build.

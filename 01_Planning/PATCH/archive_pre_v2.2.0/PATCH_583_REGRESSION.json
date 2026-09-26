@@ -1,0 +1,21 @@
+{
+  "patch": 583,
+  "version": "1.0.583",
+  "checks": {
+    "python_compile": "pass",
+    "compound_exterior_wall_fields": 2,
+    "compound_visible_row_ids": [
+      "AZR-0001-1",
+      "AZR-0001-2"
+    ],
+    "add_item_immediate_tree_insert": true,
+    "add_item_stable_identity_edit": true,
+    "manual_excel_button_removed": true,
+    "automatic_excel_audit": true,
+    "excel_audit_utc_prefix": true,
+    "project_json_current_state_preserved": true,
+    "compound_structured_decision_test": "pass",
+    "stable_add_identity_update_test": "pass",
+    "automatic_excel_audit_import_test": "pass"
+  }
+}

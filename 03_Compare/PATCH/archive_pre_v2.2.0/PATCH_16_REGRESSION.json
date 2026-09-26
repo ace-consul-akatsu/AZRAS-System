@@ -1,0 +1,20 @@
+{
+  "product": "AZRAS Compare",
+  "version": "1.1.16",
+  "patch": 16,
+  "result": "PASS_AFTER_CORRECTION",
+  "checks": {
+    "python_compile": true,
+    "read_only_evaluation_consumer": true,
+    "no_compare_lifecycle_co2_recalculation": true,
+    "no_compare_discount_cashflow_recalculation": true,
+    "saved_module4_timeline_only": true,
+    "saved_module6_pv_timeline_only": true,
+    "missing_evaluation_result_not_zero": true,
+    "missing_saved_pv_timeline_fail_closed": true,
+    "retired_feasibility_logic_removed": true,
+    "current_product_list_00_03_only": true,
+    "version_metadata_synchronized": true,
+    "rootless_full_zip": true
+  }
+}

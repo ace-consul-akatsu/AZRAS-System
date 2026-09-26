@@ -1,0 +1,13 @@
+{
+  "version": "1.0.629",
+  "tests": {
+    "module1_compiles": true,
+    "round_half_up_2_005_gives_2_01": true,
+    "round_half_up_12_345_gives_12_35": true,
+    "round_half_up_0_125_gives_0_13": true,
+    "applied_to_approved_quantity_field": true,
+    "applied_to_additional_item_quantity_field": true,
+    "applied_to_exterior_wall_split_values": true,
+    "no_other_numeric_fields_touched": true
+  }
+}

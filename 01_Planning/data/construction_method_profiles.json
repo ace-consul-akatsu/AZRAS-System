@@ -1,0 +1,298 @@
+[
+  {
+    "id": "wood_post_beam",
+    "profile_key": "Wood Post-and-Beam",
+    "analysis_profile_key": "Wood Post-and-Beam",
+    "ja": "木造軸組構造",
+    "en": "Wood Post-and-Beam",
+    "methods": [
+      {
+        "id": "traditional",
+        "ja": "在来軸組",
+        "en": "Traditional Post-and-Beam"
+      },
+      {
+        "id": "hardware",
+        "ja": "金物工法",
+        "en": "Metal Connector System"
+      },
+      {
+        "id": "se",
+        "ja": "SE構法",
+        "en": "SE System"
+      },
+      {
+        "id": "post_beam",
+        "ja": "ポスト&ビーム",
+        "en": "Post & Beam"
+      },
+      {
+        "id": "timber_frame_post_beam",
+        "ja": "Timber Frame（柱梁式）",
+        "en": "Timber Frame (Post-and-Beam)"
+      }
+    ]
+  },
+  {
+    "id": "wood_frame",
+    "profile_key": "Wood Framed-Wall",
+    "analysis_profile_key": "Wood Framed-Wall",
+    "ja": "木造枠組壁構造",
+    "en": "Wood Framed-Wall",
+    "methods": [
+      {
+        "id": "2x4",
+        "ja": "2×4",
+        "en": "2×4"
+      },
+      {
+        "id": "2x6",
+        "ja": "2×6",
+        "en": "2×6"
+      },
+      {
+        "id": "platform",
+        "ja": "Platform Framing",
+        "en": "Platform Framing"
+      },
+      {
+        "id": "balloon",
+        "ja": "Balloon Framing",
+        "en": "Balloon Framing"
+      },
+      {
+        "id": "timber_frame_wall",
+        "ja": "Timber Frame（壁式）",
+        "en": "Timber Frame (Wall System)"
+      }
+    ]
+  },
+  {
+    "id": "mass_timber",
+    "profile_key": "Wood Post-and-Beam",
+    "analysis_profile_key": "Wood Post-and-Beam",
+    "ja": "Mass Timber構造",
+    "en": "Mass Timber",
+    "methods": [
+      {
+        "id": "clt",
+        "ja": "CLT",
+        "en": "CLT"
+      },
+      {
+        "id": "glt",
+        "ja": "GLT",
+        "en": "GLT"
+      },
+      {
+        "id": "lvl",
+        "ja": "LVL",
+        "en": "LVL"
+      },
+      {
+        "id": "nlt",
+        "ja": "NLT",
+        "en": "NLT"
+      },
+      {
+        "id": "dlt",
+        "ja": "DLT",
+        "en": "DLT"
+      },
+      {
+        "id": "mass_plywood",
+        "ja": "Mass Plywood",
+        "en": "Mass Plywood"
+      }
+    ]
+  },
+  {
+    "id": "steel",
+    "profile_key": "Steel Structure",
+    "analysis_profile_key": "Steel Structure",
+    "ja": "S造",
+    "en": "Steel Structure",
+    "methods": [
+      {
+        "id": "conventional_steel",
+        "ja": "一般鉄骨造",
+        "en": "Conventional Steel Frame"
+      },
+      {
+        "id": "light_gauge_steel",
+        "ja": "軽量鉄骨造",
+        "en": "Light-Gauge Steel Frame"
+      },
+      {
+        "id": "heavy_steel",
+        "ja": "重量鉄骨造",
+        "en": "Heavy Steel Frame"
+      },
+      {
+        "id": "peb",
+        "ja": "PEB（プレエンジニアード）",
+        "en": "Pre-Engineered Building"
+      },
+      {
+        "id": "steel_prefab",
+        "ja": "鉄骨プレハブ",
+        "en": "Steel Prefabricated"
+      }
+    ]
+  },
+  {
+    "id": "rc_frame",
+    "profile_key": "RC Frame",
+    "analysis_profile_key": "RC Frame",
+    "ja": "RCラーメン構造",
+    "en": "RC Moment Frame",
+    "methods": [
+      {
+        "id": "conventional_rc",
+        "ja": "一般RC",
+        "en": "Conventional RC"
+      },
+      {
+        "id": "rcc_frame",
+        "ja": "RCC Frame",
+        "en": "RCC Frame"
+      },
+      {
+        "id": "icf",
+        "ja": "ICF",
+        "en": "ICF"
+      },
+      {
+        "id": "precast_rc",
+        "ja": "プレキャストRC",
+        "en": "Precast RC"
+      },
+      {
+        "id": "src",
+        "ja": "SRC",
+        "en": "SRC"
+      }
+    ]
+  },
+  {
+    "id": "rc_wall",
+    "profile_key": "RC Wall Structure",
+    "analysis_profile_key": "RC Wall Structure",
+    "ja": "RC壁式構造",
+    "en": "RC Wall Structure",
+    "methods": [
+      {
+        "id": "cast_in_place",
+        "ja": "現場打ちRC壁式",
+        "en": "Cast-in-Place RC Wall"
+      },
+      {
+        "id": "precast_wall",
+        "ja": "プレキャストRC壁式",
+        "en": "Precast RC Wall"
+      },
+      {
+        "id": "insulated_rc_panel",
+        "ja": "断熱RCパネル",
+        "en": "Insulated RC Panel"
+      }
+    ]
+  },
+  {
+    "id": "masonry",
+    "profile_key": "Other",
+    "analysis_profile_key": "Other",
+    "ja": "組積造・ブロック造",
+    "en": "Masonry / Block",
+    "methods": [
+      {
+        "id": "brick",
+        "ja": "レンガ造",
+        "en": "Brick Masonry"
+      },
+      {
+        "id": "cmu",
+        "ja": "CMU",
+        "en": "CMU"
+      },
+      {
+        "id": "aac",
+        "ja": "AAC",
+        "en": "AAC"
+      },
+      {
+        "id": "maconnerie",
+        "ja": "Maçonnerie",
+        "en": "Maçonnerie"
+      },
+      {
+        "id": "stone",
+        "ja": "石造",
+        "en": "Stone Masonry"
+      }
+    ]
+  },
+  {
+    "id": "earth",
+    "profile_key": "Other",
+    "analysis_profile_key": "Other",
+    "ja": "土・伝統構造",
+    "en": "Earth / Traditional",
+    "methods": [
+      {
+        "id": "adobe",
+        "ja": "Adobe",
+        "en": "Adobe"
+      },
+      {
+        "id": "rammed_earth",
+        "ja": "Rammed Earth",
+        "en": "Rammed Earth"
+      },
+      {
+        "id": "cob",
+        "ja": "Cob",
+        "en": "Cob"
+      },
+      {
+        "id": "earth_wall",
+        "ja": "土壁",
+        "en": "Earth Wall"
+      }
+    ]
+  },
+  {
+    "id": "other",
+    "profile_key": "Other",
+    "analysis_profile_key": "Other",
+    "ja": "その他",
+    "en": "Other",
+    "methods": [
+      {
+        "id": "modular",
+        "ja": "モジュール工法",
+        "en": "Modular Construction"
+      },
+      {
+        "id": "manufactured_home",
+        "ja": "マニュファクチャード・ホーム",
+        "en": "Manufactured Home"
+      },
+      {
+        "id": "three_d_printed",
+        "ja": "3Dプリント工法",
+        "en": "3D-Printed Construction"
+      },
+      {
+        "id": "hybrid",
+        "ja": "複合・ハイブリッド工法",
+        "en": "Hybrid Construction"
+      },
+      {
+        "id": "other",
+        "ja": "その他",
+        "en": "Other"
+      }
+    ]
+  }
+]

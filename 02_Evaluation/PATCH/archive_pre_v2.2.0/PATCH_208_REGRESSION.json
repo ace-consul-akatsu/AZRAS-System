@@ -1,0 +1,25 @@
+{
+  "product": "AZRAS Evaluation",
+  "version": "1.0.208",
+  "patch": 208,
+  "scope": "current v2.0.0 responsibility-boundary and legacy-path audit",
+  "result": "PASS_AFTER_CORRECTION",
+  "checks": {
+    "all_python_sources_compile": true,
+    "python_source_count": 69,
+    "all_current_dev_checks_pass": true,
+    "full_self_check_pass": true,
+    "planning_canonical_quantity_only": true,
+    "raw_ai_payload_quantity_reconstruction_removed": true,
+    "raw_ai_provider_surface_fallback_removed": true,
+    "retired_feasibility_adjustment_removed_from_active_calculation": true,
+    "retired_feasibility_field_removed_on_project_migration": true,
+    "lca_crosswalk_five_rows_restored": true,
+    "retired_module8_dependency_and_recalc_removed": true,
+    "future_module9_dependency_and_recalc_removed": true,
+    "obsolete_runtime_files_removed": true,
+    "forbidden_historical_runtime_values_absent": true,
+    "release_has_no_python_cache": true,
+    "missing_planning_inputs_fail_closed": true
+  }
+}

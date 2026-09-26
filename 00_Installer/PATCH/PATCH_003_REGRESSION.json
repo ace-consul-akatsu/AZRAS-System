@@ -1,0 +1,25 @@
+{
+  "patch": "PATCH_003",
+  "product": "00 AZRAS Installer",
+  "version": "5.0.4",
+  "suite_baseline": "AZRAS v2.2.0",
+  "date_utc": "260924",
+  "defects": [
+    "version stated as 5.0.4-p032 (screen/NOTICE), 5.0.4-p033 (README), 5.0.4-p001 + patch \"2\" (VERSION.json), 5.0.0 (guides)",
+    "NOTICE validated set listed pre-v2.2.0 product versions",
+    "PATCH_002 delivered in folder 00_Installer_01",
+    "LICENSE.txt was a custom permission text while the repository is MIT; now MIT (ACE Comprehensive Consulting Co., Ltd.)"
+  ],
+  "validated_set": {
+    "01_Planning": "2.2.0 PATCH_048",
+    "02_Evaluation": "2.2.0 PATCH_010",
+    "03_Compare": "2.2.0 PATCH_007"
+  },
+  "results": {
+    "dev_checks_total": 7,
+    "dev_checks_pass": 7,
+    "pyflakes_warnings": 0,
+    "gui_startup_smoke": "PASS (installer, launcher)",
+    "license_consistency_self_check": "PASS"
+  }
+}

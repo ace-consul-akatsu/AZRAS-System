@@ -1,0 +1,3 @@
+AZRAS Evaluation v2.2.0
+Product slot: 02_AZRAS_Evaluation
+Current boundary: 01 Planning -> 02 Evaluation -> 03 Compare

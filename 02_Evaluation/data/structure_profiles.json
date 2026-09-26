@@ -1,0 +1,41 @@
+{
+  "AZRAS": {
+    "label": "AZRAS",
+    "rc_wall_area_m2": 123.54,
+    "light_wall_area_m2": 82.742,
+    "rc_wall_mm": 300,
+    "slab_mm": 500,
+    "rc_insulation_mm": 150,
+    "light_insulation_mm": 200,
+    "roof_insulation_mm": 200,
+    "slab_insulation_mm": 300,
+    "wall_active_fraction": 0.55,
+    "slab_active_fraction": 0.35
+  },
+  "RC Frame": {
+    "label": "RCラーメン",
+    "rc_wall_area_m2": 206.282,
+    "light_wall_area_m2": 0.0,
+    "rc_wall_mm": 150,
+    "slab_mm": 150,
+    "rc_insulation_mm": 150,
+    "light_insulation_mm": 0,
+    "roof_insulation_mm": 150,
+    "slab_insulation_mm": 300,
+    "wall_active_fraction": 0.50,
+    "slab_active_fraction": 0.40
+  },
+  "2x6 Timber": {
+    "label": "2×6木造",
+    "rc_wall_area_m2": 0.0,
+    "light_wall_area_m2": 206.282,
+    "rc_wall_mm": 0,
+    "slab_mm": 150,
+    "rc_insulation_mm": 0,
+    "light_insulation_mm": 190,
+    "roof_insulation_mm": 190,
+    "slab_insulation_mm": 300,
+    "wall_active_fraction": 0.0,
+    "slab_active_fraction": 0.25
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "version": "1.0.622",
+  "tests": {
+    "dynamic_thermal_model_v9_compiles": true,
+    "read_weather_raises_actionable_valueerror_for_missing_file": true,
+    "hourly_comparison_engine_read_epw_behavior_unchanged": true,
+    "no_calculation_logic_changed": true
+  }
+}

@@ -1,0 +1,15 @@
+AZRAS Evaluation — Self Check Guide
+PATCH 140
+
+Purpose:
+- Verify that main.py and Module 3–7 can be imported without launching GUI windows.
+- Verify core Project JSON load/save/linkage modules.
+- Verify essential lang/data/VERSION files exist.
+- Verify VERSION.json, core.version, and Project JSON schema versions agree.
+
+How to run:
+1. Double-click SELF_CHECK.bat.
+2. Confirm the final line says SELF CHECK PASSED.
+
+This self-check does not calculate or modify a Project JSON.
+It is a startup/dependency/resource integrity check only.

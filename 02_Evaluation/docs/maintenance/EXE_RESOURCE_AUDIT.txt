@@ -1,0 +1,16 @@
+AZRAS Evaluation — EXE Resource Audit
+PATCH 136
+
+PyInstaller one-folder build:
+- AZRAS_Evaluation.spec packages lang/, data/, and VERSION.json as data.
+- PyInstaller exposes the bundle data directory through sys._MEIPASS.
+- main.py uses __file__-based ROOT, which is compatible with bundled resources.
+- core/version.py previously used sys.executable.parent when frozen.
+  In a modern one-folder build, this can point to the executable directory while
+  VERSION.json is placed under the bundle data directory (_internal).
+
+PATCH 136 correction:
+- core/version.py now prefers sys._MEIPASS when frozen.
+- Source/Python execution continues to use the repository root via __file__.
+
+No Project JSON or calculation logic is changed.

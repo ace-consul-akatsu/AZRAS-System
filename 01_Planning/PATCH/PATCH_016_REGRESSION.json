@@ -1,0 +1,40 @@
+{
+  "patch": "PATCH_016",
+  "product": "01_Planning",
+  "version_after": "1.0.621",
+  "created_at_utc": "2026-09-16T00:00:00Z",
+  "changed_files": [
+    "services/environment_engine_v9_1.py",
+    "module2/app.py"
+  ],
+  "fixes": [
+    {
+      "id": "foundation_bottom_insulation_ignored",
+      "summary": "foundation_bottom_insulation (mat-foundation-bottom insulation) had no branch in the ground U-value if/elif chain and was silently ignored, mislabeled as slab_under_insulation in output.",
+      "files": ["services/environment_engine_v9_1.py"]
+    },
+    {
+      "id": "floor_insulation_checkboxes_not_exclusive",
+      "summary": "foundation_bottom_insulation and slab_under_insulation checkboxes could both be checked with only one taking effect; made mutually exclusive.",
+      "files": ["module2/app.py"]
+    },
+    {
+      "id": "floor_insulation_thickness_label_misleading",
+      "summary": "Shared thickness/conductivity entry always labeled tsuchima-shita-danneturyou even when applied to foundation-bottom position; label made position-neutral.",
+      "files": ["module2/app.py"]
+    },
+    {
+      "id": "comparison_insulation_position_default_other",
+      "summary": "8760-hour insulation/thermal-mass comparison screen defaulted unresolved insulation_position to \"other\" (mass_coupling 0.50) while baseline always uses 1.00 (equivalent to exterior), silently halving compared-row thermal mass unrelated to thickness changes. Default changed to \"exterior\".",
+      "files": ["module2/app.py"]
+    }
+  ],
+  "verification": {
+    "compile_check": "python3 -m py_compile services/environment_engine_v9_1.py module2/app.py -> OK",
+    "numeric_8760_rerun": "not performed in this session (no weather data / execution environment available)"
+  },
+  "regression_scope_not_covered": [
+    "Full 8760-hour solver re-run against the uploaded 260916_AZRAS_Sample.json project to numerically confirm the corrected cooling/heating totals",
+    "Existing dev_checks/ self-check suite was not re-run in this session"
+  ]
+}

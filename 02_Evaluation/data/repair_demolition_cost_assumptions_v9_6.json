@@ -1,0 +1,191 @@
+{
+  "version": "9.6",
+  "action_rates": {
+    "inspection": {
+      "ja": "点検",
+      "en": "Inspection",
+      "work": 0.005,
+      "demo": 0.0
+    },
+    "repair": {
+      "ja": "修繕",
+      "en": "Repair",
+      "work": 0.12,
+      "demo": 0.03
+    },
+    "skeleton_repair": {
+      "ja": "スケルトン修繕",
+      "en": "Skeleton Repair",
+      "work": 0.08,
+      "demo": 0.02
+    },
+    "replace_equipment": {
+      "ja": "設備更新",
+      "en": "Equipment Replacement",
+      "work": 1.0,
+      "demo": 0.08
+    },
+    "replace_infill": {
+      "ja": "インフィル更新",
+      "en": "Infill Replacement",
+      "work": 1.0,
+      "demo": 0.1
+    },
+    "partial_demolition": {
+      "ja": "一部解体",
+      "en": "Partial Demolition",
+      "work": 0.0,
+      "demo": 0.15
+    },
+    "retain_skeleton": {
+      "ja": "スケルトン継続利用（工事なし）",
+      "en": "Retain Skeleton (no construction work)",
+      "work": 0.0,
+      "demo": 0.0
+    },
+    "full_rebuild": {
+      "ja": "全面建替え",
+      "en": "Full Rebuild",
+      "work": 1.0,
+      "demo": 0.12
+    }
+  },
+  "component_shares": {
+    "structure_rc_core": 0.38,
+    "structure_rc_frame": 0.42,
+    "structure_rc_wall": 0.4,
+    "structure_steel": 0.38,
+    "structure_timber": 0.32,
+    "structure_clt": 0.35,
+    "infill_layout": 0.08,
+    "infill_exterior": 0.1,
+    "insulation": 0.04,
+    "windows": 0.08,
+    "roof": 0.07,
+    "equipment_lighting": 0.015,
+    "equipment_outlets": 0.02,
+    "equipment_hvac": 0.055,
+    "equipment_ventilation": 0.02,
+    "equipment_refrigerator": 0.01,
+    "all_infill": 0.37,
+    "whole_building": 1.0
+  },
+  "factors": {
+    "reuse_credit": 0.45,
+    "recycling_credit": 0.05,
+    "waste": 0.25,
+    "temporary": 0.08,
+    "overhead": 0.12,
+    "contingency": 0.07,
+    "tax": 0.1
+  },
+  "component_cost_sources": {
+    "whole_building": {
+      "source": "total"
+    },
+    "structure": {
+      "source": "lines",
+      "cost_item_keys": [
+        "concrete",
+        "reinforcing_steel",
+        "formwork",
+        "dimension_lumber",
+        "structural_plywood",
+        "clt",
+        "structural_steel",
+        "phc_pile",
+        "blinding_concrete",
+        "excavation",
+        "backfill",
+        "imported_fill",
+        "soil_disposal",
+        "ground_preparation"
+      ]
+    },
+    "windows": {
+      "source": "lines",
+      "cost_item_keys": [
+        "glass",
+        "tempered_glass",
+        "doors",
+        "shutter",
+        "louver"
+      ]
+    },
+    "roof": {
+      "source": "lines",
+      "cost_item_keys": [
+        "roofing",
+        "parapet_coping",
+        "rainwater_gutter"
+      ]
+    },
+    "infill_exterior": {
+      "source": "lines",
+      "cost_item_keys": [
+        "external_finish",
+        "external_finish_rc",
+        "external_finish_timber"
+      ]
+    },
+    "infill_layout": {
+      "source": "lines",
+      "cost_item_keys": [
+        "interior_finish",
+        "gypsum_board",
+        "ceiling_lgs",
+        "oa_floor"
+      ]
+    },
+    "insulation": {
+      "source": "lines",
+      "cost_item_keys": [
+        "phenolic_foam",
+        "xps",
+        "roof_glass_wool",
+        "ceiling_glass_wool",
+        "ceiling_insulation_area",
+        "vapor_barrier"
+      ]
+    },
+    "equipment_hvac": {
+      "source": "package",
+      "package_key": "hvac",
+      "split_with": [
+        "equipment_ventilation"
+      ]
+    },
+    "equipment_ventilation": {
+      "source": "package",
+      "package_key": "hvac",
+      "split_with": [
+        "equipment_hvac"
+      ]
+    },
+    "equipment_lighting": {
+      "source": "package",
+      "package_key": "electrical",
+      "split_with": [
+        "equipment_outlets"
+      ]
+    },
+    "equipment_outlets": {
+      "source": "package",
+      "package_key": "electrical",
+      "split_with": [
+        "equipment_lighting"
+      ]
+    },
+    "all_infill": {
+      "source": "non_structural",
+      "groups": [
+        "windows",
+        "roof",
+        "infill_exterior",
+        "infill_layout",
+        "insulation"
+      ]
+    }
+  },
+  "component_cost_sources_note_ja": "PATCH_007: 部位の更新費をModule 5の明細から取る対応表。structure は全構造部位（structure_rc_core / rc_frame / rc_wall / steel / timber / clt）に共通で適用。明細に該当行が無い部位は従来の「建設費総額×割合」を使い、summary.legacy_share_components に列挙する。"
+}

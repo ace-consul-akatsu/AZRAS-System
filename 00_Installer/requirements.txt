@@ -1,0 +1,2 @@
+# Tkinter is included with the standard Windows Python installer.
+# No third-party Python package is required for the dependency checker itself.

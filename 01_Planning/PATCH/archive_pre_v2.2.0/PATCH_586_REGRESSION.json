@@ -1,0 +1,10 @@
+{
+  "version": "1.0.586",
+  "tests": {
+    "module5_compile": true,
+    "primary_request_direct_chat_copy": true,
+    "independent_review_direct_chat_copy": true,
+    "chatgpt_recheck_direct_chat_copy": true,
+    "main_screen_guidance": true
+  }
+}

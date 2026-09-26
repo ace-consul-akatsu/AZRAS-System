@@ -1,0 +1,82 @@
+{
+  "version": "9.6",
+  "action_rates": {
+    "inspection": {
+      "ja": "点検",
+      "en": "Inspection",
+      "work": 0.005,
+      "demo": 0.0
+    },
+    "repair": {
+      "ja": "修繕",
+      "en": "Repair",
+      "work": 0.12,
+      "demo": 0.03
+    },
+    "skeleton_repair": {
+      "ja": "スケルトン修繕",
+      "en": "Skeleton Repair",
+      "work": 0.08,
+      "demo": 0.02
+    },
+    "replace_equipment": {
+      "ja": "設備更新",
+      "en": "Equipment Replacement",
+      "work": 1.0,
+      "demo": 0.08
+    },
+    "replace_infill": {
+      "ja": "インフィル更新",
+      "en": "Infill Replacement",
+      "work": 1.0,
+      "demo": 0.1
+    },
+    "partial_demolition": {
+      "ja": "一部解体",
+      "en": "Partial Demolition",
+      "work": 0.0,
+      "demo": 0.15
+    },
+    "retain_skeleton": {
+      "ja": "スケルトン継続利用",
+      "en": "Retain Skeleton",
+      "work": 0.05,
+      "demo": 0.02
+    },
+    "full_rebuild": {
+      "ja": "全面建替え",
+      "en": "Full Rebuild",
+      "work": 1.0,
+      "demo": 0.12
+    }
+  },
+  "component_shares": {
+    "structure_rc_core": 0.38,
+    "structure_rc_frame": 0.42,
+    "structure_rc_wall": 0.4,
+    "structure_steel": 0.38,
+    "structure_timber": 0.32,
+    "structure_clt": 0.35,
+    "infill_layout": 0.08,
+    "infill_exterior": 0.1,
+    "insulation": 0.04,
+    "windows": 0.08,
+    "roof": 0.07,
+    "equipment_lighting": 0.015,
+    "equipment_outlets": 0.02,
+    "equipment_hvac": 0.055,
+    "equipment_ventilation": 0.02,
+    "equipment_refrigerator": 0.01,
+    "all_infill": 0.37,
+    "whole_building": 1.0
+  },
+  "factors": {
+    "reuse_credit": 0.45,
+    "recycling_credit": 0.05,
+    "waste": 0.25,
+    "temporary": 0.08,
+    "overhead": 0.12,
+    "contingency": 0.07,
+    "tax": 0.1
+  }
+}

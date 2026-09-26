@@ -1,0 +1,353 @@
+{
+  "version": "9.8",
+  "status": "planning_comparison_defaults",
+  "scope": {
+    "primary_building_storeys": 2,
+    "supported_uses": [
+      "Residential",
+      "Retail",
+      "Office",
+      "Warehouse",
+      "Factory"
+    ],
+    "note_ja": "本プラットフォームは基本的に2階建て建物を対象とする。3階建以上は別途評価とする。",
+    "note_en": "The platform primarily targets two-storey buildings. Buildings of three storeys or more require a separate assessment."
+  },
+  "disasters": {
+    "flood": {
+      "ja": "水害",
+      "en": "Flood",
+      "implemented": true
+    },
+    "tsunami": {
+      "ja": "津波",
+      "en": "Tsunami",
+      "implemented": false
+    },
+    "earthquake": {
+      "ja": "地震",
+      "en": "Earthquake",
+      "implemented": false
+    },
+    "fire": {
+      "ja": "火災",
+      "en": "Fire",
+      "implemented": false
+    },
+    "wind_tornado": {
+      "ja": "強風・竜巻",
+      "en": "Wind / Tornado",
+      "implemented": false
+    },
+    "landslide": {
+      "ja": "土砂災害",
+      "en": "Landslide",
+      "implemented": false
+    }
+  },
+  "construction_profiles": {
+    "AZRAS": {
+      "ja": "AZRAS",
+      "en": "AZRAS"
+    },
+    "2x6 Timber": {
+      "ja": "2×6木造",
+      "en": "2×6 Timber"
+    },
+    "RC Frame": {
+      "ja": "RCラーメン",
+      "en": "RC Frame"
+    }
+  },
+  "depth_categories": {
+    "le_1m": {
+      "ja": "GL＋1.0m以下",
+      "en": "GL +1.0 m or less"
+    },
+    "to_2_5m": {
+      "ja": "GL＋1.0m超～2.5m以下",
+      "en": "Above GL +1.0 m to 2.5 m"
+    },
+    "over_2_5_to_6m": {
+      "ja": "GL＋2.5m超～6.0m未満",
+      "en": "Above GL +2.5 m to below 6.0 m"
+    },
+    "ge_6m": {
+      "ja": "GL＋6.0m以上",
+      "en": "GL +6.0 m or more"
+    }
+  },
+  "planning_factors": {
+    "fallback_construction_cost_per_m2_jpy": 450000,
+    "fallback_initial_embodied_co2_kg_per_m2": 650,
+    "fallback_initial_embodied_energy_MJ_per_m2": 8500,
+    "daily_business_loss_rate_of_annual_rent": 0.0027397260273972603,
+    "insurance_eligible_fraction": 0.8
+  },
+  "flood_scenarios": {
+    "AZRAS": {
+      "le_1m": {
+        "with_barrier": {
+          "damage_level": "none",
+          "works_ja": [
+            "工事なし",
+            "目視点検のみ"
+          ],
+          "works_en": [
+            "No recovery work",
+            "Visual inspection only"
+          ],
+          "demolition_scope_ja": "解体なし",
+          "demolition_scope_en": "No demolition",
+          "cost_ratio": 0.0,
+          "duration_days": 0,
+          "waste_kg_per_m2": 0.0,
+          "co2_ratio": 0.0,
+          "energy_ratio": 0.0
+        },
+        "without_barrier": {
+          "damage_level": "minor",
+          "works_ja": [
+            "RC躯体・RC外壁は継続使用",
+            "木造部分の排水・乾燥",
+            "含水率・カビ・腐朽点検",
+            "必要に応じて断熱材・内装材を更新"
+          ],
+          "works_en": [
+            "Retain the RC skeleton and RC exterior walls",
+            "Drain and dry timber portions",
+            "Inspect moisture, mould and decay",
+            "Replace insulation and interior finishes where required"
+          ],
+          "demolition_scope_ja": "RC外壁は解体せず、被害を受けた木造内装・断熱のみ部分撤去",
+          "demolition_scope_en": "Retain RC exterior walls; remove only affected timber interior and insulation",
+          "cost_ratio": 0.04,
+          "duration_days": 21,
+          "waste_kg_per_m2": 8.0,
+          "co2_ratio": 0.025,
+          "energy_ratio": 0.025
+        }
+      },
+      "to_2_5m": {
+        "damage_level": "moderate",
+        "works_ja": [
+          "RC躯体・RC外壁を継続使用",
+          "1階木造部分を解体",
+          "1階木造部分を復元"
+        ],
+        "works_en": [
+          "Retain RC skeleton and exterior walls",
+          "Remove first-floor timber portions",
+          "Reconstruct first-floor timber portions"
+        ],
+        "demolition_scope_ja": "1階木造部分",
+        "demolition_scope_en": "First-floor timber portions",
+        "cost_ratio": 0.18,
+        "duration_days": 90,
+        "waste_kg_per_m2": 45.0,
+        "co2_ratio": 0.16,
+        "energy_ratio": 0.16
+      },
+      "over_2_5_to_6m": {
+        "damage_level": "major",
+        "works_ja": [
+          "RC躯体・RC外壁を継続使用",
+          "1・2階木造部分を解体",
+          "1・2階木造部分を復元"
+        ],
+        "works_en": [
+          "Retain RC skeleton and exterior walls",
+          "Remove first- and second-floor timber portions",
+          "Reconstruct first- and second-floor timber portions"
+        ],
+        "demolition_scope_ja": "1・2階木造部分",
+        "demolition_scope_en": "First- and second-floor timber portions",
+        "cost_ratio": 0.32,
+        "duration_days": 150,
+        "waste_kg_per_m2": 85.0,
+        "co2_ratio": 0.29,
+        "energy_ratio": 0.29
+      },
+      "ge_6m": {
+        "damage_level": "severe",
+        "works_ja": [
+          "RC躯体・RC外壁を継続使用",
+          "1・2階木造部分と屋根を解体",
+          "木造部分と屋根を全面復元"
+        ],
+        "works_en": [
+          "Retain RC skeleton and exterior walls",
+          "Remove first- and second-floor timber portions and roof",
+          "Fully reconstruct timber portions and roof"
+        ],
+        "demolition_scope_ja": "1・2階木造部分および屋根",
+        "demolition_scope_en": "First- and second-floor timber portions and roof",
+        "cost_ratio": 0.42,
+        "duration_days": 210,
+        "waste_kg_per_m2": 115.0,
+        "co2_ratio": 0.38,
+        "energy_ratio": 0.38
+      }
+    },
+    "2x6 Timber": {
+      "le_1m": {
+        "damage_level": "minor",
+        "works_ja": [
+          "外壁内部の排水",
+          "木材・断熱材・内装の乾燥",
+          "含水率・カビ・腐朽点検",
+          "必要に応じて断熱材・内装材を更新"
+        ],
+        "works_en": [
+          "Drain wall cavities",
+          "Dry timber, insulation and interior finishes",
+          "Inspect moisture, mould and decay",
+          "Replace insulation and finishes where required"
+        ],
+        "demolition_scope_ja": "被害を受けた外壁内部・断熱材・内装材",
+        "demolition_scope_en": "Affected wall cavities, insulation and interior finishes",
+        "cost_ratio": 0.07,
+        "duration_days": 35,
+        "waste_kg_per_m2": 15.0,
+        "co2_ratio": 0.05,
+        "energy_ratio": 0.05
+      },
+      "to_2_5m": {
+        "damage_level": "rebuild",
+        "works_ja": [
+          "建物を解体",
+          "同じ用途・規模で建替え"
+        ],
+        "works_en": [
+          "Demolish building",
+          "Rebuild with the same use and scale"
+        ],
+        "demolition_scope_ja": "建物全体",
+        "demolition_scope_en": "Whole building",
+        "cost_ratio": 1.12,
+        "duration_days": 300,
+        "waste_kg_per_m2": 350.0,
+        "co2_ratio": 1.1,
+        "energy_ratio": 1.1
+      },
+      "over_2_5_to_6m": {
+        "damage_level": "rebuild",
+        "works_ja": [
+          "建物を解体",
+          "同じ用途・規模で建替え"
+        ],
+        "works_en": [
+          "Demolish building",
+          "Rebuild with the same use and scale"
+        ],
+        "demolition_scope_ja": "建物全体",
+        "demolition_scope_en": "Whole building",
+        "cost_ratio": 1.12,
+        "duration_days": 300,
+        "waste_kg_per_m2": 350.0,
+        "co2_ratio": 1.1,
+        "energy_ratio": 1.1
+      },
+      "ge_6m": {
+        "damage_level": "rebuild",
+        "works_ja": [
+          "建物を解体",
+          "同じ用途・規模で建替え"
+        ],
+        "works_en": [
+          "Demolish building",
+          "Rebuild with the same use and scale"
+        ],
+        "demolition_scope_ja": "建物全体",
+        "demolition_scope_en": "Whole building",
+        "cost_ratio": 1.12,
+        "duration_days": 300,
+        "waste_kg_per_m2": 350.0,
+        "co2_ratio": 1.1,
+        "energy_ratio": 1.1
+      }
+    },
+    "RC Frame": {
+      "le_1m": {
+        "damage_level": "minor",
+        "works_ja": [
+          "RC躯体・仕上面を清掃",
+          "浸水部を乾燥",
+          "設備・内装を点検"
+        ],
+        "works_en": [
+          "Clean RC structure and finishes",
+          "Dry flooded areas",
+          "Inspect equipment and interiors"
+        ],
+        "demolition_scope_ja": "原則として解体なし",
+        "demolition_scope_en": "Normally no demolition",
+        "cost_ratio": 0.02,
+        "duration_days": 14,
+        "waste_kg_per_m2": 3.0,
+        "co2_ratio": 0.01,
+        "energy_ratio": 0.01
+      },
+      "to_2_5m": {
+        "damage_level": "moderate",
+        "works_ja": [
+          "RC躯体を継続使用",
+          "1階木造・内装部分を解体",
+          "1階木造・内装部分を復元"
+        ],
+        "works_en": [
+          "Retain RC skeleton",
+          "Remove first-floor timber and interior portions",
+          "Reconstruct first-floor timber and interior portions"
+        ],
+        "demolition_scope_ja": "1階木造・内装部分",
+        "demolition_scope_en": "First-floor timber and interior portions",
+        "cost_ratio": 0.16,
+        "duration_days": 85,
+        "waste_kg_per_m2": 40.0,
+        "co2_ratio": 0.14,
+        "energy_ratio": 0.14
+      },
+      "over_2_5_to_6m": {
+        "damage_level": "major",
+        "works_ja": [
+          "RC躯体を継続使用",
+          "1・2階木造・内装部分を解体",
+          "1・2階木造・内装部分を復元"
+        ],
+        "works_en": [
+          "Retain RC skeleton",
+          "Remove first- and second-floor timber and interior portions",
+          "Reconstruct first- and second-floor timber and interior portions"
+        ],
+        "demolition_scope_ja": "1・2階木造・内装部分",
+        "demolition_scope_en": "First- and second-floor timber and interior portions",
+        "cost_ratio": 0.28,
+        "duration_days": 140,
+        "waste_kg_per_m2": 75.0,
+        "co2_ratio": 0.25,
+        "energy_ratio": 0.25
+      },
+      "ge_6m": {
+        "damage_level": "severe",
+        "works_ja": [
+          "RC躯体を継続使用",
+          "1・2階木造・内装部分を解体",
+          "1・2階木造・内装部分を復元"
+        ],
+        "works_en": [
+          "Retain RC skeleton",
+          "Remove first- and second-floor timber and interior portions",
+          "Reconstruct first- and second-floor timber and interior portions"
+        ],
+        "demolition_scope_ja": "1・2階木造・内装部分",
+        "demolition_scope_en": "First- and second-floor timber and interior portions",
+        "cost_ratio": 0.3,
+        "duration_days": 160,
+        "waste_kg_per_m2": 85.0,
+        "co2_ratio": 0.27,
+        "energy_ratio": 0.27
+      }
+    }
+  }
+}

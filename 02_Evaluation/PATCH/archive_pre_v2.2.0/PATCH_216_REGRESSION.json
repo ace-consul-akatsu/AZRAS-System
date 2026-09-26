@@ -1,0 +1,13 @@
+{
+  "version": "1.0.216",
+  "tests": {
+    "full_tree_compiles": true,
+    "friendly_exception_text_helper_added": true,
+    "friendly_exception_text_passes_valueerror_through_unchanged": true,
+    "no_raw_showerror_str_exc_remaining_in_evaluation_tree": true,
+    "startup_language_is_now_en_was_ja": true,
+    "i18n_default_is_en": true,
+    "language_menu_switch_still_works": true,
+    "lang_json_key_parity_unchanged_768_768": true
+  }
+}

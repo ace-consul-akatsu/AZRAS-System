@@ -1,0 +1,28 @@
+{
+  "version": "9.0-foundation",
+  "source": "AZRAS Global Building Platform v8.6",
+  "classification": {
+    "reuse_as_is": [
+      "PDF text extraction and known drawing pattern recognition",
+      "automatic quantity takeoff engine",
+      "drawing profiles for AZRAS, 2x6 Timber and RC Frame",
+      "quantity assumptions and AZRAS rebar takeoff"
+    ],
+    "reuse_with_revision": [
+      "building profile data model",
+      "thermal and material calculations",
+      "GUI color convention",
+      "project JSON data exchange"
+    ],
+    "discard": [
+      "Arabic, Spanish and French UI dictionaries",
+      "post-hoc text replacement translation",
+      "single monolithic v8.x GUI"
+    ]
+  },
+  "current_phase": {
+    "module0": "working foundation",
+    "module1": "working foundation with PDF analysis, quantities, indicative insulation/thermal mass and equipment energy",
+    "module2_to_8": "schemas reserved; implementation pending"
+  }
+}

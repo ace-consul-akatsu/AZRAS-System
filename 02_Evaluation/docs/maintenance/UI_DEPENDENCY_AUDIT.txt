@@ -1,0 +1,29 @@
+AZRAS Evaluation — UI Dependency Audit
+PATCH 133
+
+Important package behavior:
+- ui/__init__.py imports install_global_treeview from ui/global_treeview.py.
+- Importing any ui.* submodule executes ui/__init__.py first.
+- Therefore ui/global_treeview.py is an INDIRECT runtime dependency even when
+  static import scanning does not show it in Module 3–7 source.
+- This explains why removing it in PATCH 115 caused a dependency problem and
+  why PATCH 116 restored it.
+
+Other shared UI files currently without direct static references:
+- ui/toolbar.py
+- ui/table.py
+- ui/splitter.py
+- ui/settings.py
+- ui/graph.py
+- ui/statusbar.py
+
+Decision:
+- Do not delete these files yet.
+- They remain compatibility/shared-component candidates until live GUI and
+  packaged EXE regression testing confirms they are unnecessary.
+
+Protection rule:
+Static "unused import" analysis alone is not sufficient for Python package
+initializers. Always inspect package __init__.py side effects before removal.
+
+No calculation logic, Project JSON, or module connection is changed by this audit.

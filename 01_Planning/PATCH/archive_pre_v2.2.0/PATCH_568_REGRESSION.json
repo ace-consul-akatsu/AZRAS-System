@@ -1,0 +1,16 @@
+{
+  "patch": 568,
+  "base_version": "1.0.567",
+  "checks": {
+    "python_compile": true,
+    "external_start_generated": true,
+    "send_contract_pdf_zip_txt": true,
+    "utc_filename_format": "YYMMDD_HHMM",
+    "seconds_in_filename": false,
+    "schema_gate": "AZRAS_AI_TAKEOFF",
+    "required_local_id_gate": true,
+    "noncompliant_schema_compatible_saved_as_evidence": true,
+    "schema_incompatible_rejected": true,
+    "canonical_schema_version": "2.6"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "patch": 532,
+  "version": "1.0.532",
+  "policy": "confirmed + rational yellow adopted; true red excluded",
+  "expected_reclassification": {
+    "2x6": [
+      "structural timber provisional 14.706 m3",
+      "ceiling substrate provisional",
+      "floor finish provisional",
+      "roof finish provisional"
+    ],
+    "AZRAS": [
+      "timber infill provisional 14.706 m3",
+      "ceiling substrate provisional",
+      "floor finish provisional",
+      "roof finish provisional"
+    ],
+    "RC": [
+      "reinforcing steel provisional 15.530288 t",
+      "ceiling substrate provisional",
+      "floor finish provisional",
+      "roof finish provisional"
+    ]
+  },
+  "must_remain_red": [
+    "AZRAS 16.350017 t competing reinforcement row",
+    "AZRAS internal RC wall concrete 25.451849 m3 ambiguity",
+    "RC legacy 0.864 t reinforcing steel row"
+  ],
+  "regression_guards": [
+    "no concrete summary+detail double count",
+    "no MEP package/detail monetary double count"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "AZRAS_MEP_UNIT_PRICE_MASTER_V1",
+  "description": "Optional sourced MEP unit-price records. Empty by default: Planning Basic must not invent market prices from model numbers or drawing text.",
+  "currency_policy": "Store the original source currency on every entry. Currency conversion, escalation and regional adjustment are separate downstream operations.",
+  "accepted_price_classes": ["actual", "alternative", "estimated"],
+  "required_for_actual_or_alternative": ["manufacturer", "model_no", "unit_price", "currency", "price_class", "source_type_or_source_reference"],
+  "entries": []
+}

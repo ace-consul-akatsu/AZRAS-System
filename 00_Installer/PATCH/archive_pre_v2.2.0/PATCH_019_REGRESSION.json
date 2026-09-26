@@ -1,0 +1,24 @@
+{
+  "product": "AZRAS Installer",
+  "version": "5.0.4-p019",
+  "patch": "019",
+  "result": "PASS_AFTER_CORRECTION",
+  "validated_release_set": {
+    "Planning": "1.0.602",
+    "Evaluation": "1.0.209",
+    "Compare": "1.1.16"
+  },
+  "checks": {
+    "all_installer_python_compile": true,
+    "current_public_Planning_folder_resolves": true,
+    "historical_Planning_folder_alias_resolves": true,
+    "Evaluation_folder_resolves": true,
+    "Compare_folder_resolves": true,
+    "one_representative_AZRAS_shortcut_only": true,
+    "launcher_child_products_exactly_Planning_Evaluation_Compare": true,
+    "no_Professional_Disaster_Twin_launcher_entries": true,
+    "version_metadata_synchronized": true,
+    "public_Planning_name_is_AZRAS_Planning": true,
+    "rootless_release_zip": true
+  }
+}

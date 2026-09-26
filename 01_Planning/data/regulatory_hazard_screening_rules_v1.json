@@ -1,0 +1,215 @@
+{
+  "ruleset_version": "1.0",
+  "policy": {
+    "hard_exclusion_requires": [
+      "explicit_project_legal_rule",
+      "or future verified jurisdiction rule explicitly marked hard_exclusion"
+    ],
+    "seed_rules_are": "screening_conditions_only",
+    "unknown_policy": "Do not exclude a method because a jurisdiction rule is missing."
+  },
+  "rules": [
+    {
+      "rule_id": "GLOBAL_MASONRY_HIGH_SEISMIC_VERIFY",
+      "scope": {
+        "countries": [
+          "*"
+        ]
+      },
+      "method_ids": [
+        "masonry"
+      ],
+      "trigger": {
+        "hazard": "seismic",
+        "min_level": 4
+      },
+      "effect": "Conditional",
+      "title_ja": "高地震地域の組積造は補強方式・現地法規を確認",
+      "title_en": "Verify reinforced masonry system and local code in high seismic areas",
+      "basis_type": "engineering_screening",
+      "legal_status": "not_a_legal_prohibition"
+    },
+    {
+      "rule_id": "GLOBAL_EARTH_HIGH_SEISMIC_VERIFY",
+      "scope": {
+        "countries": [
+          "*"
+        ]
+      },
+      "method_ids": [
+        "earth"
+      ],
+      "trigger": {
+        "hazard": "seismic",
+        "min_level": 3
+      },
+      "effect": "Conditional",
+      "title_ja": "地震地域の土・Adobe系は補強方式・現地法規を確認",
+      "title_en": "Verify reinforcement and local code for earth/adobe construction in seismic areas",
+      "basis_type": "engineering_screening",
+      "legal_status": "not_a_legal_prohibition"
+    },
+    {
+      "rule_id": "NZ_URM_VULNERABILITY_FLAG",
+      "scope": {
+        "countries": [
+          "New Zealand",
+          "NZ"
+        ]
+      },
+      "method_ids": [
+        "masonry"
+      ],
+      "trigger": {
+        "hazard": "seismic",
+        "min_level": 1
+      },
+      "effect": "Conditional",
+      "title_ja": "ニュージーランドでは無筋組積造(URM)を特に脆弱な類型として確認",
+      "title_en": "New Zealand: explicitly verify unreinforced masonry (URM) vulnerability",
+      "basis_type": "official_existing_building_risk_system",
+      "legal_status": "not_a_new_building_prohibition",
+      "source_note": "MBIE earthquake-prone building methodology identifies unreinforced masonry buildings as Category A potentially earthquake-prone buildings.",
+      "source_title": "Building Performance — Territorial authorities identify potentially earthquake-prone buildings",
+      "source_url": "https://www.building.govt.nz/building-code-compliance/b-stability/b1-structure/methodology-identify-earthquake-prone-buildings/section1",
+      "verified_on": "2026-08-16"
+    },
+    {
+      "rule_id": "US_IBC_SEISMIC_CATEGORY_DESIGN_CHECK",
+      "scope": {
+        "countries": [
+          "United States",
+          "USA",
+          "US"
+        ]
+      },
+      "method_ids": [
+        "masonry",
+        "rc",
+        "steel",
+        "wood_frame",
+        "wood_post_beam"
+      ],
+      "trigger": {
+        "hazard": "seismic",
+        "min_level": 2
+      },
+      "effect": "Conditional",
+      "title_ja": "米国IBC系ではSeismic Design Categoryに応じた構造設計確認が必要",
+      "title_en": "US IBC jurisdictions: verify structural system against Seismic Design Category",
+      "basis_type": "model_code_screening",
+      "legal_status": "adoption_and_local_amendments_must_be_verified",
+      "source_note": "2024 IBC Section 1613 assigns structures to seismic design categories and requires earthquake-resistant design.",
+      "source_title": "2024 International Building Code — Chapter 16 Structural Design, Section 1613",
+      "source_url": "https://codes.iccsafe.org/content/IBC2024P1/chapter-16-structural-design",
+      "verified_on": "2026-08-16"
+    },
+    {
+      "rule_id": "JP_MASONRY_STRUCTURE_CODE_CHECK",
+      "scope": {
+        "countries": [
+          "Japan",
+          "JP",
+          "日本"
+        ]
+      },
+      "method_ids": [
+        "masonry"
+      ],
+      "trigger": {
+        "hazard": "seismic",
+        "min_level": 1
+      },
+      "effect": "Conditional",
+      "title_ja": "日本では組積造の階数・構造方法・構造計算条件を建築基準法令で確認",
+      "title_en": "Japan: verify masonry storey/structural-method/structural-calculation requirements under building regulations",
+      "basis_type": "official_building_regulation_screening",
+      "legal_status": "design_and_procedure_requirements_must_be_verified",
+      "source_title": "国土交通省 — 建築基準法施行令第82条の2に基づく特定建築物ほか",
+      "source_url": "https://www.mlit.go.jp/notice/noticedata/sgml/1980/26041000/26041000.html",
+      "source_note": "Official MLIT material distinguishes masonry and reinforced concrete block construction by storey count in structural-regulation treatment; this rule is a verification flag, not a prohibition.",
+      "verified_on": "2026-08-16"
+    },
+    {
+      "rule_id": "CL_NCH433_2026_SEISMIC_DESIGN_CHECK",
+      "scope": {
+        "countries": [
+          "Chile",
+          "CL",
+          "チリ"
+        ]
+      },
+      "method_ids": [
+        "masonry",
+        "rc",
+        "steel",
+        "wood_frame",
+        "wood_post_beam",
+        "earth"
+      ],
+      "trigger": {
+        "hazard": "seismic",
+        "min_level": 1
+      },
+      "effect": "Conditional",
+      "title_ja": "チリでは現行NCh433:2026耐震設計基準への適合確認が必要",
+      "title_en": "Chile: verify compliance with current NCh433:2026 seismic design standard",
+      "basis_type": "national_standard_screening",
+      "legal_status": "applicability_and_project_specific_requirements_must_be_verified",
+      "source_title": "Instituto Nacional de Normalización — NCh433:2026 Diseño sísmico de edificios",
+      "source_url": "https://www.inn.cl/nch-aprobadas?page=2",
+      "source_note": "INN lists NCh433:2026 Diseño sísmico de edificios as Vigente; it replaced NCh433:1996 Mod 2009 technically.",
+      "verified_on": "2026-08-16"
+    },
+    {
+      "rule_id": "CL_NCH432_2025_WIND_DESIGN_CHECK",
+      "scope": {
+        "countries": [
+          "Chile",
+          "CL",
+          "チリ"
+        ]
+      },
+      "method_ids": [
+        "masonry",
+        "rc",
+        "steel",
+        "wood_frame",
+        "wood_post_beam",
+        "earth"
+      ],
+      "trigger": {
+        "hazard": "wind",
+        "min_level": 1
+      },
+      "effect": "Conditional",
+      "title_ja": "チリではNCh432:2025風荷重基準の確認が必要",
+      "title_en": "Chile: verify NCh432:2025 structural wind-load requirements",
+      "basis_type": "national_standard_screening",
+      "legal_status": "applicability_and_project_specific_requirements_must_be_verified",
+      "source_title": "Instituto Nacional de Normalización — NCh432:2025 Diseño estructural - Cargas de viento",
+      "source_url": "https://www.inn.cl/nch-aprobadas/?page=8",
+      "source_note": "INN lists NCh432:2025 Diseño estructural - Cargas de viento as Vigente.",
+      "verified_on": "2026-08-16"
+    }
+  ],
+  "verified_jurisdictions": {
+    "Japan": {
+      "status": "seed_verified_sources",
+      "hard_exclusions": 0
+    },
+    "United States": {
+      "status": "seed_verified_sources",
+      "hard_exclusions": 0
+    },
+    "New Zealand": {
+      "status": "seed_verified_sources",
+      "hard_exclusions": 0
+    },
+    "Chile": {
+      "status": "seed_verified_sources",
+      "hard_exclusions": 0
+    }
+  },
+  "last_verified_on": "2026-08-16"
+}

@@ -1,0 +1,13 @@
+{
+  "version": "1.0.587",
+  "tests": {
+    "module1_compile": true,
+    "meta_uploaded_json_parses": true,
+    "meta_root_schema_missing": true,
+    "meta_takeoff_items": 33,
+    "meta_local_id_overlap": 33,
+    "missing_schema_recognized_as_azras_evidence": true,
+    "fallback_evidence_only": true,
+    "unsupported_nonempty_schema_still_rejected": true
+  }
+}

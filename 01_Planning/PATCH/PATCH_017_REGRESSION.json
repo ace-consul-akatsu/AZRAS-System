@@ -1,0 +1,30 @@
+{
+  "patch": "PATCH_017",
+  "product": "01_Planning",
+  "version_after": "1.0.622",
+  "created_at_utc": "2026-09-16T00:00:00Z",
+  "changed_files": [
+    "module1/app.py",
+    "dev_checks/round_half_up_regression_self_check.py"
+  ],
+  "fixes": [
+    {
+      "id": "compound_decision_rounding_regression",
+      "summary": "_screen_review_structured_decision() (added after PATCH_629) stored float(raw) directly without calling _round_half_up(), silently regressing PATCH_629's rounding fix for the RC/2x6 exterior-wall split answer (the single-value approved_quantity path was unaffected, since it goes through a different function).",
+      "files": ["module1/app.py"]
+    }
+  ],
+  "new_self_checks": [
+    {
+      "id": "round_half_up_regression_self_check",
+      "summary": "Source-level check that _screen_review_structured_decision() still calls _round_half_up(), plus a behavioral check of _round_half_up()'s known edge cases (2.005->2.01, 0.125->0.13). Verified to fail against the pre-fix code and pass against the fixed code.",
+      "file": "dev_checks/round_half_up_regression_self_check.py"
+    }
+  ],
+  "verification": {
+    "compile_check": "python3 -m py_compile module1/app.py -> OK",
+    "self_check": "python3 dev_checks/round_half_up_regression_self_check.py -> OK",
+    "regression_of_regression_test_itself": "Manually reverted the fix in a scratch copy and confirmed the new self-check fails as expected, then re-confirmed it passes on the fixed source."
+  },
+  "process_lesson": "When fixing a bug, grep for sibling/duplicate code paths handling the same kind of data before considering the fix complete, and add one dev_checks self-check per fix so future patches cannot silently reintroduce it without being caught automatically."
+}

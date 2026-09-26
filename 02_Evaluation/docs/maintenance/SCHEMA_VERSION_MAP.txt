@@ -1,0 +1,28 @@
+AZRAS Evaluation — Schema / Platform Version Map
+
+1. Product application version
+   VERSION.json -> version (single source of truth; v2.2.0 baseline)
+
+2. Project JSON schema
+   core/project_store.py -> SCHEMA_VERSION = 3.0
+   This is the current top-level Project JSON save schema.
+   JSON Schema document: data/project_schema_v3_0.json
+   data/project_schema_v2_0.json describes the older 2.0 files only
+   (it fixes schema_version to "2.0"; current saves do not validate against it).
+
+3. Legacy compatibility defaults
+   core/project_coordinator.py contains:
+     schema_version default 2.0
+     platform_version default 9.4.0
+   These are setdefault() compatibility values for older/incomplete Project JSON.
+   They are NOT the AZRAS Evaluation application version.
+   Do not mechanically replace them with 1.0.xxx.
+
+4. Sub-schema versions
+   comparison_interface, detailed_configuration, environment calculation data,
+   regional coefficients, and Module-specific payloads have their own schema versions.
+   These are independent from the top-level Project JSON schema.
+
+Protection rule:
+   Version cleanup must not rewrite Project JSON schema/platform/sub-schema constants
+   unless the data migration and 03_AZRAS_Evaluation_2 connection are verified together.

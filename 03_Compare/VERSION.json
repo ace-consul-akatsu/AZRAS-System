@@ -1,0 +1,17 @@
+{
+  "product": "AZRAS Compare",
+  "product_name": "AZRAS Compare",
+  "version": "2.2.0",
+  "patch": 7,
+  "baseline_of": "1.1.20 + PATCH_021",
+  "baseline_note": "Re-baselined after a cross-module regression audit (dev_checks/, pyflakes) found only minor dead-code issues (duplicate translation dict key, unused import/variables) and confirmed no crash-causing bugs. Patch numbering restarts at 1; PATCH_16-20's history is kept under PATCH/archive_pre_v2.2.0/ for reference.",
+  "executable_name": "AZRAS_Compare",
+  "schema_version": "3.0",
+  "compatible_schema_versions": [
+    "3.0"
+  ],
+  "schema_role": "read_only_consumer",
+  "feature": "PATCH_007: follows the 02 Evaluation PATCH_009 market-rent contract (summary.target_gross_yield_percent = null, summary.stored_target_gross_yield_percent = preference, target_gross_yield_active = false). comparison/extractor.py no longer returns the inactive preference as the target yield (it did, through an 'or' fallback into settings); it reports target_gross_yield_active and the stored preference separately. premise_book.py no longer lists the inactive yield as a premise difference and marks market-rent copies target_gross_yield_active = false while keeping the user's preference, exactly as 02 Evaluation saves it. Version single source of truth: README/NOTICE state 2.2.0, VERSION.json patch is a number; dev_checks version_consistency, duplicate_dict_key and pyflakes_undefined_names added (same set as the other three products). v2.2.0 baseline release. Includes PATCH_006 and earlier. License unified to the MIT License (copyright ACE Comprehensive Consulting Co., Ltd.); LICENSE.txt now match the AZRAS-System repository LICENSE; dev_checks/license_consistency_self_check.py added.",
+  "product_slot": "03_AZRAS_Compare",
+  "language_policy": "English canonical internal/persisted data; UI languages are presentation translations"
+}

@@ -1,0 +1,17 @@
+{
+  "version": "1.0.592",
+  "tests": {
+    "module1_compile": true,
+    "human_override_persisted_before_rebuild": true,
+    "project_saved_before_rebuild": true,
+    "post_rebuild_result_save_guarded": true,
+    "ADD_item_survival_path_corrected": true,
+    "formal_dialog_answer_count_corrected": true,
+    "PATCH_591_no_Responses_creation": true,
+    "PATCH_590_AZR0001_two_answers": true,
+    "PATCH_589_Current_workspace": true,
+    "PATCH_588_provider_canonicalization": true,
+    "five_patch_regression_policy_applied": true,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "version": "1.0.598",
+  "tests": {
+    "598_human_history_cleanup": true,
+    "598_no_ledger_accumulation": true,
+    "598_building_system_change_purges_ai": true,
+    "598_restore_time_cleanup": true,
+    "597_new_final_conflict_reopens": true,
+    "596_carried_gap_keys_scoped_final": true,
+    "595_omitted_scope_guard": true,
+    "594_transactional_rebuild": true,
+    "593_collected_ai_viewer": true,
+    "current_project_human_decision_ledger_deleted": true,
+    "current_project_human_source_history_deleted": true,
+    "current_user_saved_exterior_parameter_retained": true,
+    "current_ai_provider_snapshots_retained_without_system_change": true,
+    "building_system_change_deletes_ai_provider_store": true,
+    "building_system_change_deletes_ai_final_state": true,
+    "building_system_change_keeps_user_saved_json_state": true,
+    "building_system_change_deletes_AI_Evolution_Current": true,
+    "five_patch_regression_policy_applied": true,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

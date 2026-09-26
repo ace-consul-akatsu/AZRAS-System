@@ -1,0 +1,43 @@
+{
+  "patch": "PATCH_048",
+  "product": "01 AZRAS Planning",
+  "version": "2.2.0",
+  "date_utc": "260924",
+  "defects": [
+    "module1/app.py: identical duplicated dict keys 'AZRAS actual sloped roof area', 'Exterior doors'",
+    "pyflakes self-check exited 0 (SKIP) when pyflakes was missing; ignored unparseable files",
+    "version stated as 2.2.0 / 1.0.614 / 1.0.632 / 1.0.620 / 1.0.603 in different files",
+    "version_info_AZRAS_Planning.txt was not a VSVersionInfo expression; PyInstaller build failed",
+    "EXE looked for VERSION.json beside the EXE, not in _internal; showed fallback version",
+    ".spec did not bundle resources/ and module1/*.json/*.md",
+    "R1 request ZIP never contained the Japanese protocol (non-existent file name); EN protocol lacked two sections",
+    "LICENSE.txt was a custom permission text while the repository is MIT; now MIT (ACE Comprehensive Consulting Co., Ltd.)",
+    "Real client/project names in comments, an archived README and one parser sentinel; replaced by real project A/B/C and a general title-block rule",
+    "data/project_schema_v2_0.json fixed schema_version to 2.0; current saves (3.0) all failed it; added project_schema_v3_0.json"
+  ],
+  "new_self_checks": [
+    "dev_checks/duplicate_dict_key_self_check.py",
+    "dev_checks/version_consistency_self_check.py",
+    "dev_checks/ai_request_package_resources_self_check.py",
+    "dev_checks/title_block_company_rule_self_check.py",
+    "dev_checks/project_schema_consistency_self_check.py"
+  ],
+  "negative_tests": {
+    "duplicate_dict_key_on_patch047_app_py": "NG (2 keys)",
+    "pyflakes_check_without_pyflakes": "NG exit 1",
+    "pyflakes_check_with_unparseable_file": "NG",
+    "pyinstaller_parse_old_version_info": "ValueError",
+    "ai_request_package_resources_on_patch047": "NG"
+  },
+  "results": {
+    "dev_checks_total": 30,
+    "dev_checks_pass": 30,
+    "gui_startup_smoke": "PASS",
+    "pyinstaller_version_info_parse_and_toRaw": "PASS (2,2,0,48)",
+    "pyflakes_undefined_names": 0,
+    "license_consistency_self_check": "PASS",
+    "title_block_rule_equivalence_old_vs_new": "identical block ends in 5 cases",
+    "project_schema_consistency_self_check": "PASS"
+  },
+  "not_verified_here": "actual Windows PyInstaller build"
+}

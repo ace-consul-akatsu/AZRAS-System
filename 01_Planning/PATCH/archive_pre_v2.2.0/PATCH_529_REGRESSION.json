@@ -1,0 +1,35 @@
+{
+  "patch": 529,
+  "test": "Module 2 vs Module 10 shared-solver parity on synthetic 8760 EPW using the three supplied sample projects",
+  "tolerance_kWh_per_year": 0.0001,
+  "results": [
+    {
+      "project": "260906_2×6_Sample",
+      "heating_diff_kWh_per_year": -3.733215669399215e-05,
+      "cooling_diff_kWh_per_year": 1.4703965348417114e-05,
+      "pass": true
+    },
+    {
+      "project": "260906_azars_Sample",
+      "heating_diff_kWh_per_year": 8.81971016042371e-06,
+      "cooling_diff_kWh_per_year": -3.4444836046532146e-05,
+      "pass": true
+    },
+    {
+      "project": "260906_RC_MRF_Sample",
+      "heating_diff_kWh_per_year": -4.657114516248839e-05,
+      "cooling_diff_kWh_per_year": 2.8347187367216975e-05,
+      "pass": true
+    }
+  ],
+  "common_interface_regression": {
+    "exterior_wall_area_m2_expected": 205.848,
+    "door_area_m2_expected": 6.33,
+    "projects_passed": [
+      "260906_2×6_Sample",
+      "260906_azars_Sample",
+      "260906_RC_MRF_Sample"
+    ]
+  },
+  "overall": "PASS"
+}

@@ -1,0 +1,573 @@
+{
+  "version": "1.1-epw-representative-cities",
+  "notice_ja": "都市情報・災害・材料施工性・法規判定は企画比較用の初期データです。正式評価では各国法規、行政資料、気象ファイル、現地施工者・供給者情報で確認してください。",
+  "cities": [
+    {
+      "name": "Tokyo",
+      "ja": "東京",
+      "country": "Japan",
+      "latitude": 35.6762,
+      "longitude": 139.6503,
+      "climate": "humid_subtropical",
+      "seismic": 5,
+      "wind": 4,
+      "flood": 4,
+      "snow": 1,
+      "fire": 3,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "wood_post_beam",
+        "wood_frame",
+        "mass_timber",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "wood_post_beam",
+        "wood_frame"
+      ],
+      "electricity_co2_kg_per_kwh": 0.45,
+      "climate_name_ja": "温暖湿潤",
+      "climate_name_en": "Humid subtropical"
+    },
+    {
+      "name": "Sapporo",
+      "ja": "札幌",
+      "country": "Japan",
+      "latitude": 43.0618,
+      "longitude": 141.3545,
+      "climate": "cold_snow",
+      "seismic": 4,
+      "wind": 3,
+      "flood": 2,
+      "snow": 5,
+      "fire": 3,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "wood_post_beam",
+        "wood_frame",
+        "mass_timber"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "wood_post_beam",
+        "wood_frame"
+      ],
+      "electricity_co2_kg_per_kwh": 0.45,
+      "climate_name_ja": "寒冷・積雪",
+      "climate_name_en": "Cold / snowy"
+    },
+    {
+      "name": "London",
+      "ja": "ロンドン",
+      "country": "United Kingdom",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "climate": "marine_temperate",
+      "seismic": 1,
+      "wind": 3,
+      "flood": 3,
+      "snow": 1,
+      "fire": 3,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "mass_timber",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "masonry"
+      ],
+      "electricity_co2_kg_per_kwh": 0.2,
+      "climate_name_ja": "西岸海洋性",
+      "climate_name_en": "Marine temperate"
+    },
+    {
+      "name": "Paris",
+      "ja": "パリ",
+      "country": "France",
+      "latitude": 48.8566,
+      "longitude": 2.3522,
+      "climate": "marine_temperate",
+      "seismic": 1,
+      "wind": 2,
+      "flood": 3,
+      "snow": 1,
+      "fire": 3,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "mass_timber",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "masonry"
+      ],
+      "electricity_co2_kg_per_kwh": 0.06,
+      "climate_name_ja": "西岸海洋性",
+      "climate_name_en": "Marine temperate"
+    },
+    {
+      "name": "New York",
+      "ja": "ニューヨーク",
+      "country": "United States",
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "climate": "humid_continental",
+      "seismic": 2,
+      "wind": 4,
+      "flood": 4,
+      "snow": 3,
+      "fire": 3,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "mass_timber",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "masonry"
+      ],
+      "electricity_co2_kg_per_kwh": 0.33,
+      "climate_name_ja": "湿潤大陸性",
+      "climate_name_en": "Humid continental"
+    },
+    {
+      "name": "Los Angeles",
+      "ja": "ロサンゼルス",
+      "country": "United States",
+      "latitude": 34.0522,
+      "longitude": -118.2437,
+      "climate": "mediterranean",
+      "seismic": 5,
+      "wind": 2,
+      "flood": 2,
+      "snow": 0,
+      "fire": 5,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "mass_timber",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "wood_frame"
+      ],
+      "electricity_co2_kg_per_kwh": 0.23,
+      "climate_name_ja": "地中海性",
+      "climate_name_en": "Mediterranean"
+    },
+    {
+      "name": "Dubai",
+      "ja": "ドバイ",
+      "country": "United Arab Emirates",
+      "latitude": 25.2048,
+      "longitude": 55.2708,
+      "climate": "hot_arid",
+      "seismic": 2,
+      "wind": 3,
+      "flood": 2,
+      "snow": 0,
+      "fire": 3,
+      "legal_data": 3,
+      "materials": [
+        "rc",
+        "steel",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "masonry"
+      ],
+      "electricity_co2_kg_per_kwh": 0.45,
+      "climate_name_ja": "高温乾燥（砂漠）",
+      "climate_name_en": "Hot arid / desert"
+    },
+    {
+      "name": "Singapore",
+      "ja": "シンガポール",
+      "country": "Singapore",
+      "latitude": 1.3521,
+      "longitude": 103.8198,
+      "climate": "tropical_humid",
+      "seismic": 1,
+      "wind": 3,
+      "flood": 4,
+      "snow": 0,
+      "fire": 3,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "mass_timber"
+      ],
+      "workforce": [
+        "rc",
+        "steel"
+      ],
+      "electricity_co2_kg_per_kwh": 0.41,
+      "climate_name_ja": "熱帯・高温多湿",
+      "climate_name_en": "Tropical humid"
+    },
+    {
+      "name": "Bangkok",
+      "ja": "バンコク",
+      "country": "Thailand",
+      "latitude": 13.7563,
+      "longitude": 100.5018,
+      "climate": "tropical_humid",
+      "seismic": 2,
+      "wind": 3,
+      "flood": 5,
+      "snow": 0,
+      "fire": 3,
+      "legal_data": 3,
+      "materials": [
+        "rc",
+        "steel",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "masonry"
+      ],
+      "electricity_co2_kg_per_kwh": 0.47,
+      "climate_name_ja": "熱帯・高温多湿",
+      "climate_name_en": "Tropical humid"
+    },
+    {
+      "name": "Delhi",
+      "ja": "デリー",
+      "country": "India",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "climate": "hot_semi_arid",
+      "seismic": 4,
+      "wind": 3,
+      "flood": 3,
+      "snow": 0,
+      "fire": 3,
+      "legal_data": 3,
+      "materials": [
+        "rc",
+        "steel",
+        "masonry",
+        "earth"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "masonry",
+        "earth"
+      ],
+      "electricity_co2_kg_per_kwh": 0.7,
+      "climate_name_ja": "高温半乾燥",
+      "climate_name_en": "Hot semi-arid"
+    },
+    {
+      "name": "Sydney",
+      "ja": "シドニー",
+      "country": "Australia",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "climate": "humid_subtropical",
+      "seismic": 1,
+      "wind": 4,
+      "flood": 3,
+      "snow": 0,
+      "fire": 5,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "mass_timber",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "wood_frame"
+      ],
+      "electricity_co2_kg_per_kwh": 0.55,
+      "climate_name_ja": "温暖湿潤",
+      "climate_name_en": "Humid subtropical"
+    },
+    {
+      "name": "Berlin",
+      "ja": "ベルリン",
+      "country": "Germany",
+      "latitude": 52.52,
+      "longitude": 13.405,
+      "climate": "cool_temperate",
+      "seismic": 1,
+      "wind": 3,
+      "flood": 2,
+      "snow": 2,
+      "fire": 3,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "mass_timber",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "masonry"
+      ],
+      "electricity_co2_kg_per_kwh": 0.35,
+      "climate_name_ja": "冷温帯",
+      "climate_name_en": "Cool temperate"
+    },
+    {
+      "name": "Oslo",
+      "ja": "オスロ",
+      "country": "Norway",
+      "latitude": 59.9139,
+      "longitude": 10.7522,
+      "climate": "cold",
+      "seismic": 1,
+      "wind": 3,
+      "flood": 2,
+      "snow": 4,
+      "fire": 2,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "mass_timber"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "mass_timber"
+      ],
+      "electricity_co2_kg_per_kwh": 0.03,
+      "climate_name_ja": "寒冷",
+      "climate_name_en": "Cold"
+    },
+    {
+      "name": "Toronto",
+      "ja": "トロント",
+      "country": "Canada",
+      "latitude": 43.6532,
+      "longitude": -79.3832,
+      "climate": "humid_continental",
+      "seismic": 2,
+      "wind": 3,
+      "flood": 2,
+      "snow": 4,
+      "fire": 3,
+      "legal_data": 4,
+      "materials": [
+        "rc",
+        "steel",
+        "wood_frame",
+        "mass_timber",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "wood_frame"
+      ],
+      "electricity_co2_kg_per_kwh": 0.04,
+      "climate_name_ja": "湿潤大陸性",
+      "climate_name_en": "Humid continental"
+    },
+    {
+      "name": "Mexico City",
+      "ja": "メキシコシティ",
+      "country": "Mexico",
+      "latitude": 19.4326,
+      "longitude": -99.1332,
+      "climate": "subtropical_highland",
+      "seismic": 5,
+      "wind": 2,
+      "flood": 3,
+      "snow": 0,
+      "fire": 3,
+      "legal_data": 3,
+      "materials": [
+        "rc",
+        "steel",
+        "masonry"
+      ],
+      "workforce": [
+        "rc",
+        "steel",
+        "masonry"
+      ],
+      "electricity_co2_kg_per_kwh": 0.42,
+      "climate_name_ja": "亜熱帯高地",
+      "climate_name_en": "Subtropical highland"
+    }
+  ],
+  "method_profiles": {
+    "azras": {
+      "seismic": 5,
+      "wind": 5,
+      "flood": 5,
+      "snow": 4,
+      "fire": 5,
+      "durability_years": 200,
+      "climates": [
+        "all"
+      ],
+      "material_key": "rc"
+    },
+    "wood_post_beam": {
+      "seismic": 4,
+      "wind": 3,
+      "flood": 2,
+      "snow": 4,
+      "fire": 2,
+      "durability_years": 80,
+      "climates": [
+        "temperate",
+        "cold",
+        "marine_temperate",
+        "cool_temperate"
+      ],
+      "material_key": "wood_post_beam"
+    },
+    "wood_frame": {
+      "seismic": 4,
+      "wind": 4,
+      "flood": 2,
+      "snow": 4,
+      "fire": 2,
+      "durability_years": 70,
+      "climates": [
+        "temperate",
+        "cold",
+        "humid_continental",
+        "marine_temperate"
+      ],
+      "material_key": "wood_frame"
+    },
+    "mass_timber": {
+      "seismic": 4,
+      "wind": 4,
+      "flood": 2,
+      "snow": 4,
+      "fire": 3,
+      "durability_years": 100,
+      "climates": [
+        "temperate",
+        "cold",
+        "marine_temperate",
+        "cool_temperate"
+      ],
+      "material_key": "mass_timber"
+    },
+    "steel": {
+      "seismic": 4,
+      "wind": 5,
+      "flood": 4,
+      "snow": 5,
+      "fire": 2,
+      "durability_years": 100,
+      "climates": [
+        "all"
+      ],
+      "material_key": "steel"
+    },
+    "rc_frame": {
+      "seismic": 5,
+      "wind": 5,
+      "flood": 5,
+      "snow": 5,
+      "fire": 5,
+      "durability_years": 120,
+      "climates": [
+        "all"
+      ],
+      "material_key": "rc"
+    },
+    "rc_wall": {
+      "seismic": 5,
+      "wind": 5,
+      "flood": 5,
+      "snow": 5,
+      "fire": 5,
+      "durability_years": 120,
+      "climates": [
+        "all"
+      ],
+      "material_key": "rc"
+    },
+    "masonry": {
+      "seismic": 2,
+      "wind": 4,
+      "flood": 4,
+      "snow": 4,
+      "fire": 5,
+      "durability_years": 120,
+      "climates": [
+        "hot_arid",
+        "hot_semi_arid",
+        "marine_temperate",
+        "temperate"
+      ],
+      "material_key": "masonry"
+    },
+    "earth": {
+      "seismic": 1,
+      "wind": 2,
+      "flood": 1,
+      "snow": 1,
+      "fire": 4,
+      "durability_years": 80,
+      "climates": [
+        "hot_arid",
+        "hot_semi_arid",
+        "subtropical_highland"
+      ],
+      "material_key": "earth"
+    },
+    "other": {
+      "seismic": 3,
+      "wind": 3,
+      "flood": 3,
+      "snow": 3,
+      "fire": 3,
+      "durability_years": 60,
+      "climates": [
+        "all"
+      ],
+      "material_key": "other"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "patch": 575,
+  "checks": [
+    "valid local_id applies even when source item is Japanese and FINAL item is English canonical",
+    "AZRAS exterior-wall allocation local_id 1 can receive FINAL 181.194 m2",
+    "Japanese UI labels for FINAL unresolved/add_new scopes contain no English-only item names",
+    "English canonical mappings exist for legacy mixed FINAL labels",
+    "JP drawing-review Excel reuses corrected Japanese localization"
+  ]
+}

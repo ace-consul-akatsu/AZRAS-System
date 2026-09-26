@@ -1,0 +1,26 @@
+AZRAS Evaluation — Root Layout after PATCH 141
+
+Root files retained for normal operation / distribution:
+- main.py
+- VERSION.json
+- README_JA.txt
+- LICENSE.txt
+- NOTICE.txt
+- AZRAS_Evaluation.spec
+- version_info_AZRAS_Evaluation.txt
+- run_AZRAS_Evaluation_without_build.bat
+- build_AZRAS_Evaluation.bat
+- SELF_CHECK.bat
+- self_check.py
+- CLEAN_PYTHON_CACHE.bat
+- CHANGELOG.md
+- APPLY_LOCATION.txt
+
+Maintenance documents are moved to:
+- docs/maintenance/
+
+Historical PATCH documents are moved to:
+- docs/history/
+
+No Python source, data, Project JSON schema, or module connection is moved by
+PATCH 141. This is documentation/root-folder cleanup only.

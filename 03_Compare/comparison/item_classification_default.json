@@ -1,0 +1,28 @@
+{
+  "schema": "AZRAS_COMPARISON_ITEM_CLASSIFICATION_V1",
+  "version": "2026-09-22",
+  "note_ja": "工法比較の単価差リスト・範囲差リストから外す工種の区分表。比較前提表の画面で編集でき、使用した区分表は比較前提表JSONに保存される。",
+  "note_en": "Which cost items are excluded from the unit-price and scope difference lists when construction methods are compared. Editable in the premise-book screen; the classification actually used is saved inside the premise book.",
+  "method_specific": {
+    "note_ja": "片方の工法にしか存在しない工種。単価差・範囲差の両方から外す。",
+    "note_en": "Items that exist in one construction method only. Excluded from both lists.",
+    "keys": ["dimension_lumber", "structural_plywood", "clt", "structural_steel",
+             "external_finish", "external_finish_rc", "external_finish_timber"]
+  },
+  "method_dependent_work": {
+    "note_ja": "同じ工種キーでも工法によって仕事の中身が違う工種。単価差リストから外し、範囲差リストには残す。",
+    "note_en": "Items whose work differs by construction method under the same key. Excluded from the unit-price list, kept in the scope list.",
+    "keys": ["formwork", "concrete", "reinforcing_steel", "phenolic_foam"]
+  },
+  "families": {
+    "note_ja": "工法固有の工種でも、どれか1つは必ず必要な部位。1つも無いProjectは範囲差として挙げる。",
+    "note_en": "Parts every building needs in some form, even though the member items are method-specific. A Project with none of them is listed as a scope gap.",
+    "groups": {
+      "exterior_finish": {
+        "ja": "外装仕上げ（いずれか）",
+        "en": "Exterior finish (any)",
+        "keys": ["external_finish", "external_finish_rc", "external_finish_timber"]
+      }
+    }
+  }
+}

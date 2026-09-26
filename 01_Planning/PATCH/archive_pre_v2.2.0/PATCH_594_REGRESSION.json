@@ -1,0 +1,19 @@
+{
+  "version": "1.0.594",
+  "tests": {
+    "module1_compile": true,
+    "transaction_snapshot_before_rebuild": true,
+    "working_state_scrubbed_without_destroying_committed_snapshot": true,
+    "visible_old_result_not_blank_at_rebuild_start": true,
+    "rollback_restores_previous_module1": true,
+    "new_result_commits_only_after_autosave": true,
+    "saved_module1_viewer_present": true,
+    "PATCH_593_collected_ai_viewer": true,
+    "PATCH_592_post_rebuild_save_guard": true,
+    "PATCH_591_no_Responses_recreation_path": true,
+    "PATCH_590_AZR0001_two_answers": true,
+    "PATCH_589_single_Current_workspace": true,
+    "five_patch_regression_policy_applied": true,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

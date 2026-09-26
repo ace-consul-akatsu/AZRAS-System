@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "azras-project-schema-v2.0",
+  "title": "AZRAS Platform Project JSON V2.0",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "platform_version",
+    "project_id",
+    "common",
+    "module_outputs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "platform_version": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "save_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "common": {
+      "type": "object",
+      "required": [
+        "project_identity",
+        "location",
+        "building",
+        "thermal",
+        "renewable_energy",
+        "comparison_interface"
+      ]
+    },
+    "module_outputs": {
+      "type": "object"
+    },
+    "comparison_export": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "patch": 534,
+  "version": "1.0.534",
+  "samples": {
+    "2x6": {
+      "concrete_m3": 12.255,
+      "rebar_t": 0.9804,
+      "dimension_lumber_m3": 14.706,
+      "glass_m2": 55.74,
+      "doors_m2": 6.33,
+      "true_red_items": []
+    },
+    "azras": {
+      "concrete_m3": 93.51,
+      "rebar_t": 8.4159,
+      "dimension_lumber_m3": 14.706,
+      "glass_m2": 55.74,
+      "doors_m2": 6.33,
+      "true_red_items": [
+        "AZRAS internal RC wall concrete"
+      ]
+    },
+    "rc_frame": {
+      "concrete_m3": 129.419064,
+      "rebar_t": 15.530288,
+      "dimension_lumber_m3": null,
+      "glass_m2": 55.74,
+      "doors_m2": 6.33,
+      "true_red_items": [
+        "internal partition opening-width candidate"
+      ]
+    }
+  },
+  "invariants": [
+    "yellow quantities adopted downstream",
+    "audit/superseded rows excluded",
+    "no AZRAS timber double count",
+    "FINAL numeric conflict correction restored on load"
+  ]
+}

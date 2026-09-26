@@ -1,0 +1,11 @@
+{
+  "version": "5.0.4-p033",
+  "tests": {
+    "all_touched_files_compile": true,
+    "version_json_is_valid_json": true,
+    "no_v2_0_0_text_remaining_except_changelog_description": true,
+    "no_1_0_614_text_remaining": true,
+    "not_found_message_no_longer_references_nonexistent_corrected_suffix": true,
+    "resolve_product_folder_matching_logic_untouched": true
+  }
+}

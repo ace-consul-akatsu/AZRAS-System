@@ -1,0 +1,16 @@
+{
+  "version": "1.0.596",
+  "tests": {
+    "module1_compile": true,
+    "exact_NameError_path_removed": true,
+    "carried_gap_keys_not_used_in_first_round_staging": true,
+    "carried_gap_keys_defined_inside_FINAL_apply_before_summary": true,
+    "PATCH_595_omitted_scope_continuity_guard_preserved": true,
+    "PATCH_594_transactional_rebuild": true,
+    "PATCH_593_collected_ai_viewer": true,
+    "PATCH_592_post_rebuild_save_guard": true,
+    "PATCH_591_no_Responses_recreation_path": true,
+    "five_patch_regression_policy_applied": true,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

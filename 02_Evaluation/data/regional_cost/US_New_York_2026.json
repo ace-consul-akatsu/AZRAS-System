@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "region_key": "United States / New York",
+  "currency": "USD",
+  "data_date": "2026-07-01",
+  "last_checked_date": "2026-08-09",
+  "status": "estimated",
+  "source_type": "official_public_wage_schedule_plus_market_index_reference",
+  "source_name": "NYC Comptroller Construction Worker Prevailing Wage Schedule 2026-2027; RLB East Q2 2026",
+  "source_references": [
+    "https://comptroller.nyc.gov/wp-content/uploads/documents/ConstructionWorkerSchedule-2026-2027-Preliminary.pdf",
+    "https://www.rlb.com/americas/insight/rlb-construction-cost-report-east-q2-2026/"
+  ],
+  "source_snapshot": {
+    "nyc_prevailing_wage_effective_period": "2026-07-01 to 2027-06-30",
+    "labor_anchors_usd_per_hour_including_supplemental_benefits": {
+      "laborer_foundation_concrete_excavating": {
+        "wage": 46.6,
+        "supplemental_benefits": 57.67,
+        "total": 104.27
+      },
+      "cement_mason": {
+        "wage": 59.87,
+        "supplemental_benefits": 34.76,
+        "total": 94.63
+      },
+      "iron_worker_structural": {
+        "wage": 59.2,
+        "supplemental_benefits": 93.52,
+        "total": 152.72
+      },
+      "carpenter_high_rise_A": {
+        "wage": 51.48,
+        "supplemental_benefits": 44.74,
+        "total": 96.22
+      }
+    },
+    "rlb_new_york_year_over_year_cost_growth_percent_q2_2026": 4.46
+  },
+  "unit_costs": {},
+  "unit_costs_status": "not_yet_populated_from_trade_quotes_or_unit_price_book",
+  "note_ja": "PATCH 059ではニューヨークの公式2026-2027労務単価と2026年市場指数を外部データ化。工事項目別の完成単価は、公開Unit Price Bookまたは現地見積で確認できた項目から順次unit_costsへ登録する。未確認項目を日本単価から推測してverified扱いにはしない。"
+}

@@ -1,0 +1,9 @@
+AZRAS SYSTEM LEGACY-DATA CLEANUP
+
+Policy:
+- Current Project JSON / current drawing evidence is authoritative.
+- Reference profiles contain method/material assumptions only; they contain no project geometry or quantity values.
+- Sample-specific geometry/opening/cost signature shortcuts are not permitted in production paths.
+- Downstream products use the current Planning quantity/cost dependency logic rather than retained historical sample branches.
+- Generated smoke-test JSON, Python caches, and legacy_reference payloads are excluded from the clean distribution.
+- Human-confirmed project inputs remain higher priority than AI supplements.

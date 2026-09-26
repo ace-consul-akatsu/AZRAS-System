@@ -1,0 +1,16 @@
+{
+  "patch": 569,
+  "base_version": "1.0.568",
+  "checks": {
+    "utc_filename_format": "YYMMDD_HHMM",
+    "seconds_in_filename": false,
+    "remaining_local_datetime_now_scan_expected": 0,
+    "legacy_jst_takeoff_wording_removed": true,
+    "module5_ai_request_utc": true,
+    "module2_export_filename_utc": true,
+    "report_timestamp_utc_labeled": true,
+    "dependency_total_consistency_gate": true,
+    "rc_total_component_reconciliation_required": true,
+    "reinforcement_uses_reconciled_rc_total": true
+  }
+}

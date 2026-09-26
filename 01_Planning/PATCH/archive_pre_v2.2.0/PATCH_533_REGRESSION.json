@@ -1,0 +1,9 @@
+{
+  "patch": 533,
+  "checks": [
+    "superseded generic window/door rows become audit-only when current-PDF owner exists",
+    "stale concrete/rebar predecessor rows do not become second physical owners",
+    "genuine unresolved/conflicting rows remain unresolved",
+    "yellow provisional quantities remain downstream eligible"
+  ]
+}

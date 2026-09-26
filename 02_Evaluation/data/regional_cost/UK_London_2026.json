@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "region_key": "United Kingdom / London",
+  "currency": "GBP",
+  "data_date": "2026-05-01",
+  "last_checked_date": "2026-08-09",
+  "status": "estimated",
+  "source_type": "official_uk_material_statistics_plus_global_city_cost_reference",
+  "source_name": "UK Department for Business and Trade Building Materials June 2026; ONS Average Weekly Earnings; Arcadis ICC 2026",
+  "source_references": [
+    "https://www.gov.uk/government/statistics/building-materials-and-components-statistics-june-2026",
+    "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/averageweeklyearnings/current",
+    "https://www.arcadis.com/en/insights/international-construction-costs-2026"
+  ],
+  "source_snapshot": {
+    "uk_material_price_change_may_2025_to_may_2026_percent": {
+      "new_housing": 3.9,
+      "other_new_work": 6.9,
+      "repair_and_maintenance": 4.6,
+      "all_work": 5.4,
+      "fabricated_structural_steel": 13.1,
+      "gravel_sand_clays_kaolin": 12.2,
+      "concrete_reinforcing_bars": -1.2,
+      "cement": -5.0
+    },
+    "uk_construction_average_weekly_earnings_2025_gbp_nonseasonally_adjusted_total_pay": 811,
+    "arcadis_2026_global_construction_cost_rank_london": 2
+  },
+  "unit_costs": {},
+  "unit_costs_status": "not_yet_populated_from_london_trade_quotes_or_unit_rate_book",
+  "note_ja": "PATCH 059では英国政府の2026年材料価格統計、ONS賃金統計、Arcadisのロンドン市場位置づけを外部データ化。ロンドン固有の工事項目別完成単価は、確認可能な現地Unit Rate/見積を取得した項目から順次unit_costsへ登録する。英国全国統計をロンドン固有のverified単価として扱わない。"
+}

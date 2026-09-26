@@ -1,0 +1,11 @@
+# AZRAS System v2.2.0 - Python packages for running all four products from source.
+# Python 3.13 (64-bit) on Windows; Tkinter comes with the python.org installer.
+# 01 Planning uses all of these; 02 Evaluation uses numpy, pandas and reportlab;
+# 00 Installer and 03 Compare use the standard library only.
+numpy
+pandas
+Pillow
+opencv-python
+PyMuPDF
+pypdf
+reportlab

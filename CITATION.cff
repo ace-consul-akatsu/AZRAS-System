@@ -1,0 +1,42 @@
+cff-version: 1.2.0
+message: "If you use AZRAS System, please cite it using these metadata."
+type: software
+title: "AZRAS System"
+abstract: >-
+  AZRAS System is an open-source desktop suite for planning, evaluating and
+  comparing buildings over a 200-year life cycle. It reads construction
+  drawings printed to PDF, performs quantity takeoff, and sends items it
+  cannot resolve to several independent AI systems; each AI answer is kept as
+  a separate candidate with its evidence, compared only between like
+  quantities and units, and never adopted by majority vote. Unresolved items
+  are routed to human review. The suite calculates CO2 emissions and energy
+  use from 8,760-hour regional weather data, compares insulation
+  specifications, construction methods and building locations, and evaluates
+  200-year business cash flow and environmental load. The same drawing set
+  can be resent to multiple AIs at later dates, with SHA-256 hashes
+  preserving drawing identity, to observe longitudinal changes in AI
+  drawing-reading capability. v2.2.0 comprises four products: Installer,
+  Planning, Evaluation and Compare.
+authors:
+  - family-names: "Akatsu"
+    given-names: "Makito"
+    affiliation: "ACE Comprehensive Consulting Co., Ltd."
+    # orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"   # add after obtaining an ORCID iD
+version: 2.2.0
+date-released: 2026-09-24   # set to the day the v2.2.0 GitHub release is created
+license: MIT
+repository-code: "https://github.com/ace-consul-akatsu/AZRAS-System"
+url: "https://ace-consul-akatsu.github.io"
+keywords:
+  - building life cycle assessment
+  - quantity takeoff
+  - multi-AI
+  - large language models
+  - AI evaluation
+  - construction drawings
+  - embodied carbon
+  - building energy simulation
+  - life cycle cost
+  - construction method comparison
+  - AZRAS
+# doi: 10.5281/zenodo.XXXXXXX   # add manually after Zenodo issues the DOI (Zenodo does not edit this file)

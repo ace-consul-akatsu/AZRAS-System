@@ -1,0 +1,36 @@
+{
+  "patch": 581,
+  "version": "1.0.581",
+  "utc_tested_at": "2026-09-08T10:07:00Z",
+  "tests": [
+    {
+      "name": "multi_answer_exterior_wall_structured",
+      "status": "pass",
+      "rc_exterior_wall_area_m2": 113.16,
+      "timber_exterior_wall_area_m2": 114.48
+    },
+    {
+      "name": "user_added_scope_persistence_after_full_rebuild",
+      "status": "pass",
+      "item": "クロス張り",
+      "quantity": 213.204,
+      "unit": "m2"
+    },
+    {
+      "name": "mapped_user_added_cost_bridge",
+      "status": "pass",
+      "cost_key": "interior_finish",
+      "quantity": 213.204
+    },
+    {
+      "name": "unmapped_user_added_no_silent_zero",
+      "status": "pass",
+      "expected": "unpriced_unmapped monetary gap",
+      "gap_count": 1
+    },
+    {
+      "name": "python_compile",
+      "status": "pass"
+    }
+  ]
+}

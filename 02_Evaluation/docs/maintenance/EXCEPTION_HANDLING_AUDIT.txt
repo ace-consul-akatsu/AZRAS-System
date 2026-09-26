@@ -1,0 +1,28 @@
+AZRAS Evaluation — Exception Handling Audit
+PATCH 132
+
+Active Module 3–7 review:
+
+Module 3:
+- Saved-result redraw uses try/except Exception: pass.
+Module 4:
+- Saved-result redraw uses try/except Exception: pass.
+Module 5:
+- Saved-result redraw uses try/except Exception: pass.
+- Optional UI variable restoration catches AttributeError.
+- File cleanup and date-format probing contain intentionally tolerant exception handling.
+Module 6:
+- Legacy settings migration and saved-result redraw contain tolerant exception handling.
+Module 7:
+- Saved-result redraw uses try/except Exception: pass.
+
+Decision for PATCH 132:
+- No exception behavior is changed yet.
+- The redraw handlers may hide a UI restoration failure, but changing them without live GUI regression testing could alter startup/load behavior.
+- File cleanup/date parsing compatibility handlers are intentionally tolerant.
+
+Protection rule:
+Do not mechanically remove `except ...: pass` from active Modules.
+Each occurrence must be changed only together with the corresponding GUI/load regression test.
+
+This audit does not change calculation logic, Project JSON, or module connections.

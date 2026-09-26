@@ -1,0 +1,17 @@
+{
+  "version": "1.0.595",
+  "tests": {
+    "module1_compile": true,
+    "omitted_scope_continuity_guard": true,
+    "missing_FINAL_scope_not_silently_deleted": true,
+    "first_round_numeric_value_not_formally_adopted_by_guard": true,
+    "carried_scope_remains_unresolved": true,
+    "PATCH_594_transactional_rebuild": true,
+    "PATCH_593_collected_ai_viewer": true,
+    "PATCH_592_post_rebuild_save_guard": true,
+    "PATCH_591_no_Responses_recreation_path": true,
+    "PATCH_590_AZR0001_two_answers": true,
+    "five_patch_regression_policy_applied": true,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

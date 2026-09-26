@@ -1,0 +1,38 @@
+{
+  "patch": "PATCH_018",
+  "product": "01_Planning",
+  "version_after": "1.0.623",
+  "created_at_utc": "2026-09-16T00:00:00Z",
+  "changed_files": [
+    "module1/app.py",
+    "dev_checks/garbled_mixed_language_label_self_check.py"
+  ],
+  "fixes": [
+    {
+      "id": "garbled_mixed_language_item_labels",
+      "summary": "_localize_takeoff_text()'s Japanese-mode phrase substitution was a case-sensitive, non-word-boundary str.replace() loop, so freely-worded item names imported from external AI-review data displayed as a garbled English/Japanese mashup, and English plurals left a stray 's' glued onto the translated Japanese word. Replaced with a case-insensitive, word-boundary-aware regex substitution plus a suffix-stripping pass and additional dictionary entries.",
+      "files": ["module1/app.py"]
+    }
+  ],
+  "confirmed_shared_by_two_screens": [
+    "module1's \"不明・図面矛盾への回答\" (unresolved/conflict review) dialog",
+    "module1's \"詳細数量\" (detailed quantities) grid"
+  ],
+  "known_residual_gaps": [
+    "\"Air-conditioning in\u6249 units\" -- the \"in\u6249\" fragment's origin was not identified in this session and needs investigation of the AI-import canonicalization step, not just the dictionary",
+    "the English conjunction \"and\" is intentionally not translated standalone, to avoid affecting many existing correctly-working long phrase entries that already contain \"and\" as part of their whole-phrase match"
+  ],
+  "new_self_checks": [
+    {
+      "id": "garbled_mixed_language_label_self_check",
+      "summary": "Source-level check that _localize_takeoff_text() still uses re.IGNORECASE and a word-boundary regex, plus the plural-\"s\" stripping pass; behavioral check against known garbled test phrases. Verified to fail against the pre-fix code and pass against the fixed code.",
+      "file": "dev_checks/garbled_mixed_language_label_self_check.py"
+    }
+  ],
+  "verification": {
+    "compile_check": "python3 -m py_compile module1/app.py -> OK",
+    "self_check": "python3 dev_checks/garbled_mixed_language_label_self_check.py -> OK",
+    "regression_of_regression_test_itself": "Manually reverted both the regex mechanism and the suffix-stripping pass in a scratch copy and confirmed the new self-check fails as expected, then re-confirmed it passes on the fixed source."
+  },
+  "structural_note": "This is a finite hand-curated phrase dictionary trying to cover effectively unbounded freely-worded external AI item names. The fix closes the specific gaps found and the two mechanical bugs (case sensitivity, partial-word matching), but a genuinely new phrase from a future AI submission may still show up partially untranslated (cleanly in English, not garbled) until this dictionary-substitution architecture is replaced by a closed canonical vocabulary or a real translation engine."
+}

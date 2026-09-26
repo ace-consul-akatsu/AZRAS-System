@@ -1,0 +1,17 @@
+{
+  "version": "1.0.590",
+  "tests": {
+    "module1_compile": true,
+    "canonical_placeholder_does_not_mask_compound_question": true,
+    "azr_0001_visible_answer_count": 2,
+    "azr_0001_expected_visible_ids": [
+      "AZR-0001-1",
+      "AZR-0001-2"
+    ],
+    "single_answer_rejected": true,
+    "both_answers_required": true,
+    "structured_action": "approve_exterior_wall_system_allocation",
+    "audit_target_uses_real_item_not_placeholder": true,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "version": "1.0.623",
+  "tests": {
+    "module1_and_legend_service_compile": true,
+    "equipment_labels_grew_13_to_34_no_duplicates": true,
+    "all_13_original_equipment_keys_and_labels_unchanged": true,
+    "ai_instruction_now_separates_fire_alarm_and_fire_suppression": true,
+    "find_equipment_pages_now_matches_plumbing_fire_gas_hvac_keywords": true,
+    "merge_recognized_equipment_labels_and_categories_cover_all_21_new_keys": true,
+    "no_calculation_or_cost_logic_changed": true,
+    "module2_energy_default_table_intentionally_not_extended": true
+  }
+}

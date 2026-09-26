@@ -1,0 +1,1147 @@
+{
+  "version": "9.4",
+  "status": "planning_comparison_defaults",
+  "notice_ja": "3工法比較では同一の2004年価格基準・共通市場校正係数・同一の評価年上昇係数を使用します。AZRAS 2004年実績3,450万円は共通市場水準の校正基準であり、AZRASだけを安くする総額置換には使用しません。",
+  "notice_en": "Unit costs are planning-comparison defaults. In Japan, update them using current construction-price publications, cost references, quotations and specialist contractor data. In other countries, replace them with official statistics, cost guides and market quotations.",
+  "locations": {
+    "Japan / Tokyo": {
+      "currency": "JPY",
+      "year": 2026,
+      "material_index": 112.0,
+      "labor_index": 118.0,
+      "productivity_index": 95.0,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "fx_jpy_per_local_currency": 1.0,
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "unit_cost_dataset": {
+        "region_key": "Japan / Tokyo",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend GCMI 2026",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      },
+      "dataset_file": "data/regional_cost/JP_Tokyo_2026.json",
+      "dataset_pattern": "data/regional_cost/JP_Tokyo_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "benchmark_usd_per_m2": 5801.2,
+      "benchmark_source": "Turner & Townsend GCMI 2026",
+      "benchmark_source_year": 2026,
+      "fx_snapshot_date": "2026-08-21"
+    },
+    "Japan / Nagoya": {
+      "currency": "JPY",
+      "year": 2026,
+      "material_index": 105.0,
+      "labor_index": 105.0,
+      "productivity_index": 100.0,
+      "unit_costs": {},
+      "pricing_mode": "japan_base_regional_index",
+      "fx_jpy_per_local_currency": 1.0,
+      "pricing_status": "regional_index_estimate_with_2026_official_sources",
+      "unit_cost_dataset": {
+        "region_key": "Japan / Nagoya",
+        "data_date": null,
+        "last_checked_date": null,
+        "source_name": null,
+        "source_reference": null,
+        "source_type": null,
+        "status": "not_available",
+        "note_ja": "現地確認単価データ未登録。単価登録時に出典・年月・確認日を必須記録する。"
+      },
+      "dataset_file": "data/regional_cost/JP_Nagoya_2026.json",
+      "dataset_pattern": "data/regional_cost/JP_Nagoya_*.json",
+      "dataset_selection_policy": "latest_data_date"
+    },
+    "Japan / Sapporo": {
+      "currency": "JPY",
+      "year": 2026,
+      "material_index": 106.0,
+      "labor_index": 111.0,
+      "productivity_index": 92.0,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "fx_jpy_per_local_currency": 1.0,
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "unit_cost_dataset": {
+        "region_key": "Japan / Sapporo",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend GCMI 2026",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      },
+      "dataset_file": "data/regional_cost/JP_Sapporo_2026.json",
+      "dataset_pattern": "data/regional_cost/JP_Sapporo_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "benchmark_usd_per_m2": 5476.9,
+      "benchmark_source": "Turner & Townsend GCMI 2026",
+      "benchmark_source_year": 2026,
+      "fx_snapshot_date": "2026-08-21"
+    },
+    "United States / New York": {
+      "currency": "USD",
+      "year": 2026,
+      "material_index": 153.0,
+      "labor_index": 180.0,
+      "productivity_index": 95.0,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "fx_jpy_per_local_currency": 159.061,
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "unit_costs_status": "local_unit_costs_not_embedded",
+      "unit_cost_dataset": {
+        "region_key": "United States / New York",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend GCMI 2026",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      },
+      "dataset_file": "data/regional_cost/US_New_York_2026.json",
+      "dataset_pattern": "data/regional_cost/US_New_York_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "benchmark_usd_per_m2": 7937.5,
+      "benchmark_source": "Turner & Townsend GCMI 2026",
+      "benchmark_source_year": 2026,
+      "fx_snapshot_date": "2026-08-21"
+    },
+    "United Kingdom / London": {
+      "currency": "GBP",
+      "year": 2026,
+      "material_index": 120.0,
+      "labor_index": 137.0,
+      "productivity_index": 95.0,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "fx_jpy_per_local_currency": 201.99,
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "unit_costs_status": "local_unit_costs_not_embedded",
+      "unit_cost_dataset": {
+        "region_key": "United Kingdom / London",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend GCMI 2026",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      },
+      "dataset_file": "data/regional_cost/UK_London_2026.json",
+      "dataset_pattern": "data/regional_cost/UK_London_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "benchmark_usd_per_m2": 6032.4,
+      "benchmark_source": "Turner & Townsend GCMI 2026",
+      "benchmark_source_year": 2026,
+      "fx_snapshot_date": "2026-08-21"
+    },
+    "United States / Los Angeles": {
+      "currency": "USD",
+      "year": 2026,
+      "material_index": 116.0,
+      "labor_index": 130.0,
+      "productivity_index": 96.0,
+      "fx_jpy_per_local_currency": 159.061,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 5941.7,
+      "benchmark_source": "Turner & Townsend GCMI 2026",
+      "benchmark_source_year": 2026,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/US_Los_Angeles_2026.json",
+      "dataset_pattern": "data/regional_cost/US_Los_Angeles_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "United States / Los Angeles",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend GCMI 2026",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "France / Paris": {
+      "currency": "EUR",
+      "year": 2026,
+      "material_index": 89.0,
+      "labor_index": 95.0,
+      "productivity_index": 96.0,
+      "fx_jpy_per_local_currency": 167.01,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 4499.0,
+      "benchmark_source": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+      "benchmark_source_year": 2024,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/FR_Paris_2026.json",
+      "dataset_pattern": "data/regional_cost/FR_Paris_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "France / Paris",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "United Arab Emirates / Dubai": {
+      "currency": "AED",
+      "year": 2026,
+      "material_index": 58.0,
+      "labor_index": 55.0,
+      "productivity_index": 103.0,
+      "fx_jpy_per_local_currency": 42.95,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 2634.0,
+      "benchmark_source": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+      "benchmark_source_year": 2024,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/AE_Dubai_2026.json",
+      "dataset_pattern": "data/regional_cost/AE_Dubai_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "United Arab Emirates / Dubai",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "Singapore / Singapore": {
+      "currency": "SGD",
+      "year": 2026,
+      "material_index": 88.0,
+      "labor_index": 89.0,
+      "productivity_index": 101.0,
+      "fx_jpy_per_local_currency": 117.7,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 4398.0,
+      "benchmark_source": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+      "benchmark_source_year": 2024,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/SG_Singapore_2026.json",
+      "dataset_pattern": "data/regional_cost/SG_Singapore_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "Singapore / Singapore",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "Thailand / Bangkok": {
+      "currency": "THB",
+      "year": 2026,
+      "material_index": 48.0,
+      "labor_index": 39.0,
+      "productivity_index": 104.0,
+      "fx_jpy_per_local_currency": 4.72,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 1200.0,
+      "benchmark_source": "Arcadis Asia Q1 2025 Bangkok building-cost ranges; planning midpoint basis",
+      "benchmark_source_year": 2025,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/TH_Bangkok_2026.json",
+      "dataset_pattern": "data/regional_cost/TH_Bangkok_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "Thailand / Bangkok",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Arcadis Asia Q1 2025 Bangkok building-cost ranges; planning midpoint basis",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "India / Delhi": {
+      "currency": "INR",
+      "year": 2026,
+      "material_index": 27.0,
+      "labor_index": 18.0,
+      "productivity_index": 108.0,
+      "fx_jpy_per_local_currency": 1.84,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 938.0,
+      "benchmark_source": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+      "benchmark_source_year": 2024,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/IN_Delhi_2026.json",
+      "dataset_pattern": "data/regional_cost/IN_Delhi_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "India / Delhi",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "Australia / Sydney": {
+      "currency": "AUD",
+      "year": 2026,
+      "material_index": 91.0,
+      "labor_index": 96.0,
+      "productivity_index": 94.0,
+      "fx_jpy_per_local_currency": 101.8,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 4241.0,
+      "benchmark_source": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+      "benchmark_source_year": 2024,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/AU_Sydney_2026.json",
+      "dataset_pattern": "data/regional_cost/AU_Sydney_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "Australia / Sydney",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "Germany / Berlin": {
+      "currency": "EUR",
+      "year": 2026,
+      "material_index": 91.0,
+      "labor_index": 95.0,
+      "productivity_index": 96.0,
+      "fx_jpy_per_local_currency": 167.01,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 4483.0,
+      "benchmark_source": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+      "benchmark_source_year": 2024,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/DE_Berlin_2026.json",
+      "dataset_pattern": "data/regional_cost/DE_Berlin_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "Germany / Berlin",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "Norway / Oslo": {
+      "currency": "NOK",
+      "year": 2026,
+      "material_index": 93.0,
+      "labor_index": 108.0,
+      "productivity_index": 94.0,
+      "fx_jpy_per_local_currency": 14.8,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 4350.0,
+      "benchmark_source": "2026 Norway residential cost benchmark + Nordic labour-cost planning adjustment",
+      "benchmark_source_year": 2026,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/NO_Oslo_2026.json",
+      "dataset_pattern": "data/regional_cost/NO_Oslo_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "Norway / Oslo",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "2026 Norway residential cost benchmark + Nordic labour-cost planning adjustment",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "Canada / Toronto": {
+      "currency": "CAD",
+      "year": 2026,
+      "material_index": 85.0,
+      "labor_index": 91.0,
+      "productivity_index": 97.0,
+      "fx_jpy_per_local_currency": 112.93,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 4183.0,
+      "benchmark_source": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+      "benchmark_source_year": 2024,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/CA_Toronto_2026.json",
+      "dataset_pattern": "data/regional_cost/CA_Toronto_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "Canada / Toronto",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "Mexico / Mexico City": {
+      "currency": "MXN",
+      "year": 2026,
+      "material_index": 59.0,
+      "labor_index": 48.0,
+      "productivity_index": 104.0,
+      "fx_jpy_per_local_currency": 7.95,
+      "unit_costs": {},
+      "pricing_mode": "automatic_city_initial_estimate",
+      "pricing_status": "planning_city_initial_estimate_2026",
+      "benchmark_usd_per_m2": 2824.0,
+      "benchmark_source": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+      "benchmark_source_year": 2024,
+      "fx_snapshot_date": "2026-08-21",
+      "dataset_file": "data/regional_cost/MX_Mexico_City_2026.json",
+      "dataset_pattern": "data/regional_cost/MX_Mexico_City_*.json",
+      "dataset_selection_policy": "latest_data_date",
+      "unit_cost_dataset": {
+        "region_key": "Mexico / Mexico City",
+        "data_date": "2026-08-21",
+        "last_checked_date": "2026-08-21",
+        "source_name": "Turner & Townsend ICMS 2024 ratio, normalized to 2026 Tokyo",
+        "source_reference": null,
+        "source_type": "market_benchmark_derived_planning_estimate",
+        "status": "estimated",
+        "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
+      }
+    },
+    "User Defined": {
+      "currency": "JPY",
+      "year": 2026,
+      "material_index": 100.0,
+      "labor_index": 100.0,
+      "productivity_index": 100.0,
+      "unit_costs": {},
+      "pricing_mode": "user_defined",
+      "fx_jpy_per_local_currency": 0.0,
+      "pricing_status": "unit_prices_or_fx_required",
+      "unit_cost_dataset": {
+        "region_key": "User Defined",
+        "data_date": null,
+        "last_checked_date": null,
+        "source_name": null,
+        "source_reference": null,
+        "source_type": null,
+        "status": "not_available",
+        "note_ja": "現地確認単価データ未登録。単価登録時に出典・年月・確認日を必須記録する。"
+      }
+    }
+  },
+  "base_unit_costs_jpy": {
+    "concrete": {
+      "ja": "コンクリート",
+      "en": "Concrete",
+      "unit": "m3",
+      "material": 22000,
+      "labor": 18000,
+      "equipment": 5000
+    },
+    "reinforcing_steel": {
+      "ja": "鉄筋",
+      "en": "Reinforcing Steel",
+      "unit": "t",
+      "material": 145000,
+      "labor": 90000,
+      "equipment": 10000
+    },
+    "structural_steel": {
+      "ja": "構造用鉄骨",
+      "en": "Structural Steel",
+      "unit": "t",
+      "material": 280000,
+      "labor": 145000,
+      "equipment": 35000
+    },
+    "dimension_lumber": {
+      "ja": "2×6・一般木材",
+      "en": "2×6 / General Lumber",
+      "unit": "m3",
+      "material": 125000,
+      "labor": 85000,
+      "equipment": 8000
+    },
+    "clt": {
+      "ja": "CLT・Mass Timber",
+      "en": "CLT / Mass Timber",
+      "unit": "m3",
+      "material": 210000,
+      "labor": 95000,
+      "equipment": 18000
+    },
+    "phenolic_foam": {
+      "ja": "フェノールフォーム",
+      "en": "Phenolic Foam",
+      "unit": "m3",
+      "material": 175000,
+      "labor": 10000,
+      "equipment": 2000
+    },
+    "xps": {
+      "ja": "XPS",
+      "en": "XPS",
+      "unit": "m3",
+      "material": 190000,
+      "labor": 35000,
+      "equipment": 4000
+    },
+    "glass": {
+      "ja": "ガラス・窓",
+      "en": "Glass / Windows",
+      "unit": "m2",
+      "material": 52000,
+      "labor": 23000,
+      "equipment": 3000
+    },
+    "gypsum_board": {
+      "ja": "石膏ボード",
+      "en": "Gypsum Board",
+      "unit": "m2",
+      "material": 2400,
+      "labor": 3300,
+      "equipment": 300
+    },
+    "roofing": {
+      "ja": "屋根・防水",
+      "en": "Roofing / Waterproofing",
+      "unit": "m2",
+      "material": 9000,
+      "labor": 7500,
+      "equipment": 1500
+    },
+    "doors": {
+      "ja": "ドア・建具",
+      "en": "Doors / Openings",
+      "unit": "m2",
+      "material": 68000,
+      "labor": 25000,
+      "equipment": 2000
+    },
+    "interior_finish": {
+      "ja": "内装最終仕上（下地・石膏ボード除外）",
+      "en": "Interior final finish only (substrate/gypsum excluded)",
+      "unit": "m2",
+      "material": 9000,
+      "labor": 7000,
+      "equipment": 500
+    },
+    "external_finish": {
+      "ja": "外装最終仕上（断熱・下地除外）",
+      "en": "Exterior final finish only (insulation/substrate excluded)",
+      "unit": "m2",
+      "material": 12000,
+      "labor": 9000,
+      "equipment": 1000
+    },
+    "formwork": {
+      "ja": "型枠工事",
+      "en": "Formwork",
+      "unit": "m2",
+      "material": 3200,
+      "labor": 4800,
+      "equipment": 700
+    },
+    "structural_plywood": {
+      "ja": "構造用合板12mm",
+      "en": "Structural plywood 12mm",
+      "unit": "m2",
+      "material": 4200,
+      "labor": 2600,
+      "equipment": 300
+    },
+    "external_finish_rc": {
+      "ja": "RC部外装最終仕上（断熱・下地除外）",
+      "en": "RC exterior final finish only (insulation/substrate excluded)",
+      "unit": "m2",
+      "material": 12000,
+      "labor": 9000,
+      "equipment": 1000
+    },
+    "external_finish_timber": {
+      "ja": "木造部外装最終仕上（断熱・構造用合板除外）",
+      "en": "Timber exterior final finish only (insulation/structural plywood excluded)",
+      "unit": "m2",
+      "material": 12000,
+      "labor": 9000,
+      "equipment": 1000
+    },
+    "excavation": {
+      "ja": "根切り・掘削",
+      "en": "Foundation Excavation",
+      "unit": "m3",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "PATCH 048で数量のみ算定。2026年実勢単価は未設定のため価格へ加算しない。"
+    },
+    "backfill": {
+      "ja": "埋戻し",
+      "en": "Foundation Backfill",
+      "unit": "m3",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "PATCH 048で数量のみ算定。2026年実勢単価は未設定のため価格へ加算しない。"
+    },
+    "imported_fill": {
+      "ja": "客土・購入土",
+      "en": "Imported Fill Soil",
+      "unit": "m3",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "現場内仮置場なし条件では必要埋戻し量を客土・購入土として搬入。土質・購入先・運搬距離に依存するため価格未設定。"
+    },
+    "soil_disposal": {
+      "ja": "残土処分",
+      "en": "Surplus Soil Disposal",
+      "unit": "m3",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "ほぐし土量換算。運搬距離・処分先条件で単価が大きく変わるため価格未設定。"
+    },
+    "blinding_concrete": {
+      "ja": "捨てコンクリート",
+      "en": "Blinding Concrete",
+      "unit": "m3",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "厚50mmの計画仮定。図面に明記がないため数量は確認対象、価格未設定。"
+    },
+    "ground_preparation": {
+      "ja": "基礎下地業・砕石",
+      "en": "Foundation Ground Preparation / Crushed Stone",
+      "unit": "m3",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "厚100mmの計画仮定。図面に明記がないため数量は確認対象、価格未設定。"
+    },
+    "phc_pile": {
+      "ja": "PHC杭（杭長）",
+      "en": "PHC Piles (installed length)",
+      "unit": "m",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量は図面・Module 1から取得。単価は地域・仕様確認後に登録。",
+      "scope_note_en": "Quantity comes from Module 1/drawings. Register a defensible regional/specification unit price before costing."
+    },
+    "shutter": {
+      "ja": "シャッター",
+      "en": "Shutters",
+      "unit": "m2",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量は図面・Module 1から取得。単価は地域・仕様確認後に登録。",
+      "scope_note_en": "Quantity comes from Module 1/drawings. Register a defensible regional/specification unit price before costing."
+    },
+    "louver": {
+      "ja": "ガラリ",
+      "en": "Louvers",
+      "unit": "m2",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量は図面・Module 1から取得。単価は地域・仕様確認後に登録。",
+      "scope_note_en": "Quantity comes from Module 1/drawings. Register a defensible regional/specification unit price before costing."
+    },
+    "roof_glass_wool": {
+      "ja": "屋根グラスウール",
+      "en": "Roof Glass Wool",
+      "unit": "m3",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量は図面・Module 1から取得。単価は地域・仕様確認後に登録。",
+      "scope_note_en": "Quantity comes from Module 1/drawings. Register a defensible regional/specification unit price before costing."
+    },
+    "tempered_glass": {
+      "ja": "強化ガラス",
+      "en": "Tempered Glass",
+      "unit": "m2",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量は図面・Module 1から取得。単価は地域・仕様確認後に登録。",
+      "scope_note_en": "Quantity comes from Module 1/drawings. Register a defensible regional/specification unit price before costing."
+    },
+    "oa_floor": {
+      "ja": "OAフロア",
+      "en": "Raised Access Floor",
+      "unit": "m2",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量は図面・Module 1から取得。単価は地域・仕様確認後に登録。",
+      "scope_note_en": "Quantity comes from Module 1/drawings. Register a defensible regional/specification unit price before costing."
+    },
+    "vapor_barrier": {
+      "ja": "防湿層",
+      "en": "Vapor Barrier",
+      "unit": "m2",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量は図面・Module 1から取得。単価は地域・仕様確認後に登録。",
+      "scope_note_en": "Quantity comes from Module 1/drawings. Register a defensible regional/specification unit price before costing."
+    },
+    "ceiling_lgs": {
+      "ja": "天井下地 LGS",
+      "en": "Ceiling LGS Substrate Framing",
+      "unit": "m2",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "Module 1の天井下地LGS適用面積を使用。最終内装仕上とは別の下地工種として地域単価を取得する。",
+      "scope_note_en": "Uses the Module 1 ceiling-LGS substrate area. Price as a substrate trade separate from the final interior-finish scope."
+    },
+    "ceiling_glass_wool": {
+      "ja": "天井グラスウール",
+      "en": "Ceiling Glass Wool",
+      "unit": "m3",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量はModule 1から取得。単価は仕様・地域確認後に登録。",
+      "scope_note_en": "Quantity comes from Module 1. Register a defensible specification/regional unit price before costing."
+    },
+    "ceiling_insulation_area": {
+      "ja": "天井断熱（面積基準）",
+      "en": "Ceiling Insulation (area basis)",
+      "unit": "m2",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量はModule 1から取得（天井面積×指定厚）。ceiling_glass_wool（m3基準）と同一層のため併用しない。単価は仕様・地域確認後に登録。",
+      "scope_note_en": "Quantity comes from Module 1 (ceiling area at the specified thickness). Mutually exclusive with ceiling_glass_wool, which measures the same layer by volume. Register a defensible specification/regional unit price before costing."
+    },
+    "parapet_coping": {
+      "ja": "笠木",
+      "en": "Parapet Coping",
+      "unit": "m",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量はModule 1/図面から取得（パラペット天端の延長）。断面見付幅が図示されない場合は延長のみで単価を登録する。",
+      "scope_note_en": "Quantity comes from Module 1/drawings (run length along the parapet). Where the coping girth is not dimensioned, register a rate on run length only."
+    },
+    "rainwater_gutter": {
+      "ja": "雨樋（軒樋・竪樋）",
+      "en": "Rainwater Gutter and Downpipe",
+      "unit": "m",
+      "material": 0,
+      "labor": 0,
+      "equipment": 0,
+      "pricing_status": "unit_price_required",
+      "scope_note_ja": "数量はModule 1/図面から取得（軒樋延長）。竪樋本数は同一スコープの補助証跡として扱い、二重計上しない。",
+      "scope_note_en": "Quantity comes from Module 1/drawings (eaves gutter run). Downpipe counts are supporting evidence for the same scope and are not added twice."
+    }
+  },
+  "equipment_packages": {
+    "hvac": {
+      "ja": "空調設備一式",
+      "en": "HVAC Package",
+      "default_cost_jpy": 5500000
+    },
+    "electrical": {
+      "ja": "電気設備一式",
+      "en": "Electrical Package",
+      "default_cost_jpy": 4200000
+    },
+    "plumbing": {
+      "ja": "給排水衛生設備一式",
+      "en": "Plumbing / Sanitary Package",
+      "default_cost_jpy": 4800000
+    },
+    "kitchen": {
+      "ja": "キッチン一式",
+      "en": "Kitchen Package",
+      "default_cost_jpy": 3000000
+    },
+    "bathroom": {
+      "ja": "ユニットバス等一式",
+      "en": "Bathroom Package",
+      "default_cost_jpy": 3600000
+    },
+    "other": {
+      "ja": "その他設備一式",
+      "en": "Other Equipment Package",
+      "default_cost_jpy": 0
+    }
+  },
+  "conditions": {
+    "site": {
+      "flat_clear": {
+        "ja": "平坦・障害物なし・十分な施工ヤード",
+        "en": "Level, unobstructed, adequate work area",
+        "factor": 1.0
+      },
+      "moderate": {
+        "ja": "一般的な市街地条件",
+        "en": "Typical urban conditions",
+        "factor": 1.08
+      },
+      "difficult": {
+        "ja": "狭小・高低差・障害物あり",
+        "en": "Restricted, sloping or obstructed site",
+        "factor": 1.2
+      }
+    },
+    "access": {
+      "good": {
+        "ja": "大型車搬入可能",
+        "en": "Good large-vehicle access",
+        "factor": 1.0
+      },
+      "restricted": {
+        "ja": "大型車搬入制限あり",
+        "en": "Large-vehicle access restricted",
+        "factor": 1.08
+      },
+      "manual": {
+        "ja": "小運搬・人力搬入が多い",
+        "en": "Frequent small/manual delivery",
+        "factor": 1.18
+      }
+    },
+    "work_time": {
+      "day": {
+        "ja": "昼間施工",
+        "en": "Daytime construction",
+        "factor": 1.0
+      },
+      "limited": {
+        "ja": "時間制限あり",
+        "en": "Restricted working hours",
+        "factor": 1.08
+      },
+      "night": {
+        "ja": "夜間・休日施工を含む",
+        "en": "Night / holiday construction",
+        "factor": 1.2
+      }
+    }
+  },
+  "rates": {
+    "overhead_percent": 12.0,
+    "contingency_percent": 5.0,
+    "design_supervision_percent": 8.0,
+    "tax_percent": 10.0
+  },
+  "schedule": {
+    "base_productivity_m2_per_month": 55.0,
+    "mobilization_months": 1.0,
+    "commissioning_months": 1.0
+  },
+  "common_2004_price_basis": {
+    "base_year": 2004,
+    "reference_region": "Japan / Nagoya",
+    "applies_to": [
+      "azras",
+      "wood_frame",
+      "rc_frame"
+    ],
+    "same_price_basis_for_all_methods": true,
+    "default_escalation_factor_2004_to_target": 1.6,
+    "common_market_calibration_factor": 0.5630354957160343,
+    "calibration_reference": {
+      "project": "高島2号新築工事",
+      "estimate_date": "2004-09-25",
+      "amount_jpy_ex_tax": 34500000,
+      "gross_floor_area_m2": 245.52,
+      "external_insulation_included": false
+    },
+    "verified_2004_reference_unit_prices": {
+      "ready_mix_concrete_jpy_per_m3": 8000,
+      "reinforcing_steel_material_jpy_per_t": 150000,
+      "formwork_foundation_jpy_per_m2": 2880,
+      "formwork_internal_jpy_per_m2": 3250,
+      "formwork_wall_jpy_per_m2": 3850
+    },
+    "policy_ja": "単価水準は3工法共通。AZRAS実績総額をAZRASだけへ直接置換しない。工法差は数量・歩掛り・工種構成で表現する。"
+  },
+  "insulation_unit_price_revision_patch039": {
+    "date": "2026-08-08",
+    "policy_ja": "断熱材数量はModule 1のm3数量を維持し、3工法共通単価のみを修正。AZRASだけの特別単価は使用しない。",
+    "phenolic_foam_base_rate_jpy_per_m3": {
+      "material": 175000,
+      "labor": 10000,
+      "equipment": 2000,
+      "total": 187000
+    },
+    "xps_base_rate_jpy_per_m3": {
+      "material": 190000,
+      "labor": 35000,
+      "equipment": 4000,
+      "total": 229000
+    },
+    "common_market_calibration_factor": 0.5630355,
+    "expected_effective_2026_rates_jpy_per_m3": {
+      "phenolic_foam": {
+        "material": 98531.21250000001,
+        "labor": 5630.3550000000005,
+        "equipment": 1126.0710000000001,
+        "total": 105287.6385
+      },
+      "xps": {
+        "material": 106976.74500000001,
+        "labor": 19706.2425,
+        "equipment": 2252.1420000000003,
+        "total": 128935.12950000001
+      }
+    },
+    "note_ja": "フェノールフォーム旧DB 360,000+90,000+10,000円/m3は過大だったため修正。XPSも高性能品を想定しつつ旧DB 230,000+70,000+8,000円/m3から調整した。"
+  },
+  "finish_scope_revision_patch040": {
+    "date": "2026-08-08",
+    "interior_finish_scope_ja": "クロス・塗装・床等の最終仕上相当。石膏ボード・構造用合板・断熱材は別工種として既に計上するため含めない。",
+    "external_finish_scope_ja": "外装の表面仕上・被覆相当。断熱材、構造用合板等の下地は別工種として既に計上するため含めない。",
+    "reason_ja": "旧『内装仕上』『外装仕上』単価は範囲が広く、別途計上済みの石膏ボード・断熱材・構造用合板との潜在的な二重計上があったため、最終仕上のみへ限定。"
+  },
+  "rc_foundation_earthwork_patch048": {
+    "status": "quantity_only_no_market_price",
+    "applies_to": "matched current RC frame comparison plan",
+    "pricing_policy_ja": "単価を推測して総額を合わせない。まず数量のみ積算し、外部実勢単価またはユーザー確認単価が得られた後に価格へ反映する。",
+    "default_planning_assumptions": {
+      "working_clearance_each_side_mm": 300,
+      "blinding_concrete_thickness_mm": 50,
+      "crushed_stone_thickness_mm": 100,
+      "blinding_projection_each_side_mm": 100,
+      "soil_bulking_factor": 1.2
+    }
+  },
+  "rc_foundation_unit_price_basis_patch049": {
+    "status": "public_methodology_plus_user_confirmed_current_rate",
+    "public_sources": [
+      {
+        "source": "MLIT Public Building Works Standard Unit Price Estimation Standard, 2026 revision",
+        "url": "https://www.mlit.go.jp/gobuild/content/001733130.pdf",
+        "supported_points_ja": [
+          "土工の数量は地山数量を基本とする。",
+          "根切りは積込みまでを含む。",
+          "購入土を用いる場合は材料所要量20%割増を標準とする。"
+        ]
+      },
+      {
+        "source": "MLIT Public Building Works Standard Unit Price Estimation Standard, 2026 revision (mechanical section table M1-1-70)",
+        "url": "https://www.mlit.go.jp/gobuild/content/001733132.pdf",
+        "supported_points_ja": [
+          "根切り・埋戻し・砂利地業の標準歩掛が公開されている。",
+          "0.28m3バックホウ根切り: バックホウ0.025日/m3 + 普通作業員0.03人/m3。",
+          "0.28m3バックホウ埋戻し: バックホウ0.020日/m3 + タンパ0.031日/m3 + 普通作業員0.07人/m3。",
+          "砂利地業: 砂利1.1m3/m3 + 普通作業員0.2人/m3。"
+        ]
+      },
+      {
+        "source": "Aichi Prefecture Building Cost Estimation / Unit Price page, 2026",
+        "url": "https://www.pref.aichi.jp/soshiki/kensetsu-kikaku/kenchikusekisan.html",
+        "supported_points_ja": [
+          "鋼材・生コン等の主要資材単価は毎月改定。",
+          "市場単価・標準材料単価は原則年4回改定。",
+          "物価資料掲載単価は非公表。"
+        ]
+      }
+    ],
+    "rate_policy_ja": {
+      "excavation": "公開歩掛は採用可能。ただし2026愛知県の労務・機械日額を公開資料だけでは確定できないため、完成単価はユーザー確認値を入力。",
+      "backfill": "公開歩掛は採用可能。ただし2026愛知県の労務・機械日額を公開資料だけでは確定できないため、完成単価はユーザー確認値を入力。",
+      "soil_disposal": "運搬距離・処分先・受入費で大きく変動するため、固定市場単価を設定せずユーザー入力。",
+      "blinding_concrete": "生コン等の主要資材単価が非公表のため、完成単価はユーザー確認値を入力。",
+      "ground_preparation": "公開歩掛は採用可能。ただし砕石材料単価・労務単価が非公表のため、完成単価はユーザー確認値を入力。"
+    },
+    "public_standard_productivity": {
+      "excavation_backhoe_0_28m3": {
+        "backhoe_day_per_m3": 0.025,
+        "ordinary_worker_person_day_per_m3": 0.03
+      },
+      "backfill_backhoe_0_28m3": {
+        "backhoe_day_per_m3": 0.02,
+        "tamper_day_per_m3": 0.031,
+        "ordinary_worker_person_day_per_m3": 0.07
+      },
+      "gravel_groundwork": {
+        "gravel_input_m3_per_finished_m3": 1.1,
+        "ordinary_worker_person_day_per_m3": 0.2
+      }
+    },
+    "patch053_notes_ja": [
+      "現場内仮置場なし条件では、根切土全量を場外搬出・処分する。",
+      "必要埋戻し量は客土・購入土として別計上する。",
+      "良好地盤として土間コン全面下の砕石厚100mmを含め、基礎下地業との重複を控除する。"
+    ]
+  },
+  "location_pricing_policy_patch056": {
+    "hierarchy": [
+      "1. local verified unit_costs for selected country/city when present",
+      "2. regional index fallback from common base when local unit_cost is absent",
+      "3. User Defined / unit-price-required when location profile is unavailable"
+    ],
+    "foreign_currency_policy": "No implicit currency relabeling. Foreign fallback requires a user-confirmed JPY-per-local-currency FX rate unless local unit costs are directly stored in local currency.",
+    "auto_location_source": "project.common country/city/address and project.common.location",
+    "note_ja": "PATCH 056では登録地からModule 5地域プロファイルを自動選択する。海外実単価をインターネットから自動取得する機能ではない。現地確認単価がDBにあれば最優先し、無ければ地域指数方式を明示して使用する。"
+  },
+  "regional_unit_cost_data_policy_patch058": {
+    "schema_version": "1.0",
+    "design": "weather-data-like regional/versioned cost dataset",
+    "required_metadata": [
+      "region_key",
+      "data_date",
+      "last_checked_date",
+      "source_name",
+      "source_reference",
+      "source_type",
+      "status"
+    ],
+    "status_values": [
+      "verified",
+      "estimated",
+      "outdated",
+      "update_required",
+      "not_available"
+    ],
+    "freshness_rules_months": {
+      "verified_to_outdated": 12,
+      "outdated_to_update_required": 24
+    },
+    "priority": [
+      "verified local unit cost for selected region",
+      "estimated local/regional unit cost with explicit provenance",
+      "regional-index fallback with explicit provenance",
+      "unit_price_required / do not silently substitute another country's price"
+    ],
+    "note_ja": "気象データと同様に、地域・時点・出典を分離管理する。単価値の変更はデータ更新で行い、計算エンジン本体の変更を原則不要とする。"
+  },
+  "regional_cost_external_dataset_policy_patch059": {
+    "design": "regional price data stored outside the calculation engine, like weather files",
+    "load_order": [
+      "external regional dataset",
+      "embedded location metadata fallback"
+    ],
+    "future_update_rule": "replace/update regional JSON data without changing calculation code when source prices change",
+    "note_ja": "気象ファイルと同じ考え方で、地域単価データを外部JSONとして分離。"
+  },
+  "japan_external_regional_cost_dataset_patch060": {
+    "design": "Tokyo, Nagoya and Sapporo moved to external versioned regional datasets",
+    "data_date": "2026-07-01",
+    "last_checked_date": "2026-08-09",
+    "official_sources": [
+      "https://www.mlit.go.jp/report/press/tochi_fudousan_kensetsugyo14_hh_000001_00337.html",
+      "https://www.mlit.go.jp/toukeijouhou/chojou/mon.htm"
+    ],
+    "note_ja": "日本3地域もニューヨーク・ロンドンと同じ外部JSON方式へ統一。出典更新時は地域JSONを更新し、計算エンジン本体を変更しない。"
+  },
+  "regional_cost_dataset_autoselection_patch061": {
+    "design": "weather-file-like version discovery",
+    "selection": "scan matching versioned regional JSON files and choose the newest valid data_date",
+    "fallback": "fixed dataset_file when no pattern match exists",
+    "future_update": "drop a newer dated regional JSON into data/regional_cost; calculation code need not change",
+    "note_ja": "気象データと同様に、地域単価ファイルを年次・月次で追加し、最新data_dateのファイルを自動採用する。"
+  },
+  "global_city_initial_cost_profiles_patch073": {
+    "date": "2026-08-21",
+    "status": "planning_initial_values",
+    "coverage": [
+      "Japan / Tokyo",
+      "Japan / Sapporo",
+      "United States / New York",
+      "United States / Los Angeles",
+      "United Kingdom / London",
+      "France / Paris",
+      "United Arab Emirates / Dubai",
+      "Singapore / Singapore",
+      "Thailand / Bangkok",
+      "India / Delhi",
+      "Australia / Sydney",
+      "Germany / Berlin",
+      "Norway / Oslo",
+      "Canada / Toronto",
+      "Mexico / Mexico City"
+    ],
+    "policy_ja": "登録国の代表都市をModule 5地域単価プロファイルへ接続。都市選択時に材料・労務・施工能率・通貨・FX初期値を自動設定し、全工種の基準単価へ地域補正を適用する。現地確認済み工事項目単価がある場合はそちらを優先する。",
+    "accuracy_note_ja": "都市別指数は国際建設費ベンチマークから作る企画段階の初期値であり、現地見積そのものではない。概算比較用途とし、実施設計・発注時は現地見積へ更新する。",
+    "usd_jpy_snapshot": {
+      "date": "2026-08-21",
+      "jpy_per_usd": 159.061,
+      "source": "live exchange-rate lookup"
+    },
+    "benchmark_method": "2026 values where directly available; otherwise same-source historical city/Tokyo ratio normalized to 2026 Tokyo or documented regional planning benchmark."
+  },
+  "foreign_local_currency_pricing_policy_patch463": {
+    "date": "2026-09-02",
+    "status": "active",
+    "construction_cost_rule": "Foreign construction unit prices and equipment-package prices must originate from the selected country/region market and be expressed in that local currency.",
+    "prohibited": [
+      "JPY base unit cost divided by FX to manufacture a foreign trade unit price",
+      "JPY equipment-package default divided by FX to manufacture a foreign package price",
+      "Aichi/Japan market-calibration factor applied to a foreign local-currency package price"
+    ],
+    "missing_price_behavior": "Do not fabricate or zero-fill a foreign price. Require local unit-price data or explicit local-currency user input.",
+    "fx_scope": "FX may be used outside construction-price formation for explicit cross-currency comparison/reporting, but not to create the underlying country construction price.",
+    "note_ja": "海外工事費は各国・地域の市場を基準に現地通貨で算定する。日本円基準単価や日本円設備パッケージ価格を為替換算して海外工事単価を作らない。"
+  }
+}

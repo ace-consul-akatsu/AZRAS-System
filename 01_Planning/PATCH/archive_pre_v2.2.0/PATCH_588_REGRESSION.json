@@ -1,0 +1,17 @@
+{
+  "version": "1.0.588",
+  "tests": {
+    "module1_compile": true,
+    "legacy_provider_entries": 7,
+    "canonical_provider_entries": 4,
+    "canonical_ids": [
+      "chatgpt",
+      "claude",
+      "gemini",
+      "meta"
+    ],
+    "same_provider_latest_wins": true,
+    "old_same_provider_history_retained": false,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

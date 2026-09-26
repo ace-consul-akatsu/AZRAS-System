@@ -1,0 +1,13 @@
+{
+  "version": "1.1.20",
+  "tests": {
+    "main_py_compiles": true,
+    "friendly_exception_text_helper_added": true,
+    "friendly_exception_text_passes_valueerror_through_unchanged": true,
+    "no_raw_showerror_str_e_remaining_in_compare_tree": true,
+    "startup_language_is_now_en_was_ja": true,
+    "current_ui_language_global_default_is_en": true,
+    "change_language_fallback_is_en": true,
+    "text_en_dictionary_unchanged": true
+  }
+}

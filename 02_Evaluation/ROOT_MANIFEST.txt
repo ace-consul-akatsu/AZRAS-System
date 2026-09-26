@@ -1,0 +1,6 @@
+AZRAS Evaluation root metadata
+Version 2.2.0 (patch number: see VERSION.json)
+Schema: 3.0
+Active Evaluation dependency modules: 1-7 only
+Retired Module 8: inactive
+Future Module 9: inactive

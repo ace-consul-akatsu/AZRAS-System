@@ -1,0 +1,34 @@
+{
+  "patch": 535,
+  "version": "1.0.535",
+  "samples": {
+    "2x6": {
+      "exterior_wall_lumber_m3": 2.767864,
+      "internal_wall_lumber_m3": 1.051524,
+      "upper_floor_lumber_m3": 2.405212,
+      "roof_lumber_m3": 3.191305,
+      "dimension_lumber_total_m3": 9.415904,
+      "basis": "2x6 drawing geometry only; no AZRAS quantity reference"
+    },
+    "azras": {
+      "timber_exterior_wall_lumber_m3": 1.323075,
+      "internal_timber_partition_lumber_m3": 0.937097,
+      "upper_floor_lumber_m3": 2.405212,
+      "roof_lumber_m3": 3.191305,
+      "dimension_lumber_total_m3": 7.856688,
+      "basis": "AZRAS drawing geometry only; RC exterior/party walls excluded from timber scope"
+    },
+    "rc_frame": {
+      "internal_partition_lgs_steel_t": 0.30557,
+      "basis": "AI/drawing review explicitly identifies 105mm LGS; geometry from current PDF; gauge/section detail yellow provisional"
+    }
+  },
+  "invariants": [
+    "2x6 and AZRAS structural timber are independently calculated by component",
+    "2x6 timber includes upper-floor and roof framing",
+    "AZRAS timber does not use whole-GFA 0.060 m3/m2 aggregate placeholder",
+    "RC LGS is added only when AI/drawing review explicitly identifies LGS",
+    "component timber rows are audit-only; one total owns downstream quantity",
+    "RC LGS total is yellow and downstream eligible"
+  ]
+}

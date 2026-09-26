@@ -1,0 +1,40 @@
+{
+  "patch": "PATCH_010",
+  "product": "02 AZRAS Evaluation",
+  "version": "2.2.0",
+  "date_utc": "260924",
+  "defects": [
+    "NOTICE/FINAL_RELEASE_STATUS 1.0.215, ROOT_MANIFEST/build guide 1.0.212 vs VERSION.json 2.2.0",
+    "version_info_AZRAS_Evaluation.txt not a VSVersionInfo expression; PyInstaller build failed",
+    "VERSION.json patch stored as text",
+    "LICENSE.txt was a custom permission text while the repository is MIT; now MIT (ACE Comprehensive Consulting Co., Ltd.)",
+    "data/project_schema_v2_0.json fixed schema_version to 2.0; current saves (3.0) all failed it; added project_schema_v3_0.json"
+  ],
+  "contract_verification": {
+    "source": "calculate_investment market_rent, preference 6.5",
+    "summary": {
+      "target_gross_yield_percent": null,
+      "stored_target_gross_yield_percent": 6.5,
+      "target_gross_yield_active": false
+    },
+    "settings": {
+      "target_gross_yield_percent": 6.5,
+      "target_gross_yield_active": false
+    },
+    "consumer": "03 Compare PATCH_007 extractor/premise_book PASS"
+  },
+  "results": {
+    "dev_checks_total": 17,
+    "dev_checks_pass": 17,
+    "full_self_check": "PASS",
+    "gui_startup_smoke": "PASS",
+    "pyinstaller_version_info_parse_and_toRaw": "PASS (2,2,0,10)",
+    "pyflakes_warnings_before_after": "26 / 26 (0 undefined names)",
+    "license_consistency_self_check": "PASS",
+    "project_schema_consistency_self_check": "PASS"
+  },
+  "not_verified_here": "actual Windows PyInstaller build",
+  "new_self_checks": [
+    "dev_checks/project_schema_consistency_self_check.py"
+  ]
+}

@@ -1,0 +1,33 @@
+AZRAS Evaluation — Distribution Layout Audit
+PATCH 142
+
+PATCH 141 cleanup layout was simulated and verified.
+
+Required runtime/distribution items remain present:
+- main.py
+- VERSION.json
+- README_JA.txt
+- LICENSE.txt / NOTICE.txt
+- AZRAS_Evaluation.spec
+- version_info_AZRAS_Evaluation.txt
+- run_AZRAS_Evaluation_without_build.bat
+- build_AZRAS_Evaluation.bat
+- SELF_CHECK.bat / self_check.py
+- core/
+- data/
+- lang/
+- module3/ through module7/
+- services/
+- ui/
+
+Compatibility item retained:
+- module1/
+  It is not part of the Evaluation main startup path, but is retained until
+  ownership with 01/02 and cross-product compatibility is finally closed.
+
+Validation result:
+- Required files/folders missing: 0
+- Python syntax errors: 0
+- SELF CHECK PASSED
+
+No calculation logic, Project JSON structure, or connection specification changed.

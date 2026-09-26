@@ -1,0 +1,183 @@
+{
+  "version": "9.2",
+  "notice_ja": "耐用年数・点検周期・更新周期は企画比較用の初期値です。実際の材料、環境、維持管理履歴、法令、メーカー資料および専門家判断で修正してください。",
+  "notice_en": "Service lives, inspection cycles and renewal cycles are planning-comparison defaults. Revise them using actual materials, exposure, maintenance history, regulations, manufacturer data and professional judgment.",
+  "components": {
+    "structure_rc_core": {
+      "ja": "RCスケルトン・コア",
+      "en": "RC Skeleton / Core",
+      "category": "skeleton",
+      "inspection_years": 10,
+      "repair_years": 30,
+      "renewal_years": 200,
+      "reusable_fraction": 0.9,
+      "recyclable_fraction": 0.95,
+      "default_action": "retain_repair"
+    },
+    "structure_rc_frame": {
+      "ja": "RC柱梁スケルトン",
+      "en": "RC Column-Beam Skeleton",
+      "category": "skeleton",
+      "inspection_years": 10,
+      "repair_years": 30,
+      "renewal_years": 100,
+      "reusable_fraction": 0.2,
+      "recyclable_fraction": 0.95,
+      "default_action": "repair_then_rebuild"
+    },
+    "structure_rc_wall": {
+      "ja": "RC壁式スケルトン",
+      "en": "RC Wall-structure Skeleton",
+      "category": "skeleton",
+      "inspection_years": 10,
+      "repair_years": 30,
+      "renewal_years": 100,
+      "reusable_fraction": 0.15,
+      "recyclable_fraction": 0.95,
+      "default_action": "repair_then_rebuild"
+    },
+    "structure_steel": {
+      "ja": "鉄骨スケルトン",
+      "en": "Steel Skeleton",
+      "category": "skeleton",
+      "inspection_years": 10,
+      "repair_years": 25,
+      "renewal_years": 75,
+      "reusable_fraction": 0.35,
+      "recyclable_fraction": 0.98,
+      "default_action": "repair_then_rebuild"
+    },
+    "structure_timber": {
+      "ja": "木造スケルトン",
+      "en": "Timber Skeleton",
+      "category": "skeleton",
+      "inspection_years": 5,
+      "repair_years": 20,
+      "renewal_years": 50,
+      "reusable_fraction": 0.15,
+      "recyclable_fraction": 0.8,
+      "default_action": "repair_then_rebuild"
+    },
+    "structure_clt": {
+      "ja": "CLT・Mass Timberスケルトン",
+      "en": "CLT / Mass Timber Skeleton",
+      "category": "skeleton",
+      "inspection_years": 5,
+      "repair_years": 25,
+      "renewal_years": 75,
+      "reusable_fraction": 0.35,
+      "recyclable_fraction": 0.85,
+      "default_action": "repair_then_rebuild"
+    },
+    "infill_layout": {
+      "ja": "間取り・間仕切り・内装インフィル",
+      "en": "Layout, Partitions and Interior Infill",
+      "category": "infill",
+      "inspection_years": 10,
+      "repair_years": 15,
+      "renewal_years": 30,
+      "reusable_fraction": 0.1,
+      "recyclable_fraction": 0.55,
+      "default_action": "replace_infill"
+    },
+    "infill_exterior": {
+      "ja": "外壁・外装インフィル",
+      "en": "Exterior Wall / Cladding Infill",
+      "category": "infill",
+      "inspection_years": 5,
+      "repair_years": 15,
+      "renewal_years": 40,
+      "reusable_fraction": 0.1,
+      "recyclable_fraction": 0.7,
+      "default_action": "replace_infill"
+    },
+    "insulation": {
+      "ja": "断熱・気密層",
+      "en": "Insulation / Airtightness Layer",
+      "category": "infill",
+      "inspection_years": 10,
+      "repair_years": 20,
+      "renewal_years": 50,
+      "reusable_fraction": 0.05,
+      "recyclable_fraction": 0.3,
+      "default_action": "replace_infill"
+    },
+    "windows": {
+      "ja": "窓・ガラス・建具",
+      "en": "Windows, Glazing and Openings",
+      "category": "infill",
+      "inspection_years": 5,
+      "repair_years": 15,
+      "renewal_years": 35,
+      "reusable_fraction": 0.1,
+      "recyclable_fraction": 0.8,
+      "default_action": "replace_infill"
+    },
+    "roof": {
+      "ja": "屋根・防水",
+      "en": "Roofing / Waterproofing",
+      "category": "infill",
+      "inspection_years": 5,
+      "repair_years": 12,
+      "renewal_years": 30,
+      "reusable_fraction": 0.05,
+      "recyclable_fraction": 0.65,
+      "default_action": "replace_infill"
+    },
+    "equipment_lighting": {
+      "ja": "照明設備",
+      "en": "Lighting Equipment",
+      "category": "equipment",
+      "inspection_years": 5,
+      "repair_years": 10,
+      "renewal_years": 15,
+      "reusable_fraction": 0.05,
+      "recyclable_fraction": 0.7,
+      "default_action": "replace_equipment"
+    },
+    "equipment_outlets": {
+      "ja": "コンセント・配線設備",
+      "en": "Plug Loads / Wiring",
+      "category": "equipment",
+      "inspection_years": 5,
+      "repair_years": 15,
+      "renewal_years": 30,
+      "reusable_fraction": 0.05,
+      "recyclable_fraction": 0.75,
+      "default_action": "replace_equipment"
+    },
+    "equipment_hvac": {
+      "ja": "空調設備",
+      "en": "HVAC Equipment",
+      "category": "equipment",
+      "inspection_years": 3,
+      "repair_years": 8,
+      "renewal_years": 15,
+      "reusable_fraction": 0.03,
+      "recyclable_fraction": 0.8,
+      "default_action": "replace_equipment"
+    },
+    "equipment_ventilation": {
+      "ja": "換気設備",
+      "en": "Ventilation Equipment",
+      "category": "equipment",
+      "inspection_years": 3,
+      "repair_years": 10,
+      "renewal_years": 20,
+      "reusable_fraction": 0.03,
+      "recyclable_fraction": 0.75,
+      "default_action": "replace_equipment"
+    },
+    "equipment_refrigerator": {
+      "ja": "冷蔵庫",
+      "en": "Refrigerator",
+      "category": "equipment",
+      "inspection_years": 5,
+      "repair_years": 8,
+      "renewal_years": 12,
+      "reusable_fraction": 0.03,
+      "recyclable_fraction": 0.8,
+      "default_action": "replace_equipment"
+    }
+  }
+}

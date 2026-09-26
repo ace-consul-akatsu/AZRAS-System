@@ -1,0 +1,76 @@
+{
+  "source_drawing": "高島伏0.pdf",
+  "status": "構造図に基づく理論数量（確認・置換可能）",
+  "calculation_basis": {
+    "wall_count": 4,
+    "wall_length_each_m": 9.5,
+    "wall_height_m": 6.0,
+    "W30_length_each_m": 4.75,
+    "W30A_length_each_m": 4.75,
+    "foundation_plan_m": [
+      12.9,
+      9.5
+    ],
+    "foundation_thickness_m": 0.5,
+    "unit_mass_kg_per_m": {
+      "D10": 0.56,
+      "D13": 0.995,
+      "D16": 1.56
+    }
+  },
+  "drawing_reinforcement_read": {
+    "W30_vertical": "D16 @160 W",
+    "W30A_vertical_above_GL_plus_2000": "D16 @160 W",
+    "W30A_vertical_below_GL_plus_2000": "D16 @80 W",
+    "wall_horizontal": "D10 @100 W",
+    "wall_sub_hoop_horizontal_spacing": 320,
+    "wall_end_reinforcement": "3-D16",
+    "foundation_X_short_direction": "D13 @160 W",
+    "foundation_Y_long_direction": "D13 @190 W",
+    "foundation_sub_stirrup_Y_spacing": 320
+  },
+  "takeoff_rows": [
+    {
+      "part": "W30・W30A壁 縦筋＋W30A下部増し筋＋壁端3-D16",
+      "bar": "D16",
+      "length_m": 3504.0,
+      "mass_t": 5.46624
+    },
+    {
+      "part": "壁 横筋（両面）",
+      "bar": "D10",
+      "length_m": 4636.0,
+      "mass_t": 2.5961600000000002
+    },
+    {
+      "part": "壁 サブフープ",
+      "bar": "D10",
+      "count": 7320,
+      "assumed_length_each_m": 0.68,
+      "length_m": 4977.6,
+      "mass_t": 2.7874560000000006
+    },
+    {
+      "part": "基礎底盤 X・Y方向 複配筋",
+      "bar": "D13",
+      "length_m": 2854.8,
+      "mass_t": 2.840526
+    },
+    {
+      "part": "基礎底盤 サブスタラップ",
+      "bar": "D13",
+      "count": 2430,
+      "assumed_length_each_m": 1.1,
+      "length_m": 2673.0,
+      "mass_t": 2.6596349999999997
+    }
+  ],
+  "net_theoretical_rebar_t": 16.350017,
+  "procurement_reference_with_5pct_t": 17.167517850000003,
+  "limitations": [
+    "伏図・軸組図・配筋表から算出した理論数量であり、加工帳による最終数量ではありません。",
+    "定着長、重ね継手、フック、かぶり、切断ロスは詳細加工図で再確認が必要です。",
+    "壁サブフープ1本0.68m、基礎サブスタラップ1本1.10mを仮定しています。",
+    "開口部・局部補強・施工上の増減は、鉄筋加工帳または実績数量に置き換えられます。"
+  ]
+}

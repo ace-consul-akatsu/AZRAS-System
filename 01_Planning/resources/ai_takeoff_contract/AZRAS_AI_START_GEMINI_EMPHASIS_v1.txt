@@ -1,0 +1,97 @@
+AZRAS AI START — EXECUTE THIS TASK NOW
+(Gemini-emphasis edition — read this entire file before doing anything else)
+
+The attached drawing files, request ZIP and this START TXT are one complete
+AZRAS AI takeoff task. This is not a summarization or description task. It is
+a quantity-takeoff computation task with a fixed, machine-validated output
+contract. Partial compliance is treated as a FAILED response by the AZRAS
+import pipeline, not a partial success.
+
+STOP AND READ FIRST — three failure modes seen before from this exact task,
+specifically from Gemini responses, that you must actively avoid:
+1. Returning a short, simplified summary of the drawings (titles, specs,
+   general descriptions) INSTEAD OF a full takeoff_items array with computed
+   quantities. A response with fewer than the mandatory number of
+   takeoff_items rows, or with local_id values you invented yourself instead
+   of copying them from the request package's PRE_TAKEOFF list, is INVALID
+   and will be rejected on import.
+2. Using your own simplified JSON shape (e.g. flat item_name/spec/quantity
+   fields) instead of the EXACT schema given in
+   AZRAS_AI_TAKEOFF_RESPONSE_TEMPLATE_v1.0.json inside the request ZIP. Copy
+   that template's field names exactly. Do not rename, drop, or reorder any
+   required top-level key.
+3. Guessing round or approximate quantities (e.g. a window count instead of
+   a measured area in m2, or a wall area rounded to a convenient number)
+   instead of deriving them from the actual dimensions, labels, and legends
+   printed on the drawing pages. If you cannot derive an exact value from the
+   drawing, mark that item's evidence_status as "estimated" or "unresolved"
+   with your reasoning — do not silently substitute a rounder, easier number.
+
+REQUIRED ACTION
+1. Open and obey the attached request package: {REQUEST_PACKAGE_ZIP_NAME}
+2. Read its AZRAS AI TAKEOFF REQUEST and execute it immediately.
+3. Independently and visually review EVERY attached drawing PDF/ZIP page —
+   not just the text you can extract, but the actual drawn geometry,
+   dimension lines, legends, and symbols. Many required quantities (wall
+   areas, window/door areas, opening counts) can only be obtained by reading
+   the drawn drawing, not by reading extracted text alone.
+4. Do NOT summarize the drawings. Do NOT ask what to do next. Do NOT return
+   a shortened or "preview" answer and offer to continue if asked.
+5. Return the final AZRAS_AI_TAKEOFF JSON required by the package, with
+   every field the response template requires, fully populated.
+
+HARD AZRAS OUTPUT CONTRACT (repeated here because partial compliance is the
+single most common failure mode — read every line)
+- Root schema MUST be exactly AZRAS_AI_TAKEOFF.
+- The response JSON's top-level keys MUST be exactly: schema, schema_version,
+  canonical_language, canonical_schema_version, project, required_filename,
+  analysis, building_profile, takeoff_items. No other top-level keys. No
+  missing top-level keys.
+- Do NOT wrap the entire response inside an outer key literally named
+  "AZRAS_AI_TAKEOFF" or any other wrapper object. schema is a STRING VALUE
+  ("AZRAS_AI_TAKEOFF"), not a JSON object name.
+- The response MUST include a top-level "takeoff_items" array. This is not
+  optional: it must contain exactly one row for every mandatory PRE_TAKEOFF
+  local_id required by the request (see the request ZIP for the exact list
+  and per-item schema). A response with no "takeoff_items" array, with fewer
+  rows than the mandatory local_id count, or with drawing-title/spec
+  information only and no quantities, is INVALID.
+- Each takeoff_items row MUST use the exact field names shown in
+  AZRAS_AI_TAKEOFF_RESPONSE_TEMPLATE_v1.0.json — not a simplified or
+  renamed subset. If the template shows fields such as
+  calculation_ledger, interpretation_basis, drawing_proof, evidence_status,
+  and confidence, your rows must include them, populated with your actual
+  reasoning, not left empty or omitted.
+- Return every mandatory PRE_TAKEOFF local_id required by the request
+  exactly once. Do not invent new local_id values for mandatory items — copy
+  them from the request package.
+- If your interface supports file creation, return exactly one downloadable
+  .json file. Otherwise return exactly one raw JSON object and no prose,
+  and no markdown code fences around it.
+
+AI IDENTITY + UTC FILENAME CONTRACT
+- Identify YOURSELF from your own runtime/service identity: you are Gemini.
+  Do not identify as a different provider.
+- Canonical provider tokens: ChatGPT=chatgpt, Claude=claude, Gemini=gemini,
+  Meta AI=meta, Grok=grok, Copilot=copilot, Perplexity=perplexity.
+- analysis.ai_reviewer MUST be exactly "gemini".
+- required_filename MUST be:
+  YYMMDD_HHMM_AZRAS_AI_Takeoff_{PROJECT_NAME}_gemini.json
+- YYMMDD_HHMM MUST be the actual response completion minute in UTC; seconds
+  are not used.
+
+BEFORE YOU RESPOND — self-check this exact list against your own draft
+answer, and fix anything that fails, before sending it:
+[ ] Does my JSON have exactly these 8 top-level keys, no more, no fewer?
+[ ] Is "schema" the string "AZRAS_AI_TAKEOFF", not an object wrapper?
+[ ] Does takeoff_items contain one row per mandatory local_id from the
+    request package, using those exact local_id values?
+[ ] Does every row use the response template's exact field names?
+[ ] Did I actually look at the drawing pages (dimensions, legends, symbols),
+    not just summarize what the drawing is about?
+[ ] Is analysis.ai_reviewer exactly "gemini"?
+[ ] Does required_filename match the YYMMDD_HHMM_AZRAS_AI_Takeoff_{PROJECT_NAME}_gemini.json
+    pattern with the actual UTC completion minute?
+
+The task is incomplete until the machine-readable AZRAS_AI_TAKEOFF JSON is
+produced and passes every item on the checklist above.

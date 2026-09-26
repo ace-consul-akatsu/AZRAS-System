@@ -1,0 +1,23 @@
+AZRAS Evaluation — EXE Build Dependency Audit
+PATCH 137
+
+PyInstaller spec audit:
+- main.py is the Analysis entry point.
+- lang/, data/, and VERSION.json are explicitly bundled.
+- No dynamic importlib/__import__ usage was found in the active source tree.
+- AZRAS_Evaluation.spec contained hiddenimports=['PIL'].
+- No Python source in this package imports PIL.
+
+PATCH 137:
+- Removed obsolete PIL hidden import from AZRAS_Evaluation.spec.
+
+Reason:
+A hidden import should only be retained when PyInstaller cannot discover a real
+runtime dependency. Keeping an unused PIL hidden import unnecessarily adds a
+build dependency and can cause build failure on machines without Pillow.
+
+Other optional libraries used by non-current/analysis services are not changed
+in this patch. Their packaging requirements will be handled only if their
+runtime path is confirmed for this product.
+
+No calculation, Project JSON, or module connection logic changed.

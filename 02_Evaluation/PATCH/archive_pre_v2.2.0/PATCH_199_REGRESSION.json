@@ -1,0 +1,18 @@
+{
+  "patch": 199,
+  "policy": {
+    "confirmed": "include",
+    "assumed_yellow": "include",
+    "unknown_red": "exclude",
+    "spec_only": "exclude",
+    "audit_only": "exclude"
+  },
+  "warnings": [
+    "module4_co2",
+    "module5_cost",
+    "module6_business"
+  ],
+  "notes": [
+    "red rows remain human-input items; no automatic invented quantity"
+  ]
+}

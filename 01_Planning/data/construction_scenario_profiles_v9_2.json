@@ -1,0 +1,95 @@
+{
+  "version": "9.2",
+  "profiles": {
+    "AZRAS": {
+      "ja": "AZRAS",
+      "en": "AZRAS",
+      "skeleton_component": "structure_rc_core",
+      "skeleton_service_life_years": 200,
+      "full_rebuild_years": [],
+      "skeleton_infill_strategy": "retain_skeleton_replace_infill",
+      "description_ja": "RCコアを長期利用し、木造・内装・設備インフィルを段階更新する。",
+      "description_en": "Retain the long-life RC core and renew timber, interior and equipment infill in stages."
+    },
+    "2x6 Timber": {
+      "ja": "2×6木造",
+      "en": "2×6 Timber",
+      "skeleton_component": "structure_timber",
+      "skeleton_service_life_years": 50,
+      "full_rebuild_years": [
+        50,
+        100,
+        150,
+        200
+      ],
+      "skeleton_infill_strategy": "full_rebuild",
+      "description_ja": "同じ用途・規模で、間取りを更新して全面建替えする。",
+      "description_en": "Rebuild fully at the same use and scale, with an updated layout."
+    },
+    "RC Frame": {
+      "ja": "RCラーメン",
+      "en": "RC Frame",
+      "skeleton_component": "structure_rc_frame",
+      "skeleton_service_life_years": 100,
+      "full_rebuild_years": [
+        100,
+        200
+      ],
+      "skeleton_infill_strategy": "repair_then_full_rebuild",
+      "description_ja": "RC柱梁を修繕し、設定年に同じ用途・規模で全面建替えする。",
+      "description_en": "Repair the RC frame and fully rebuild at the specified years with the same use and scale."
+    },
+    "RC Wall": {
+      "ja": "RC壁式",
+      "en": "RC Wall Structure",
+      "skeleton_component": "structure_rc_wall",
+      "skeleton_service_life_years": 100,
+      "full_rebuild_years": [
+        100,
+        200
+      ],
+      "skeleton_infill_strategy": "repair_then_full_rebuild",
+      "description_ja": "RC壁式躯体を修繕し、設定年に同じ用途・規模で全面建替えする。",
+      "description_en": "Repair the RC wall structure and fully rebuild at the specified years."
+    },
+    "Steel Frame": {
+      "ja": "鉄骨造",
+      "en": "Steel Frame",
+      "skeleton_component": "structure_steel",
+      "skeleton_service_life_years": 75,
+      "full_rebuild_years": [
+        75,
+        150
+      ],
+      "skeleton_infill_strategy": "repair_then_full_rebuild",
+      "description_ja": "鉄骨躯体を修繕し、設定年に同じ用途・規模で全面建替えする。",
+      "description_en": "Repair the steel frame and fully rebuild at the specified years."
+    },
+    "CLT / Mass Timber": {
+      "ja": "CLT・Mass Timber",
+      "en": "CLT / Mass Timber",
+      "skeleton_component": "structure_clt",
+      "skeleton_service_life_years": 75,
+      "full_rebuild_years": [
+        75,
+        150
+      ],
+      "skeleton_infill_strategy": "repair_then_full_rebuild",
+      "description_ja": "木質スケルトンを修繕し、設定年に同じ用途・規模で全面建替えする。",
+      "description_en": "Repair the mass-timber skeleton and fully rebuild at the specified years."
+    },
+    "User Defined": {
+      "ja": "ユーザー定義",
+      "en": "User Defined",
+      "skeleton_component": "structure_rc_frame",
+      "skeleton_service_life_years": 100,
+      "full_rebuild_years": [
+        100,
+        200
+      ],
+      "skeleton_infill_strategy": "user_defined",
+      "description_ja": "利用者が各周期と建替え年を設定する。",
+      "description_en": "The user defines all cycles and rebuild years."
+    }
+  }
+}

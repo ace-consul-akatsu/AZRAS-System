@@ -1,0 +1,214 @@
+{
+  "schema": "AZRAS_AI_TAKEOFF",
+  "schema_version": "1.0",
+  "project": "PROJECT_NAME",
+  "required_filename": "YYMMDD_HHMM_AZRAS_AI_Takeoff_PROJECT_NAME_<ACTUAL_RESPONDER_TOKEN>.json",
+  "analysis": {
+    "type": "AI PDF quantity takeoff",
+    "ai_reviewer": "Actual responding AI service name",
+    "status": "complete|incomplete",
+    "drawing_coverage": [
+      {
+        "source_file": "drawing.pdf",
+        "source_page": 1,
+        "drawing_no": "A-01",
+        "drawing_name": "drawing title",
+        "discipline": "architecture",
+        "review_status": "reviewed",
+        "extracted_scopes": []
+      }
+    ],
+    "completeness_audit": {
+      "architecture": {
+        "status": "complete|partial|not_applicable",
+        "reviewed_pages": [],
+        "required_scopes": [],
+        "present_scopes": [],
+        "unresolved_scopes": [],
+        "omitted_scope_check": []
+      },
+      "structure": {
+        "status": "complete|partial|not_applicable",
+        "reviewed_pages": [],
+        "required_scopes": [],
+        "present_scopes": [],
+        "unresolved_scopes": [],
+        "omitted_scope_check": []
+      },
+      "electrical": {
+        "status": "complete|partial|not_applicable",
+        "reviewed_pages": [],
+        "required_scopes": [],
+        "present_scopes": [],
+        "unresolved_scopes": [],
+        "omitted_scope_check": []
+      },
+      "mechanical": {
+        "status": "complete|partial|not_applicable",
+        "reviewed_pages": [],
+        "required_scopes": [],
+        "present_scopes": [],
+        "unresolved_scopes": [],
+        "omitted_scope_check": []
+      },
+      "plumbing": {
+        "status": "complete|partial|not_applicable",
+        "reviewed_pages": [],
+        "required_scopes": [],
+        "present_scopes": [],
+        "unresolved_scopes": [],
+        "omitted_scope_check": []
+      },
+      "fire": {
+        "status": "complete|partial|not_applicable",
+        "reviewed_pages": [],
+        "required_scopes": [],
+        "present_scopes": [],
+        "unresolved_scopes": [],
+        "omitted_scope_check": []
+      }
+    },
+    "quantity_resolution_audit": {
+      "total_items": 0,
+      "numeric_items": 0,
+      "unresolved_items": 0,
+      "unresolved_with_missing_inputs": 0,
+      "calculable_unresolved_count": 0,
+      "resolution_rate_pct": 0.0,
+      "status": "complete|reviewed_unresolved|partial"
+    }
+  },
+  "building_profile": {
+    "geometry": {
+      "storeys": null,
+      "floor_areas_m2": [],
+      "gross_floor_area_m2": null,
+      "footprint_m2": null,
+      "roof_area_m2": null,
+      "exterior_wall_area_m2": null,
+      "window_area_m2": null,
+      "door_area_m2": null,
+      "north_rotation_deg": null,
+      "orientation_evidence": {
+        "evidence_status": "unresolved",
+        "confidence": 0.0,
+        "source_file": null,
+        "source_page": null,
+        "drawing_no": null,
+        "drawing_name": null,
+        "calculation_basis": "Return null if the north/orientation symbol cannot be verified. Do not return 0° as a default."
+      }
+    },
+    "assemblies": {
+      "roof": {
+        "material": "Glass wool|Rock wool|Phenolic foam|XPS|other",
+        "thickness_mm": null,
+        "u_value_W_m2K": null,
+        "resolved": false,
+        "evidence_status": "confirmed|estimated|unresolved",
+        "source_file": "drawing.pdf",
+        "source_page": 1,
+        "drawing_no": "A-01",
+        "drawing_name": "drawing title"
+      },
+      "light_wall": {
+        "material": "",
+        "thickness_mm": null,
+        "u_value_W_m2K": null,
+        "resolved": false,
+        "evidence_status": "unresolved"
+      },
+      "rc_wall": {
+        "material": "",
+        "thickness_mm": null,
+        "u_value_W_m2K": null,
+        "resolved": false,
+        "evidence_status": "unresolved"
+      },
+      "slab": {
+        "material": "",
+        "thickness_mm": null,
+        "u_value_W_m2K": null,
+        "resolved": false,
+        "evidence_status": "unresolved"
+      },
+      "window": {
+        "u_value_W_m2K": null,
+        "resolved": false,
+        "evidence_status": "unresolved"
+      },
+      "door": {
+        "u_value_W_m2K": null,
+        "resolved": false,
+        "evidence_status": "unresolved"
+      }
+    },
+    "surfaces": [
+      {
+        "name": "Exterior face 1",
+        "local_azimuth_deg": null,
+        "true_azimuth_deg": null,
+        "gross_wall_area_m2": null,
+        "opaque_area_m2": null,
+        "window_area_m2": null,
+        "door_area_m2": null,
+        "shading_factor": 1.0,
+        "evidence_status": "unresolved",
+        "confidence": 0.0,
+        "source_file": null,
+        "source_page": null,
+        "drawing_no": null,
+        "drawing_name": null,
+        "calculation_basis": "Return null if orientation, exterior-wall location, or window layout cannot be verified."
+      }
+    ]
+  },
+  "takeoff_items": [
+    {
+      "category": "architecture|structure|electrical|mechanical|plumbing|fire|other",
+      "item": "item name",
+      "specification": "specification",
+      "quantity": null,
+      "unit": "unit",
+      "source_file": "drawing.pdf",
+      "source_page": 1,
+      "drawing_no": "A-01",
+      "drawing_name": "drawing title",
+      "calculation_basis": "evidence and calculation basis",
+      "evidence_status": "confirmed|estimated|unresolved|unreadable|conflicting",
+      "confidence": 0.0,
+      "unresolved_aspects": [],
+      "resolution_attempted": true,
+      "missing_inputs": [],
+      "checked_sources": [],
+      "local_id": 1,
+      "resolution_action": "resolve_existing|verify_estimated|conflict_with_confirmed|add_new"
+    }
+  ],
+  "structural_takeoff_policy": {
+    "schema": "AZRAS_STRUCTURAL_TAKEOFF_COVERAGE_V1",
+    "rule": "When structural drawings exist, do not omit required scopes. Unknown quantity must be null/unresolved; zero is allowed only when absence is drawing-confirmed.",
+    "steel_required_scopes": [
+      "foundation_concrete",
+      "ground_slab_concrete",
+      "structural_steel_frame",
+      "baseplates_anchorbolts",
+      "steel_connections",
+      "secondary_steel"
+    ],
+    "rc_required_scopes": [
+      "foundation_concrete",
+      "ground_slab_concrete",
+      "rc_walls_columns_beams",
+      "reinforcement"
+    ]
+  },
+  "supplement_policy": {
+    "mode": "supplement_only",
+    "primary_merge_key": "local_id",
+    "confirmed_items": "do_not_recalculate_duplicate_or_overwrite",
+    "estimated_items": "verify_only_when_relevant",
+    "unresolved_items": "primary_ai_worklist",
+    "new_items": "allowed_only_when_not_duplicate_of_pre_takeoff"
+  }
+}

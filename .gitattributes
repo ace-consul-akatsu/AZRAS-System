@@ -1,0 +1,7 @@
+# Line endings.  Text files are stored with LF in the repository.
+# Windows batch and VBScript files must reach users with CRLF line endings,
+# including in the ZIP that GitHub and Zenodo generate from a release.
+* text=auto
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.vbs text eol=crlf

@@ -1,0 +1,251 @@
+{
+  "schema_version": "1.1",
+  "default_region_id": "JP_NAGOYA",
+  "regions": [
+    {
+      "id": "JP_NAGOYA",
+      "country": "Japan",
+      "city": "Nagoya",
+      "label_ja": "日本－名古屋",
+      "label_en": "Japan - Nagoya",
+      "investment_defaults": {
+        "general_inflation_percent": 2.6,
+        "construction_cost_escalation_percent": 2.8
+      },
+      "status": "active",
+      "note_ja": "現在の日本標準値を継承。税制はModule 6に含めません。",
+      "note_en": "Uses the current Japan defaults. Taxes are excluded from Module 6.",
+      "sources": {
+        "inflation": {
+          "provider": "Japan official / existing AZRAS baseline",
+          "period": "existing baseline",
+          "status": "active"
+        },
+        "construction": {
+          "provider": "Japan official / existing AZRAS baseline",
+          "period": "existing baseline",
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "US_LOS_ANGELES",
+      "country": "USA",
+      "city": "Los Angeles",
+      "label_ja": "USA－ロサンゼルス",
+      "label_en": "USA - Los Angeles",
+      "investment_defaults": null,
+      "status": "source_verified_values_pending",
+      "sources": {
+        "inflation": {
+          "provider": "World Bank Global Database of Inflation / U.S. CPI",
+          "period": "1970-2025 available at country level",
+          "status": "verified_source"
+        },
+        "construction": {
+          "provider": "U.S. Census Bureau Construction Price Indexes",
+          "period": "current + historical series; national/region, not city-specific",
+          "status": "verified_source"
+        }
+      },
+      "note_ja": "公式統計の出典を登録済み。長期平均値は統計期間・系列の整合確認後に有効化します。税制はModule 6に含めません。",
+      "note_en": "Official statistical sources are registered. Long-run averages will be enabled after period/series consistency checks. Taxes are excluded from Module 6."
+    },
+    {
+      "id": "US_ATLANTA",
+      "country": "USA",
+      "city": "Atlanta",
+      "label_ja": "USA－アトランタ",
+      "label_en": "USA - Atlanta",
+      "investment_defaults": null,
+      "status": "source_verified_values_pending",
+      "sources": {
+        "inflation": {
+          "provider": "World Bank Global Database of Inflation / U.S. CPI",
+          "period": "1970-2025 available at country level",
+          "status": "verified_source"
+        },
+        "construction": {
+          "provider": "U.S. Census Bureau Construction Price Indexes",
+          "period": "current + historical series; national/region, not city-specific",
+          "status": "verified_source"
+        }
+      },
+      "note_ja": "公式統計の出典を登録済み。長期平均値は統計期間・系列の整合確認後に有効化します。税制はModule 6に含めません。",
+      "note_en": "Official statistical sources are registered. Long-run averages will be enabled after period/series consistency checks. Taxes are excluded from Module 6."
+    },
+    {
+      "id": "UK_LONDON",
+      "country": "United Kingdom",
+      "city": "London",
+      "label_ja": "イギリス－ロンドン",
+      "label_en": "United Kingdom - London",
+      "investment_defaults": null,
+      "status": "source_verified_values_pending",
+      "sources": {
+        "inflation": {
+          "provider": "World Bank Global Database of Inflation / UK CPI",
+          "period": "1970-2025 available at country level",
+          "status": "verified_source"
+        },
+        "construction": {
+          "provider": "UK Office for National Statistics Construction Output Price Indices",
+          "period": "2014-present",
+          "status": "verified_source"
+        }
+      },
+      "note_ja": "公式統計の出典を登録済み。長期平均値は統計期間・系列の整合確認後に有効化します。税制はModule 6に含めません。",
+      "note_en": "Official statistical sources are registered. Long-run averages will be enabled after period/series consistency checks. Taxes are excluded from Module 6."
+    },
+    {
+      "id": "FR_PARIS",
+      "country": "France",
+      "city": "Paris",
+      "label_ja": "フランス－パリ",
+      "label_en": "France - Paris",
+      "investment_defaults": {
+        "construction_cost_escalation_percent": 4.29
+      },
+      "status": "partial_active",
+      "sources": {
+        "inflation": {
+          "provider": "World Bank Global Database of Inflation / France CPI",
+          "period": "1970-2025 available at country level",
+          "status": "verified_source"
+        },
+        "construction": {
+          "provider": "INSEE - Indice du coût de la construction (ICC)",
+          "period": "1953 Q4-2025 Q4",
+          "status": "verified_source",
+          "start_index": 100,
+          "end_index": 2058,
+          "calculation": "CAGR = (2058 / 100)^(1 / 72) - 1",
+          "annualized_percent": 4.29,
+          "scope": "Metropolitan France; new residential construction price index"
+        }
+      },
+      "note_ja": "フランス建設費上昇率はINSEE ICC（1953Q4=100→2025Q4=2058）の72年間CAGRを採用。一般物価は未確定のため現在値を変更しません。税制はModule 6に含めません。",
+      "note_en": "France construction-cost escalation uses the 72-year CAGR of INSEE ICC (1953Q4=100 to 2025Q4=2058). General inflation is not yet activated. Taxes are excluded from Module 6."
+    },
+    {
+      "id": "DE_BERLIN",
+      "country": "Germany",
+      "city": "Berlin",
+      "label_ja": "ドイツ－ベルリン",
+      "label_en": "Germany - Berlin",
+      "investment_defaults": null,
+      "status": "source_verified_values_pending",
+      "sources": {
+        "inflation": {
+          "provider": "World Bank Global Database of Inflation / Germany CPI",
+          "period": "1970-2025 database coverage; country series availability applies",
+          "status": "verified_source"
+        },
+        "construction": {
+          "provider": "Destatis Construction price index for residential buildings",
+          "period": "official national series; 2010-2022 change also published",
+          "status": "verified_source"
+        }
+      },
+      "note_ja": "公式統計の出典を登録済み。長期平均値は統計期間・系列の整合確認後に有効化します。税制はModule 6に含めません。",
+      "note_en": "Official statistical sources are registered. Long-run averages will be enabled after period/series consistency checks. Taxes are excluded from Module 6."
+    },
+    {
+      "id": "SA_RIYADH",
+      "country": "Saudi Arabia",
+      "city": "Riyadh",
+      "label_ja": "サウジアラビア－リヤド",
+      "label_en": "Saudi Arabia - Riyadh",
+      "investment_defaults": null,
+      "status": "source_verified_values_pending",
+      "sources": {
+        "inflation": {
+          "provider": "World Bank Global Database of Inflation / Saudi Arabia CPI",
+          "period": "1970-2025 database coverage; country series availability applies",
+          "status": "verified_source"
+        },
+        "construction": {
+          "provider": "GASTAT Construction Cost Index",
+          "period": "current methodology/base 2023; long-run comparable series requires review",
+          "status": "verified_source_limited"
+        }
+      },
+      "note_ja": "公式統計の出典を登録済み。長期平均値は統計期間・系列の整合確認後に有効化します。税制はModule 6に含めません。",
+      "note_en": "Official statistical sources are registered. Long-run averages will be enabled after period/series consistency checks. Taxes are excluded from Module 6."
+    },
+    {
+      "id": "NO_OSLO",
+      "country": "Norway",
+      "city": "Oslo",
+      "label_ja": "ノルウェー－オスロ",
+      "label_en": "Norway - Oslo",
+      "investment_defaults": null,
+      "status": "source_verified_values_pending",
+      "sources": {
+        "inflation": {
+          "provider": "World Bank Global Database of Inflation / Norway CPI",
+          "period": "1970-2025 available at country level",
+          "status": "verified_source"
+        },
+        "construction": {
+          "provider": "Statistics Norway Construction cost index for residential buildings",
+          "period": "official long-run series",
+          "status": "verified_source"
+        }
+      },
+      "note_ja": "公式統計の出典を登録済み。長期平均値は統計期間・系列の整合確認後に有効化します。税制はModule 6に含めません。",
+      "note_en": "Official statistical sources are registered. Long-run averages will be enabled after period/series consistency checks. Taxes are excluded from Module 6."
+    },
+    {
+      "id": "AU_SYDNEY",
+      "country": "Australia",
+      "city": "Sydney",
+      "label_ja": "オーストラリア－シドニー",
+      "label_en": "Australia - Sydney",
+      "investment_defaults": null,
+      "status": "source_verified_values_pending",
+      "sources": {
+        "inflation": {
+          "provider": "World Bank Global Database of Inflation / Australia CPI",
+          "period": "1970-2025 available at country level",
+          "status": "verified_source"
+        },
+        "construction": {
+          "provider": "Australian Bureau of Statistics Input to House Construction Industry",
+          "period": "capital-city series; Sydney included",
+          "status": "verified_source_city"
+        }
+      },
+      "note_ja": "公式統計の出典を登録済み。長期平均値は統計期間・系列の整合確認後に有効化します。税制はModule 6に含めません。",
+      "note_en": "Official statistical sources are registered. Long-run averages will be enabled after period/series consistency checks. Taxes are excluded from Module 6."
+    },
+    {
+      "id": "AE_DUBAI",
+      "country": "UAE",
+      "city": "Dubai",
+      "label_ja": "UAE－ドバイ",
+      "label_en": "UAE - Dubai",
+      "investment_defaults": null,
+      "status": "source_verified_values_pending",
+      "sources": {
+        "inflation": {
+          "provider": "World Bank Global Database of Inflation / UAE CPI",
+          "period": "1970-2025 database coverage; country series availability applies",
+          "status": "verified_source"
+        },
+        "construction": {
+          "provider": "Dubai Statistics Center Construction Cost Index",
+          "period": "official Dubai quarterly/annual index; historical continuity requires review",
+          "status": "verified_source_city"
+        }
+      },
+      "note_ja": "公式統計の出典を登録済み。長期平均値は統計期間・系列の整合確認後に有効化します。税制はModule 6に含めません。",
+      "note_en": "Official statistical sources are registered. Long-run averages will be enabled after period/series consistency checks. Taxes are excluded from Module 6."
+    }
+  ],
+  "methodology": {
+    "inflation": "Use country-level long-run CPI from a common international source where possible.",
+    "construction": "Prefer city-level official residential construction index; otherwise use the most appropriate official national/regional residential construction index.",
+    "rule": "Do not substitute unverified values or silently reuse Japan assumptions for overseas regions."
+  }
+}

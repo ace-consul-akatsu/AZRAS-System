@@ -1,0 +1,10 @@
+{
+  "patch": 200,
+  "version": "1.0.200",
+  "policy": "PATCH 532 compatible yellow adoption",
+  "guards": [
+    "true red excluded",
+    "canonical concrete ownership",
+    "MEP package/detail no double count"
+  ]
+}

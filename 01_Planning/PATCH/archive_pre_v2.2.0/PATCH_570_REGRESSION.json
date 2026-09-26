@@ -1,0 +1,14 @@
+{
+  "patch": 570,
+  "base_version": "1.0.569",
+  "checks": {
+    "send_groups": "drawing PDF/ZIP + request package ZIP + START TXT",
+    "meta_extract_zip_supported": true,
+    "filename_utc_format": "YYMMDD_HHMM",
+    "seconds_in_filename": false,
+    "original_timestamp_offset_must_be_utc": true,
+    "non_utc_plus09_rejected": true,
+    "observation_record_filename_seconds_removed": true,
+    "version_metadata_consistent": true
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "version": "9.5",
+  "status": "planning_comparison_defaults",
+  "notice_ja": "家賃、空室率、運営費、金利、税、売却価値等は企画比較用の初期値です。実際の事業評価では、対象地域の市場調査、金融条件、税務、契約、修繕計画、鑑定評価および専門家確認に置き換えてください。",
+  "notice_en": "Rent, vacancy, operating expenses, interest, taxes and terminal value are planning-comparison defaults. Replace them with project-specific market, financing, tax, contract, maintenance and valuation data.",
+  "profiles": {
+    "Japan / Residential": {
+      "currency": "JPY",
+      "annual_rent_per_m2": 30000,
+      "vacancy_rate_percent": 5.0,
+      "rent_growth_percent": 1.0,
+      "operating_expense_percent": 20.0,
+      "annual_maintenance_percent_of_cost": 0.5,
+      "property_tax_percent_of_cost": 1.4,
+      "insurance_percent_of_cost": 0.15,
+      "discount_rate_percent": 4.0,
+      "terminal_cap_rate_percent": 5.0,
+      "terminal_sale_cost_percent": 3.0,
+      "land_cost": 0,
+      "other_initial_cost": 0
+    },
+    "Japan / Office": {
+      "currency": "JPY",
+      "annual_rent_per_m2": 48000,
+      "vacancy_rate_percent": 8.0,
+      "rent_growth_percent": 1.0,
+      "operating_expense_percent": 25.0,
+      "annual_maintenance_percent_of_cost": 0.6,
+      "property_tax_percent_of_cost": 1.4,
+      "insurance_percent_of_cost": 0.18,
+      "discount_rate_percent": 4.5,
+      "terminal_cap_rate_percent": 5.5,
+      "terminal_sale_cost_percent": 3.0,
+      "land_cost": 0,
+      "other_initial_cost": 0
+    },
+    "User Defined": {
+      "currency": "JPY",
+      "annual_rent_per_m2": 30000,
+      "vacancy_rate_percent": 5.0,
+      "rent_growth_percent": 1.0,
+      "operating_expense_percent": 20.0,
+      "annual_maintenance_percent_of_cost": 0.5,
+      "property_tax_percent_of_cost": 1.4,
+      "insurance_percent_of_cost": 0.15,
+      "discount_rate_percent": 4.0,
+      "terminal_cap_rate_percent": 5.0,
+      "terminal_sale_cost_percent": 3.0,
+      "land_cost": 0,
+      "other_initial_cost": 0
+    }
+  },
+  "financing_defaults": {
+    "use_loan": false,
+    "loan_to_cost_percent": 70.0,
+    "annual_interest_rate_percent": 1.8,
+    "loan_term_years": 30,
+    "repayment_method": "annuity"
+  },
+  "analysis_years": 100
+}

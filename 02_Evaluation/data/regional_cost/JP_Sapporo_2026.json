@@ -1,0 +1,321 @@
+{
+  "schema_version": "1.0",
+  "region_key": "Japan / Sapporo",
+  "currency": "JPY",
+  "data_date": "2026-07-01",
+  "last_checked_date": "2026-08-09",
+  "status": "estimated",
+  "source_type": "official_public_labor_rate_and_monthly_material_market_monitoring",
+  "source_name": "国土交通省 令和8年3月公共工事設計労務単価; 主要建設資材需給・価格動向調査",
+  "source_references": [
+    "https://www.mlit.go.jp/report/press/tochi_fudousan_kensetsugyo14_hh_000001_00337.html",
+    "https://www.mlit.go.jp/toukeijouhou/chojou/mon.htm"
+  ],
+  "source_snapshot": {
+    "public_works_labor_rate_effective_from": "2026-03-01",
+    "national_weighted_average_public_works_labor_rate_jpy_per_day": 25834,
+    "national_all_trade_simple_average_increase_percent_vs_previous_year": 4.5,
+    "major_material_market_survey_2026_07": {
+      "price_trend_slightly_up": [
+        "asphalt_mixture",
+        "deformed_rebar",
+        "H_section_steel",
+        "formwork_plywood"
+      ],
+      "price_trend_flat_other_surveyed_materials": true,
+      "supply_demand_all_surveyed_materials": "balanced",
+      "inventory_all_surveyed_materials": "normal"
+    }
+  },
+  "regional_indices": {
+    "material_index": 110.0,
+    "labor_index": 108.0,
+    "productivity_index": 92.0
+  },
+  "unit_costs": {},
+  "unit_costs_status": "not_yet_populated_from_verified_local_unit_price_sources",
+  "note_ja": "北海道・札幌圏向け地域係数。工事項目別現地完成単価は未登録。 2026年の国交省公表労務単価および主要建設資材の月次価格動向を出典として保持する。 現在のmaterial/labor/productivity indexは既存AZRAS地域係数を移行した推定値であり、 国交省資料そのものから算出した都市別完成単価ではない。 今後、確認可能な地域別単価を取得した項目からunit_costsへ追加する。",
+  "official_source_catalog_patch065": {
+    "aichi_building_costs": {
+      "name": "愛知県 建築局「積算基準・積算単価（建築）」",
+      "url": "https://www.pref.aichi.jp/soshiki/kensetsu-kikaku/kenchikusekisan.html",
+      "checked": "2026-08-09",
+      "availability": {
+        "major_materials": "non_public",
+        "market_unit_prices": "non_public",
+        "standard_material_prices": "non_public",
+        "general_material_prices": "non_public",
+        "aichi_independent_public_prices": "public_pdf"
+      }
+    },
+    "aichi_civil_costs": {
+      "name": "愛知県 建設局「積算基準・設計単価（土木）」",
+      "url": "https://www.pref.aichi.jp/soshiki/kensetsu-kikaku/sekisanshiryou.html",
+      "checked": "2026-08-09",
+      "availability": {
+        "materials_from_commercial_price_books": "non_public",
+        "other_public_design_prices": "public"
+      }
+    },
+    "mlit_labor_2026": {
+      "name": "国土交通省 令和8年3月から適用する公共工事設計労務単価",
+      "url": "https://www.mlit.go.jp/report/press/tochi_fudousan_kensetsugyo14_hh_000001_00337.html",
+      "checked": "2026-08-09",
+      "availability": "public"
+    },
+    "mlit_material_market": {
+      "name": "国土交通省 主要建設資材需給・価格動向調査",
+      "url": "https://www.mlit.go.jp/toukeijouhou/chojou/mon.htm",
+      "checked": "2026-08-09",
+      "availability": "public_market_trend_not_unit_price"
+    }
+  },
+  "module5_unit_cost_source_coverage": {
+    "concrete": {
+      "item_ja": "コンクリート",
+      "unit": "m3",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026",
+        "mlit_material_market"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "commercial_price_book_or_verified_quote_required",
+      "reason_ja": "愛知県建築局は主要資材・市場単価等を物価資料により改定するが、該当単価は非公表。公開労務・市場動向は検証補助に使用。"
+    },
+    "reinforcing_steel": {
+      "item_ja": "鉄筋",
+      "unit": "t",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026",
+        "mlit_material_market"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "commercial_price_book_or_verified_quote_required",
+      "reason_ja": "愛知県建築局は主要資材・市場単価等を物価資料により改定するが、該当単価は非公表。公開労務・市場動向は検証補助に使用。"
+    },
+    "structural_steel": {
+      "item_ja": "構造用鉄骨",
+      "unit": "t",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026",
+        "mlit_material_market"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "commercial_price_book_or_verified_quote_required",
+      "reason_ja": "愛知県建築局は主要資材・市場単価等を物価資料により改定するが、該当単価は非公表。公開労務・市場動向は検証補助に使用。"
+    },
+    "dimension_lumber": {
+      "item_ja": "2×6・一般木材",
+      "unit": "m3",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "clt": {
+      "item_ja": "CLT・Mass Timber",
+      "unit": "m3",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "phenolic_foam": {
+      "item_ja": "フェノールフォーム",
+      "unit": "m3",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "xps": {
+      "item_ja": "XPS",
+      "unit": "m3",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "glass": {
+      "item_ja": "ガラス・窓",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "gypsum_board": {
+      "item_ja": "石膏ボード",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "roofing": {
+      "item_ja": "屋根・防水",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "doors": {
+      "item_ja": "ドア・建具",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "interior_finish": {
+      "item_ja": "内装最終仕上（下地・石膏ボード除外）",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "external_finish": {
+      "item_ja": "外装最終仕上（断熱・下地除外）",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "formwork": {
+      "item_ja": "型枠工事",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026",
+        "mlit_material_market"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "commercial_price_book_or_verified_quote_required",
+      "reason_ja": "愛知県建築局は主要資材・市場単価等を物価資料により改定するが、該当単価は非公表。公開労務・市場動向は検証補助に使用。"
+    },
+    "structural_plywood": {
+      "item_ja": "構造用合板12mm",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026",
+        "mlit_material_market"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "commercial_price_book_or_verified_quote_required",
+      "reason_ja": "愛知県建築局は主要資材・市場単価等を物価資料により改定するが、該当単価は非公表。公開労務・市場動向は検証補助に使用。"
+    },
+    "external_finish_rc": {
+      "item_ja": "RC部外装最終仕上（断熱・下地除外）",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "external_finish_timber": {
+      "item_ja": "木造部外装最終仕上（断熱・構造用合板除外）",
+      "unit": "m2",
+      "preferred_source": "aichi_building_costs",
+      "secondary_sources": [
+        "mlit_labor_2026"
+      ],
+      "public_2026_complete_unit_price_available": false,
+      "status": "verified_local_quote_or_price_book_required",
+      "reason_ja": "公開資料だけで住宅向けの地域完成単価を確定できないため、物価資料または確認済み現地見積を優先する。"
+    },
+    "excavation": {
+      "item_ja": "根切り・掘削",
+      "unit": "m3",
+      "preferred_source": "aichi_civil_costs",
+      "public_2026_complete_unit_price_available": false,
+      "status": "source_identified_unit_price_confirmation_required",
+      "reason_ja": "愛知県の公開設計単価・施工パッケージ等を参照できるが、住宅規模の完成単価としてそのまま採用する前に施工条件・運搬距離・土質の確認が必要。"
+    },
+    "backfill": {
+      "item_ja": "埋戻し",
+      "unit": "m3",
+      "preferred_source": "aichi_civil_costs",
+      "public_2026_complete_unit_price_available": false,
+      "status": "source_identified_unit_price_confirmation_required",
+      "reason_ja": "愛知県の公開設計単価・施工パッケージ等を参照できるが、住宅規模の完成単価としてそのまま採用する前に施工条件・運搬距離・土質の確認が必要。"
+    },
+    "imported_fill": {
+      "item_ja": "客土・購入土",
+      "unit": "m3",
+      "preferred_source": "aichi_civil_costs",
+      "public_2026_complete_unit_price_available": false,
+      "status": "source_identified_unit_price_confirmation_required",
+      "reason_ja": "愛知県の公開設計単価・施工パッケージ等を参照できるが、住宅規模の完成単価としてそのまま採用する前に施工条件・運搬距離・土質の確認が必要。"
+    },
+    "soil_disposal": {
+      "item_ja": "残土処分",
+      "unit": "m3",
+      "preferred_source": "aichi_civil_costs",
+      "public_2026_complete_unit_price_available": false,
+      "status": "source_identified_unit_price_confirmation_required",
+      "reason_ja": "愛知県の公開設計単価・施工パッケージ等を参照できるが、住宅規模の完成単価としてそのまま採用する前に施工条件・運搬距離・土質の確認が必要。"
+    },
+    "blinding_concrete": {
+      "item_ja": "捨てコンクリート",
+      "unit": "m3",
+      "preferred_source": "aichi_building_costs",
+      "public_2026_complete_unit_price_available": false,
+      "status": "source_identified_unit_price_confirmation_required",
+      "reason_ja": "生コン等の主要資材単価は愛知県建築局ページで非公表と明記されているため、公開資料だけでは完成単価をverifiedにできない。"
+    },
+    "ground_preparation": {
+      "item_ja": "基礎下地業・砕石",
+      "unit": "m3",
+      "preferred_source": "aichi_civil_costs",
+      "public_2026_complete_unit_price_available": false,
+      "status": "source_identified_unit_price_confirmation_required",
+      "reason_ja": "愛知県の公開設計単価・施工パッケージ等を参照できるが、住宅規模の完成単価としてそのまま採用する前に施工条件・運搬距離・土質の確認が必要。"
+    }
+  },
+  "source_coverage_summary_patch065": {
+    "module5_item_count": 23,
+    "verified_local_complete_unit_cost_count": 0,
+    "policy": "Do not convert public trend data into a verified completed unit price. Use commercial price books or verified local quotations where official completed prices are unavailable.",
+    "note_ja": "23工事項目すべてについて出典候補と公開可否を登録。非公表・条件依存の項目は推測単価を入れず、確認単価待ちとする。"
+  }
+}

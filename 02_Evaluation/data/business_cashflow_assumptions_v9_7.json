@@ -1,0 +1,24 @@
+{
+  "version": "9.8",
+  "status": "planning_comparison_defaults",
+  "notice_ja": "200年間の事業収支はModule 5の建設費、延べ床面積、年間賃料単価、Module 7の修繕・更新・解体費を統合して計算します。企画比較用のため、実際の賃料、空室率、税、保険、修繕費、売却価値へ置き換えてください。",
+  "notice_en": "The 200-year model integrates Module 5 construction cost, gross floor area, annual rent per square metre and Module 7 renewal costs.",
+  "defaults": {
+    "analysis_years": 200,
+    "rent_growth_percent": 1.0,
+    "vacancy_rate_percent": 5.0,
+    "operating_expense_percent": 20.0,
+    "property_tax_percent_of_initial_cost": 1.4,
+    "insurance_percent_of_initial_cost": 0.15,
+    "discount_rate_percent": 4.0,
+    "terminal_cap_rate_percent": 5.0,
+    "terminal_sale_cost_percent": 3.0,
+    "construction_cost_escalation_percent": 1.0,
+    "repair_cost_escalation_percent": 1.0,
+    "income_tax_percent": 0.0,
+    "include_module7_costs": true,
+    "include_terminal_value": true,
+    "annual_rent_JPY_per_m2": 30000.0,
+    "other_initial_cost_JPY": 0.0
+  }
+}

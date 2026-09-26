@@ -1,0 +1,25 @@
+{
+  "product": "AZRAS Compare",
+  "version": "1.1.17",
+  "patch": 17,
+  "audit_scope": "language/canonical presentation + responsibility-boundary regression",
+  "result": "PASS",
+  "checks": {
+    "python_compile": true,
+    "version_1_1_17": true,
+    "language_selector_en_ja": true,
+    "dynamic_chart_translation": true,
+    "english_month_labels": true,
+    "warning_language_branching": true,
+    "csv_ascii_default_filename": true,
+    "no_compare_discount_recalculation": true,
+    "saved_module6_pv_only": true,
+    "missing_not_zero": true,
+    "no_feasibility_runtime": true,
+    "static_widget_translation_coverage": true,
+    "representative_english_strings_no_japanese": true,
+    "no_pyc_or_cache": true,
+    "all": true
+  },
+  "static_untranslated_candidates": []
+}

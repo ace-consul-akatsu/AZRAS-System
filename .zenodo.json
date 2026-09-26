@@ -1,0 +1,36 @@
+{
+  "title": "AZRAS System",
+  "upload_type": "software",
+  "version": "2.2.0",
+  "access_right": "open",
+  "license": "MIT",
+  "language": "eng",
+  "description": "<p>AZRAS System is an open-source desktop suite for planning, evaluating and comparing buildings over a 200-year life cycle. It reads construction drawings printed to PDF, performs quantity takeoff, and sends items it cannot resolve to several independent AI systems; each AI answer is kept as a separate candidate with its evidence, compared only between like quantities and units, and never adopted by majority vote. Unresolved items are routed to human review. The suite calculates CO2 emissions and energy use from 8,760-hour regional weather data, compares insulation specifications, construction methods and building locations, and evaluates 200-year business cash flow and environmental load. The same drawing set can be resent to multiple AIs at later dates, with SHA-256 hashes preserving drawing identity, to observe longitudinal changes in AI drawing-reading capability. v2.2.0 comprises four products: Installer, Planning, Evaluation and Compare.</p>",
+  "creators": [
+    {
+      "name": "Akatsu, Makito",
+      "affiliation": "ACE Comprehensive Consulting Co., Ltd."
+    }
+  ],
+  "keywords": [
+    "building life cycle assessment",
+    "quantity takeoff",
+    "multi-AI",
+    "large language models",
+    "AI evaluation",
+    "construction drawings",
+    "embodied carbon",
+    "building energy simulation",
+    "life cycle cost",
+    "construction method comparison",
+    "AZRAS"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://ace-consul-akatsu.github.io",
+      "relation": "isDocumentedBy",
+      "scheme": "url"
+    }
+  ],
+  "notes": "Copyright (c) 2026 ACE Comprehensive Consulting Co., Ltd. Provided free of charge on the premise of use for AI research and business purposes; see the disclaimer of use distributed with the software (Japanese and English; the Japanese version prevails)."
+}

@@ -1,0 +1,188 @@
+{
+  "version": "9.4",
+  "status": "planning_comparison_defaults",
+  "notice_ja": "環境原単位・廃棄率・輸送条件は企画比較用の初期値です。正式なLCAでは対象地域、製品EPD、施工条件、輸送距離、廃棄処理実績等の確認値へ置き換えてください。",
+  "notice_en": "Environmental factors, waste rates and transport assumptions are planning-comparison defaults. For formal LCA, replace them with verified regional data, product EPDs, construction conditions, transport distances and actual end-of-life data.",
+  "materials": {
+    "concrete": {
+      "ja": "コンクリート",
+      "en": "Concrete",
+      "unit": "m3",
+      "embodied_co2_kg_per_unit": 300.0,
+      "embodied_energy_MJ_per_unit": 1800.0,
+      "density_kg_per_unit": 2300.0,
+      "default_recycling_fraction": 0.85,
+      "default_reuse_fraction": 0.0,
+      "biogenic_storage_kgCO2_per_unit": 0.0
+    },
+    "reinforcing_steel": {
+      "ja": "鉄筋",
+      "en": "Reinforcing Steel",
+      "unit": "t",
+      "embodied_co2_kg_per_unit": 1800.0,
+      "embodied_energy_MJ_per_unit": 22000.0,
+      "density_kg_per_unit": 1000.0,
+      "default_recycling_fraction": 0.95,
+      "default_reuse_fraction": 0.02,
+      "biogenic_storage_kgCO2_per_unit": 0.0
+    },
+    "structural_steel": {
+      "ja": "構造用鉄骨",
+      "en": "Structural Steel",
+      "unit": "t",
+      "embodied_co2_kg_per_unit": 1900.0,
+      "embodied_energy_MJ_per_unit": 24000.0,
+      "density_kg_per_unit": 1000.0,
+      "default_recycling_fraction": 0.98,
+      "default_reuse_fraction": 0.1,
+      "biogenic_storage_kgCO2_per_unit": 0.0
+    },
+    "dimension_lumber": {
+      "ja": "2×6・一般木材",
+      "en": "2×6 / General Lumber",
+      "unit": "m3",
+      "embodied_co2_kg_per_unit": 110.0,
+      "embodied_energy_MJ_per_unit": 3500.0,
+      "density_kg_per_unit": 500.0,
+      "default_recycling_fraction": 0.6,
+      "default_reuse_fraction": 0.1,
+      "biogenic_storage_kgCO2_per_unit": 916.6666666666666,
+      "dry_density_kg_per_m3": 500.0,
+      "wood_fraction": 1.0,
+      "carbon_fraction_of_dry_wood": 0.5,
+      "storage_duration_years": 60,
+      "product_type_ja": "一般構造木材・2×6材",
+      "product_type_en": "General structural lumber / 2×6 lumber",
+      "biogenic_storage_calculation": "formula"
+    },
+    "clt": {
+      "ja": "CLT・Mass Timber",
+      "en": "CLT / Mass Timber",
+      "unit": "m3",
+      "embodied_co2_kg_per_unit": 150.0,
+      "embodied_energy_MJ_per_unit": 4200.0,
+      "density_kg_per_unit": 500.0,
+      "default_recycling_fraction": 0.65,
+      "default_reuse_fraction": 0.25,
+      "biogenic_storage_kgCO2_per_unit": 880.0,
+      "dry_density_kg_per_m3": 500.0,
+      "wood_fraction": 0.96,
+      "carbon_fraction_of_dry_wood": 0.5,
+      "storage_duration_years": 100,
+      "product_type_ja": "CLT・Mass Timber",
+      "product_type_en": "CLT / Mass Timber",
+      "biogenic_storage_calculation": "formula"
+    },
+    "phenolic_foam": {
+      "ja": "フェノールフォーム",
+      "en": "Phenolic Foam",
+      "unit": "m3",
+      "embodied_co2_kg_per_unit": 420.0,
+      "embodied_energy_MJ_per_unit": 14500.0,
+      "density_kg_per_unit": 40.0,
+      "default_recycling_fraction": 0.1,
+      "default_reuse_fraction": 0.0,
+      "biogenic_storage_kgCO2_per_unit": 0.0
+    },
+    "xps": {
+      "ja": "XPS",
+      "en": "XPS",
+      "unit": "m3",
+      "embodied_co2_kg_per_unit": 520.0,
+      "embodied_energy_MJ_per_unit": 18000.0,
+      "density_kg_per_unit": 35.0,
+      "default_recycling_fraction": 0.1,
+      "default_reuse_fraction": 0.0,
+      "biogenic_storage_kgCO2_per_unit": 0.0
+    },
+    "glass": {
+      "ja": "ガラス",
+      "en": "Glass",
+      "unit": "m2",
+      "embodied_co2_kg_per_unit": 35.0,
+      "embodied_energy_MJ_per_unit": 480.0,
+      "density_kg_per_unit": 25.0,
+      "default_recycling_fraction": 0.8,
+      "default_reuse_fraction": 0.05,
+      "biogenic_storage_kgCO2_per_unit": 0.0
+    },
+    "gypsum_board": {
+      "ja": "石膏ボード",
+      "en": "Gypsum Board",
+      "unit": "m2",
+      "embodied_co2_kg_per_unit": 8.0,
+      "embodied_energy_MJ_per_unit": 95.0,
+      "density_kg_per_unit": 10.0,
+      "default_recycling_fraction": 0.35,
+      "default_reuse_fraction": 0.0,
+      "biogenic_storage_kgCO2_per_unit": 0.0
+    }
+  },
+  "processes": {
+    "construction_co2_kg_per_m2": 25.0,
+    "construction_energy_MJ_per_m2": 350.0,
+    "transport_co2_kg_per_tkm": 0.1,
+    "initial_transport_distance_km": 100.0,
+    "renewal_transport_distance_km": 100.0,
+    "waste_transport_distance_km": 50.0,
+    "demolition_co2_kg_per_t": 12.0,
+    "demolition_energy_MJ_per_t": 160.0,
+    "recycling_credit_co2_kg_per_t": 80.0,
+    "reuse_credit_fraction_of_new_product": 0.7,
+    "equipment_embodied_co2_kg_per_kW": 120.0,
+    "equipment_embodied_energy_MJ_per_kW": 1800.0,
+    "equipment_mass_kg_per_kW": 35.0
+  },
+  "component_material_shares": {
+    "all_infill": {
+      "dimension_lumber": 0.2,
+      "phenolic_foam": 0.15,
+      "glass": 0.1,
+      "gypsum_board": 0.35,
+      "structural_steel": 0.05,
+      "xps": 0.15
+    },
+    "infill_layout": {
+      "gypsum_board": 0.7,
+      "dimension_lumber": 0.25,
+      "structural_steel": 0.05
+    },
+    "infill_exterior": {
+      "dimension_lumber": 0.25,
+      "gypsum_board": 0.2,
+      "phenolic_foam": 0.35,
+      "structural_steel": 0.2
+    },
+    "insulation": {
+      "phenolic_foam": 0.7,
+      "xps": 0.3
+    },
+    "windows": {
+      "glass": 0.85,
+      "structural_steel": 0.15
+    },
+    "roof": {
+      "structural_steel": 0.35,
+      "dimension_lumber": 0.25,
+      "phenolic_foam": 0.4
+    },
+    "whole_building": {
+      "concrete": 0.45,
+      "reinforcing_steel": 0.08,
+      "structural_steel": 0.08,
+      "dimension_lumber": 0.1,
+      "clt": 0.05,
+      "phenolic_foam": 0.07,
+      "xps": 0.04,
+      "glass": 0.05,
+      "gypsum_board": 0.08
+    }
+  },
+  "biogenic_carbon_method": {
+    "formula": "wood_volume_m3 × dry_density_kg_m3 × wood_fraction × carbon_fraction × 44 / 12",
+    "co2_to_carbon_molecular_ratio": 3.6666666666666665,
+    "status": "planning_comparison_default",
+    "notice_ja": "木材中の生物由来炭素固定量は、体積・全乾密度・木質含有率・炭素含有率から算定する企画比較用参考値です。",
+    "notice_en": "Biogenic carbon storage is a planning reference calculated from volume, oven-dry density, wood fraction and carbon fraction."
+  }
+}

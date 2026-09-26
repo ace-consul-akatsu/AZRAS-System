@@ -1,0 +1,17 @@
+{
+  "version": "1.0.602",
+  "scope": "full-system-audit correction 01/04: Planning current-state AI retention",
+  "tests": {
+    "all_76_python_sources_compile": true,
+    "legacy_chronological_ai_review_history_not_active": true,
+    "same_provider_one_current_claim": true,
+    "AI_Evolution_Current_only_regression": true,
+    "building_system_change_AI_purge_regression": true,
+    "transactional_rebuild_regression": true,
+    "omitted_scope_carried_gap_regression": true,
+    "collected_AI_viewer_regression": true,
+    "historical_human_decision_ledger_not_read": true,
+    "automatic_human_review_history_file_not_created": true,
+    "VERSION_metadata_consistent_1_0_601": true
+  }
+}

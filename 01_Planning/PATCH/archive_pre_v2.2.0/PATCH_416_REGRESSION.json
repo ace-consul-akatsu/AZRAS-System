@@ -1,0 +1,61 @@
+{
+  "passed": 11,
+  "results": [
+    {
+      "name": "auto takeoff current RC key",
+      "status": "PASS",
+      "detail": "[{'category': 'Insulation', 'item': 'RC exterior-wall phenolic foam', 'quantity': 12.0, 'unit': 'm3', 'confidence': 0.88, 'source_mode': 'Drawing-dimension calculation', 'formula': '120.000 m2 × 100.0 mm ÷ 1000', 'evidence': 'Material=Phenolic foam; calculated from area and thickness', 'editable': True, 'accepted_quantity': 12.0}]"
+    },
+    {
+      "name": "auto takeoff RC insulation volume",
+      "status": "PASS",
+      "detail": "{'category': 'Insulation', 'item': 'RC exterior-wall phenolic foam', 'quantity': 12.0, 'unit': 'm3', 'confidence': 0.88, 'source_mode': 'Drawing-dimension calculation', 'formula': '120.000 m2 × 100.0 mm ÷ 1000', 'evidence': 'Material=Phenolic foam; calculated from area and thickness', 'editable': True, 'accepted_quantity': 12.0}"
+    },
+    {
+      "name": "performance current RC key",
+      "status": "PASS",
+      "detail": "[{'part': 'rc_wall', 'area_m2': 120.0, 'material': 'Phenolic foam', 'thickness_mm': 100.0, 'u_value_W_m2K': 0.19342359767891684, 'resolved': True}]"
+    },
+    {
+      "name": "roundtrip north flat",
+      "status": "PASS",
+      "detail": "27.5"
+    },
+    {
+      "name": "roundtrip north structured",
+      "status": "PASS",
+      "detail": "27.5"
+    },
+    {
+      "name": "roundtrip module1 retained",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "blocked rebar excluded",
+      "status": "PASS",
+      "detail": "[{\"item\": \"鉄筋\", \"cost_item_key\": \"reinforcing_steel\", \"quantity\": 10.0, \"reason\": \"hard_downstream_block:blocked_until_resolved\", \"source\": \"Module 1 downstream quantity/cost gate\"}]"
+    },
+    {
+      "name": "formwork retained",
+      "status": "PASS",
+      "detail": "{\"concrete\": 80.0, \"formwork\": 123.4, \"roofing\": 100.0, \"interior_finish\": 400.0, \"external_finish_rc\": 120.0, \"external_finish_timber\": 30.0, \"phenolic_foam\": 35.0, \"xps\": 10.0, \"dimension_lumber\": 12.0}"
+    },
+    {
+      "name": "full cost calculation produced",
+      "status": "PASS",
+      "detail": "40120480.10231561"
+    },
+    {
+      "name": "MEP hvac package replaced",
+      "status": "PASS",
+      "detail": "[{\"package_key\": \"electrical\", \"name_ja\": \"電気設備一式\", \"name_en\": \"Electrical Package\", \"cost\": 2568900.936851643, \"market_cost_group\": \"building_services_equipment\", \"market_calibration_factor_2026\": 0.6116430802027721, \"market_calibration_source_2026\": \"azras_wood_or_common_component_uses_wood_2026_calibration\"}, {\"package_key\": \"plumbing\", \"name_ja\": \"給排水衛生設備一式\", \"name_en\": \"Plumbing / Sanitary Package\", \"cost\": 2935886.784973306, \"market_cost_group\": \"building_services_equipment\", \"market_calibration_factor_2026\": 0.6116430802027721, \"market_calibration_source_2026\": \"azras_wood_or_common_component_uses_wood_2026_calibration\"}, {\"package_key\": \"kitchen\", \"name_ja\": \"キッチン一式\", \"name_en\": \"Kitchen Package\", \"cost\": 1834929.2406083164, \"market_cost_group\": \"building_services_equipment\", \"market_calibration_factor_2026\": 0.6116430802027721, \"market_calibration_source_2026\": \"azras_wood_or_common_component_uses_wood_2026_calibration\"}, {\"package_key\": \"bathroom\", \"name_ja\": \"ユニットバス等一式\", \"name_en\": \"Bathroom Package\", \"cost\": 2201915.0887299795, \"market_cost_group\": \"building_services_equipment\", \"market_calibration_factor_2026\": 0.6116430802027721, \"market_calibration_source_2026\": \"azras_wood_or_common_component_uses_wood_2026_calibration\"}]"
+    },
+    {
+      "name": "MEP detail 500k retained",
+      "status": "PASS",
+      "detail": ""
+    }
+  ],
+  "total_cost": 40120480.10231561
+}

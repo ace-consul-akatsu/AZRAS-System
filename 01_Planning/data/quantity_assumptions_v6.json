@@ -1,0 +1,36 @@
+{
+  "disclaimer_ja": "重要：AZRASの鉄筋量は、添付構造図「高島伏0.pdf」の伏図・軸組図・配筋表から算出した理論数量 16.35 t を初期値としています。ただし、加工帳による最終数量ではなく、定着・重ね継手・フック・開口補強・切断ロス等は仮定を含みます。構造設計者の数量調書、鉄筋加工帳または実績数量が得られた場合は「実数入力」に切り替えて置き換えてください。他構造で構造図が未入力の場合は代表的平均原単位による暫定推定値です。",
+  "disclaimer_en": "Important: When structural drawings are not provided, reinforcement, structural steel, connection hardware and related quantities are provisional estimates based on representative average intensities. Replace them with actual take-off quantities when structural drawings, fabrication drawings or bills of quantities become available. Estimated quantities must not be used to assess structural safety.",
+  "average_intensities": {
+    "reinforcement_kg_per_m3_concrete": {
+      "AZRAS": 90.0,
+      "RC Frame": 120.0,
+      "2x6 Timber": 0.0,
+      "Steel Frame": 0.0,
+      "CLT": 0.0
+    },
+    "structural_steel_kg_per_m2_floor": {
+      "AZRAS": 0.0,
+      "RC Frame": 0.0,
+      "2x6 Timber": 0.0,
+      "Steel Frame": 75.0,
+      "CLT": 5.0
+    },
+    "dimension_lumber_m3_per_m2_floor": {
+      "AZRAS": 0.06,
+      "RC Frame": 0.01,
+      "2x6 Timber": 0.145,
+      "Steel Frame": 0.015,
+      "CLT": 0.025
+    },
+    "clt_m3_per_m2_floor": {
+      "AZRAS": 0.0,
+      "RC Frame": 0.0,
+      "2x6 Timber": 0.0,
+      "Steel Frame": 0.0,
+      "CLT": 0.32
+    }
+  },
+  "azras_structural_drawing_rebar_t": 16.350017,
+  "azras_rebar_takeoff_file": "azras_rebar_takeoff_v6_1.json"
+}

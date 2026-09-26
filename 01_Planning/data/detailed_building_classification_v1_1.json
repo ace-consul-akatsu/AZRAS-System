@@ -1,0 +1,1035 @@
+{
+  "building_systems": [
+    {
+      "id": "azras",
+      "ja": "AZRAS Platform",
+      "en": "AZRAS Platform"
+    },
+    {
+      "id": "general",
+      "ja": "一般建築",
+      "en": "General Building"
+    }
+  ],
+  "structures": {
+    "general": [
+      {
+        "id": "wood_post_beam",
+        "ja": "木造軸組構造",
+        "en": "Wood Post-and-Beam"
+      },
+      {
+        "id": "wood_frame",
+        "ja": "木造枠組壁構造",
+        "en": "Wood Framed-Wall"
+      },
+      {
+        "id": "mass_timber",
+        "ja": "Mass Timber構造",
+        "en": "Mass Timber"
+      },
+      {
+        "id": "steel",
+        "ja": "S造",
+        "en": "Steel Structure"
+      },
+      {
+        "id": "rc_frame",
+        "ja": "RCラーメン構造",
+        "en": "RC Moment Frame"
+      },
+      {
+        "id": "rc_wall",
+        "ja": "RC壁式構造",
+        "en": "RC Wall Structure"
+      },
+      {
+        "id": "masonry",
+        "ja": "組積造・ブロック造",
+        "en": "Masonry / Block"
+      },
+      {
+        "id": "earth",
+        "ja": "土・伝統構造",
+        "en": "Earth / Traditional"
+      },
+      {
+        "id": "other",
+        "ja": "その他",
+        "en": "Other"
+      }
+    ],
+    "azras_core": [
+      {
+        "id": "rc",
+        "ja": "RC造",
+        "en": "Reinforced Concrete"
+      },
+      {
+        "id": "stone",
+        "ja": "石造",
+        "en": "Stone"
+      },
+      {
+        "id": "brick",
+        "ja": "レンガ造",
+        "en": "Brick"
+      },
+      {
+        "id": "block",
+        "ja": "ブロック造",
+        "en": "Block"
+      },
+      {
+        "id": "earth",
+        "ja": "土造",
+        "en": "Earth"
+      }
+    ],
+    "azras_infill": [
+      {
+        "id": "wood_post_beam",
+        "ja": "木造軸組構造",
+        "en": "Wood Post-and-Beam"
+      },
+      {
+        "id": "wood_frame",
+        "ja": "木造枠組壁構造",
+        "en": "Wood Framed-Wall"
+      },
+      {
+        "id": "mass_timber",
+        "ja": "Mass Timber構造",
+        "en": "Mass Timber"
+      },
+      {
+        "id": "wood_prefab",
+        "ja": "木造プレハブ",
+        "en": "Timber Prefabricated"
+      },
+      {
+        "id": "metal_prefab",
+        "ja": "金属プレハブ",
+        "en": "Metal Prefabricated"
+      },
+      {
+        "id": "stone",
+        "ja": "石造",
+        "en": "Stone"
+      },
+      {
+        "id": "brick",
+        "ja": "レンガ造",
+        "en": "Brick"
+      },
+      {
+        "id": "block",
+        "ja": "ブロック造",
+        "en": "Block"
+      },
+      {
+        "id": "earth",
+        "ja": "土造",
+        "en": "Earth"
+      }
+    ],
+    "outfill_wall": [
+      {
+        "id": "wood",
+        "ja": "木造",
+        "en": "Timber"
+      },
+      {
+        "id": "mass_timber",
+        "ja": "Mass Timber",
+        "en": "Mass Timber"
+      },
+      {
+        "id": "stone",
+        "ja": "石造",
+        "en": "Stone"
+      },
+      {
+        "id": "brick",
+        "ja": "レンガ造",
+        "en": "Brick"
+      },
+      {
+        "id": "block",
+        "ja": "ブロック造",
+        "en": "Block"
+      },
+      {
+        "id": "earth",
+        "ja": "土造",
+        "en": "Earth"
+      },
+      {
+        "id": "metal_panel",
+        "ja": "金属パネル",
+        "en": "Metal Panel"
+      },
+      {
+        "id": "prefab",
+        "ja": "プレハブ外壁",
+        "en": "Prefabricated Wall"
+      },
+      {
+        "id": "other",
+        "ja": "その他",
+        "en": "Other"
+      }
+    ],
+    "outfill_roof": [
+      {
+        "id": "wood",
+        "ja": "木造",
+        "en": "Timber"
+      },
+      {
+        "id": "mass_timber",
+        "ja": "Mass Timber",
+        "en": "Mass Timber"
+      },
+      {
+        "id": "metal",
+        "ja": "金属屋根",
+        "en": "Metal Roof"
+      },
+      {
+        "id": "rc",
+        "ja": "RC屋根",
+        "en": "RC Roof"
+      },
+      {
+        "id": "earth",
+        "ja": "土屋根",
+        "en": "Earth Roof"
+      },
+      {
+        "id": "prefab",
+        "ja": "プレハブ屋根",
+        "en": "Prefabricated Roof"
+      },
+      {
+        "id": "other",
+        "ja": "その他",
+        "en": "Other"
+      }
+    ]
+  },
+  "methods": {
+    "wood_post_beam": [
+      {
+        "id": "traditional",
+        "ja": "在来軸組",
+        "en": "Traditional Post-and-Beam"
+      },
+      {
+        "id": "hardware",
+        "ja": "金物工法",
+        "en": "Metal Connector System"
+      },
+      {
+        "id": "se",
+        "ja": "SE構法",
+        "en": "SE System"
+      },
+      {
+        "id": "post_beam",
+        "ja": "ポスト&ビーム",
+        "en": "Post & Beam"
+      },
+      {
+        "id": "timber_frame_post_beam",
+        "ja": "Timber Frame（柱梁式）",
+        "en": "Timber Frame (Post-and-Beam)"
+      }
+    ],
+    "wood_frame": [
+      {
+        "id": "2x4",
+        "ja": "2×4",
+        "en": "2×4"
+      },
+      {
+        "id": "2x6",
+        "ja": "2×6",
+        "en": "2×6"
+      },
+      {
+        "id": "platform",
+        "ja": "Platform Framing",
+        "en": "Platform Framing"
+      },
+      {
+        "id": "balloon",
+        "ja": "Balloon Framing",
+        "en": "Balloon Framing"
+      },
+      {
+        "id": "timber_frame_wall",
+        "ja": "Timber Frame（壁式）",
+        "en": "Timber Frame (Wall System)"
+      }
+    ],
+    "mass_timber": [
+      {
+        "id": "clt",
+        "ja": "CLT",
+        "en": "CLT"
+      },
+      {
+        "id": "glt",
+        "ja": "GLT",
+        "en": "GLT"
+      },
+      {
+        "id": "lvl",
+        "ja": "LVL",
+        "en": "LVL"
+      },
+      {
+        "id": "nlt",
+        "ja": "NLT",
+        "en": "NLT"
+      },
+      {
+        "id": "dlt",
+        "ja": "DLT",
+        "en": "DLT"
+      },
+      {
+        "id": "mass_plywood",
+        "ja": "Mass Plywood",
+        "en": "Mass Plywood"
+      }
+    ],
+    "rc_frame": [
+      {
+        "id": "conventional_rc",
+        "ja": "一般RC",
+        "en": "Conventional RC"
+      },
+      {
+        "id": "rcc_frame",
+        "ja": "RCC Frame",
+        "en": "RCC Frame"
+      },
+      {
+        "id": "icf",
+        "ja": "ICF",
+        "en": "ICF"
+      },
+      {
+        "id": "precast_rc",
+        "ja": "プレキャストRC",
+        "en": "Precast RC"
+      },
+      {
+        "id": "src",
+        "ja": "SRC",
+        "en": "SRC"
+      }
+    ],
+    "masonry": [
+      {
+        "id": "brick",
+        "ja": "レンガ造",
+        "en": "Brick Masonry"
+      },
+      {
+        "id": "cmu",
+        "ja": "CMU",
+        "en": "CMU"
+      },
+      {
+        "id": "aac",
+        "ja": "AAC",
+        "en": "AAC"
+      },
+      {
+        "id": "maconnerie",
+        "ja": "Maçonnerie",
+        "en": "Maçonnerie"
+      },
+      {
+        "id": "stone",
+        "ja": "石造",
+        "en": "Stone Masonry"
+      }
+    ],
+    "earth": [
+      {
+        "id": "adobe",
+        "ja": "Adobe",
+        "en": "Adobe"
+      },
+      {
+        "id": "rammed_earth",
+        "ja": "Rammed Earth",
+        "en": "Rammed Earth"
+      },
+      {
+        "id": "cob",
+        "ja": "Cob",
+        "en": "Cob"
+      },
+      {
+        "id": "earth_wall",
+        "ja": "土壁",
+        "en": "Earth Wall"
+      }
+    ],
+    "wood_prefab": [
+      {
+        "id": "wood_unit",
+        "ja": "木質ユニット",
+        "en": "Timber Unit"
+      },
+      {
+        "id": "modular",
+        "ja": "モジュール住宅",
+        "en": "Modular Home"
+      }
+    ],
+    "metal_prefab": [
+      {
+        "id": "steel_unit",
+        "ja": "鉄骨ユニット",
+        "en": "Steel Unit"
+      },
+      {
+        "id": "metal_module",
+        "ja": "金属モジュール",
+        "en": "Metal Module"
+      }
+    ],
+    "steel": [
+      {
+        "id": "conventional_steel",
+        "ja": "一般鉄骨造",
+        "en": "Conventional Steel Frame"
+      },
+      {
+        "id": "light_gauge_steel",
+        "ja": "軽量鉄骨造",
+        "en": "Light-Gauge Steel Frame"
+      },
+      {
+        "id": "heavy_steel",
+        "ja": "重量鉄骨造",
+        "en": "Heavy Steel Frame"
+      },
+      {
+        "id": "peb",
+        "ja": "PEB（プレエンジニアード）",
+        "en": "Pre-Engineered Building"
+      },
+      {
+        "id": "steel_prefab",
+        "ja": "鉄骨プレハブ",
+        "en": "Steel Prefabricated"
+      }
+    ],
+    "rc_wall": [
+      {
+        "id": "cast_in_place",
+        "ja": "現場打ちRC壁式",
+        "en": "Cast-in-Place RC Wall"
+      },
+      {
+        "id": "precast_wall",
+        "ja": "プレキャストRC壁式",
+        "en": "Precast RC Wall"
+      },
+      {
+        "id": "insulated_rc_panel",
+        "ja": "断熱RCパネル",
+        "en": "Insulated RC Panel"
+      }
+    ],
+    "other": [
+      {
+        "id": "modular",
+        "ja": "モジュール工法",
+        "en": "Modular Construction"
+      },
+      {
+        "id": "manufactured_home",
+        "ja": "マニュファクチャード・ホーム",
+        "en": "Manufactured Home"
+      },
+      {
+        "id": "three_d_printed",
+        "ja": "3Dプリント工法",
+        "en": "3D-Printed Construction"
+      },
+      {
+        "id": "hybrid",
+        "ja": "複合・ハイブリッド工法",
+        "en": "Hybrid Construction"
+      },
+      {
+        "id": "other",
+        "ja": "その他",
+        "en": "Other"
+      }
+    ],
+    "rc": [
+      {
+        "id": "cast_in_place",
+        "ja": "現場打ちRC",
+        "en": "Cast-in-Place RC"
+      },
+      {
+        "id": "precast_rc",
+        "ja": "プレキャストRC",
+        "en": "Precast RC"
+      },
+      {
+        "id": "icf",
+        "ja": "ICF",
+        "en": "Insulated Concrete Formwork"
+      }
+    ],
+    "stone": [
+      {
+        "id": "cut_stone",
+        "ja": "切石積み",
+        "en": "Cut Stone Masonry"
+      },
+      {
+        "id": "rubble_stone",
+        "ja": "野面石積み",
+        "en": "Rubble Stone Masonry"
+      },
+      {
+        "id": "reinforced_stone",
+        "ja": "補強石造",
+        "en": "Reinforced Stone Masonry"
+      }
+    ],
+    "brick": [
+      {
+        "id": "fired_brick",
+        "ja": "焼成レンガ造",
+        "en": "Fired Brick Masonry"
+      },
+      {
+        "id": "reinforced_brick",
+        "ja": "補強レンガ造",
+        "en": "Reinforced Brick Masonry"
+      },
+      {
+        "id": "cavity_brick",
+        "ja": "中空・二重レンガ造",
+        "en": "Cavity Brick Masonry"
+      }
+    ],
+    "block": [
+      {
+        "id": "cmu",
+        "ja": "CMU・コンクリートブロック",
+        "en": "CMU / Concrete Block"
+      },
+      {
+        "id": "aac",
+        "ja": "AACブロック",
+        "en": "AAC Block"
+      },
+      {
+        "id": "reinforced_block",
+        "ja": "補強ブロック造",
+        "en": "Reinforced Block Masonry"
+      }
+    ]
+  },
+  "interior_substrates": [
+    {
+      "id": "wood",
+      "ja": "木下地",
+      "en": "Timber Stud"
+    },
+    {
+      "id": "lgs",
+      "ja": "LGS",
+      "en": "Light-Gauge Steel"
+    },
+    {
+      "id": "direct",
+      "ja": "躯体直貼り",
+      "en": "Direct to Structure"
+    },
+    {
+      "id": "exposed",
+      "ja": "躯体現し",
+      "en": "Exposed Structure"
+    },
+    {
+      "id": "other",
+      "ja": "その他",
+      "en": "Other"
+    }
+  ],
+  "insulation_positions": [
+    {
+      "id": "external",
+      "ja": "外断熱",
+      "en": "External Insulation"
+    },
+    {
+      "id": "internal",
+      "ja": "内断熱",
+      "en": "Internal Insulation"
+    },
+    {
+      "id": "cavity",
+      "ja": "充填断熱",
+      "en": "Cavity Insulation"
+    },
+    {
+      "id": "additional",
+      "ja": "付加断熱",
+      "en": "Additional Insulation"
+    },
+    {
+      "id": "combined",
+      "ja": "複合断熱",
+      "en": "Combined Insulation"
+    }
+  ],
+  "version": "2.0",
+  "core_methods": {
+    "rc": [
+      {
+        "id": "cast_in_place",
+        "ja": "現場打ちRC",
+        "en": "Cast-in-Place RC"
+      },
+      {
+        "id": "precast_rc",
+        "ja": "プレキャストRC",
+        "en": "Precast RC"
+      },
+      {
+        "id": "icf",
+        "ja": "ICF",
+        "en": "Insulated Concrete Formwork"
+      }
+    ],
+    "stone": [
+      {
+        "id": "cut_stone",
+        "ja": "切石積み",
+        "en": "Cut Stone Masonry"
+      },
+      {
+        "id": "rubble_stone",
+        "ja": "野面石積み",
+        "en": "Rubble Stone Masonry"
+      },
+      {
+        "id": "reinforced_stone",
+        "ja": "補強石造",
+        "en": "Reinforced Stone Masonry"
+      }
+    ],
+    "brick": [
+      {
+        "id": "fired_brick",
+        "ja": "焼成レンガ造",
+        "en": "Fired Brick Masonry"
+      },
+      {
+        "id": "reinforced_brick",
+        "ja": "補強レンガ造",
+        "en": "Reinforced Brick Masonry"
+      },
+      {
+        "id": "cavity_brick",
+        "ja": "中空・二重レンガ造",
+        "en": "Cavity Brick Masonry"
+      }
+    ],
+    "block": [
+      {
+        "id": "cmu",
+        "ja": "CMU・コンクリートブロック",
+        "en": "CMU / Concrete Block"
+      },
+      {
+        "id": "aac",
+        "ja": "AACブロック",
+        "en": "AAC Block"
+      },
+      {
+        "id": "reinforced_block",
+        "ja": "補強ブロック造",
+        "en": "Reinforced Block Masonry"
+      }
+    ],
+    "earth": [
+      {
+        "id": "adobe",
+        "ja": "Adobe",
+        "en": "Adobe"
+      },
+      {
+        "id": "rammed_earth",
+        "ja": "Rammed Earth",
+        "en": "Rammed Earth"
+      },
+      {
+        "id": "cob",
+        "ja": "Cob",
+        "en": "Cob"
+      },
+      {
+        "id": "earth_wall",
+        "ja": "土壁",
+        "en": "Earth Wall"
+      }
+    ]
+  },
+  "outfill_wall_methods": {
+    "wood": [
+      {
+        "id": "timber_cladding",
+        "ja": "木板張り",
+        "en": "Timber Cladding"
+      },
+      {
+        "id": "wood_frame_panel",
+        "ja": "木造パネル外壁",
+        "en": "Timber Framed Panel"
+      },
+      {
+        "id": "prefab_wood_panel",
+        "ja": "木質プレハブパネル",
+        "en": "Prefabricated Timber Panel"
+      }
+    ],
+    "mass_timber": [
+      {
+        "id": "clt",
+        "ja": "CLT",
+        "en": "CLT"
+      },
+      {
+        "id": "glt",
+        "ja": "GLT",
+        "en": "GLT"
+      },
+      {
+        "id": "lvl",
+        "ja": "LVL",
+        "en": "LVL"
+      },
+      {
+        "id": "nlt",
+        "ja": "NLT",
+        "en": "NLT"
+      },
+      {
+        "id": "dlt",
+        "ja": "DLT",
+        "en": "DLT"
+      },
+      {
+        "id": "mass_plywood",
+        "ja": "Mass Plywood",
+        "en": "Mass Plywood"
+      }
+    ],
+    "stone": [
+      {
+        "id": "cut_stone",
+        "ja": "切石積み",
+        "en": "Cut Stone Masonry"
+      },
+      {
+        "id": "rubble_stone",
+        "ja": "野面石積み",
+        "en": "Rubble Stone Masonry"
+      },
+      {
+        "id": "reinforced_stone",
+        "ja": "補強石造",
+        "en": "Reinforced Stone Masonry"
+      }
+    ],
+    "brick": [
+      {
+        "id": "fired_brick",
+        "ja": "焼成レンガ造",
+        "en": "Fired Brick Masonry"
+      },
+      {
+        "id": "reinforced_brick",
+        "ja": "補強レンガ造",
+        "en": "Reinforced Brick Masonry"
+      },
+      {
+        "id": "cavity_brick",
+        "ja": "中空・二重レンガ造",
+        "en": "Cavity Brick Masonry"
+      }
+    ],
+    "block": [
+      {
+        "id": "cmu",
+        "ja": "CMU・コンクリートブロック",
+        "en": "CMU / Concrete Block"
+      },
+      {
+        "id": "aac",
+        "ja": "AACブロック",
+        "en": "AAC Block"
+      },
+      {
+        "id": "reinforced_block",
+        "ja": "補強ブロック造",
+        "en": "Reinforced Block Masonry"
+      }
+    ],
+    "earth": [
+      {
+        "id": "adobe",
+        "ja": "Adobe",
+        "en": "Adobe"
+      },
+      {
+        "id": "rammed_earth",
+        "ja": "Rammed Earth",
+        "en": "Rammed Earth"
+      },
+      {
+        "id": "cob",
+        "ja": "Cob",
+        "en": "Cob"
+      },
+      {
+        "id": "earth_wall",
+        "ja": "土壁",
+        "en": "Earth Wall"
+      }
+    ],
+    "metal_panel": [
+      {
+        "id": "steel_panel",
+        "ja": "鋼板パネル",
+        "en": "Steel Panel"
+      },
+      {
+        "id": "aluminum_panel",
+        "ja": "アルミパネル",
+        "en": "Aluminium Panel"
+      },
+      {
+        "id": "sandwich_panel",
+        "ja": "断熱サンドイッチパネル",
+        "en": "Insulated Sandwich Panel"
+      }
+    ],
+    "prefab": [
+      {
+        "id": "timber_prefab_wall",
+        "ja": "木造プレハブ外壁",
+        "en": "Timber Prefabricated Wall"
+      },
+      {
+        "id": "metal_prefab_wall",
+        "ja": "金属プレハブ外壁",
+        "en": "Metal Prefabricated Wall"
+      },
+      {
+        "id": "rc_prefab_wall",
+        "ja": "RCプレハブ外壁",
+        "en": "RC Prefabricated Wall"
+      }
+    ],
+    "other": [
+      {
+        "id": "other",
+        "ja": "その他",
+        "en": "Other"
+      }
+    ]
+  },
+  "outfill_roof_methods": {
+    "wood": [
+      {
+        "id": "timber_truss",
+        "ja": "木造トラス屋根",
+        "en": "Timber Truss Roof"
+      },
+      {
+        "id": "rafter",
+        "ja": "垂木屋根",
+        "en": "Rafter Roof"
+      },
+      {
+        "id": "prefab_wood_roof",
+        "ja": "木造プレハブ屋根",
+        "en": "Prefabricated Timber Roof"
+      }
+    ],
+    "mass_timber": [
+      {
+        "id": "clt",
+        "ja": "CLT",
+        "en": "CLT"
+      },
+      {
+        "id": "glt",
+        "ja": "GLT",
+        "en": "GLT"
+      },
+      {
+        "id": "lvl",
+        "ja": "LVL",
+        "en": "LVL"
+      },
+      {
+        "id": "nlt",
+        "ja": "NLT",
+        "en": "NLT"
+      },
+      {
+        "id": "dlt",
+        "ja": "DLT",
+        "en": "DLT"
+      },
+      {
+        "id": "mass_plywood",
+        "ja": "Mass Plywood",
+        "en": "Mass Plywood"
+      }
+    ],
+    "metal": [
+      {
+        "id": "standing_seam",
+        "ja": "立平・立はぜ葺き",
+        "en": "Standing Seam Metal Roof"
+      },
+      {
+        "id": "metal_panel",
+        "ja": "金属屋根パネル",
+        "en": "Metal Roof Panel"
+      },
+      {
+        "id": "steel_truss",
+        "ja": "鉄骨トラス屋根",
+        "en": "Steel Truss Roof"
+      }
+    ],
+    "rc": [
+      {
+        "id": "cast_in_place_slab",
+        "ja": "現場打ちRC屋根スラブ",
+        "en": "Cast-in-Place RC Roof Slab"
+      },
+      {
+        "id": "precast_slab",
+        "ja": "プレキャストRC屋根",
+        "en": "Precast RC Roof"
+      }
+    ],
+    "earth": [
+      {
+        "id": "earth_roof",
+        "ja": "土屋根",
+        "en": "Earth Roof"
+      },
+      {
+        "id": "green_roof",
+        "ja": "屋上緑化・グリーンルーフ",
+        "en": "Green Roof"
+      }
+    ],
+    "prefab": [
+      {
+        "id": "timber_prefab_roof",
+        "ja": "木造プレハブ屋根",
+        "en": "Timber Prefabricated Roof"
+      },
+      {
+        "id": "metal_prefab_roof",
+        "ja": "金属プレハブ屋根",
+        "en": "Metal Prefabricated Roof"
+      },
+      {
+        "id": "rc_prefab_roof",
+        "ja": "RCプレハブ屋根",
+        "en": "RC Prefabricated Roof"
+      }
+    ],
+    "other": [
+      {
+        "id": "other",
+        "ja": "その他",
+        "en": "Other"
+      }
+    ]
+  },
+  "prefabrication_types": [
+    {
+      "id": "none",
+      "ja": "なし",
+      "en": "None"
+    },
+    {
+      "id": "partial",
+      "ja": "部分プレハブ化",
+      "en": "Partial Prefabrication"
+    },
+    {
+      "id": "panelized",
+      "ja": "パネル化",
+      "en": "Panelized"
+    },
+    {
+      "id": "volumetric_module",
+      "ja": "立体モジュール化",
+      "en": "Volumetric Modular"
+    },
+    {
+      "id": "full_factory",
+      "ja": "工場完成型",
+      "en": "Factory-Completed"
+    }
+  ],
+  "interior_partition_systems": [
+    {
+      "id": "wood_stud",
+      "ja": "木下地間仕切り",
+      "en": "Timber Stud Partition"
+    },
+    {
+      "id": "lgs",
+      "ja": "LGS間仕切り",
+      "en": "LGS Partition"
+    },
+    {
+      "id": "masonry",
+      "ja": "組積間仕切り",
+      "en": "Masonry Partition"
+    },
+    {
+      "id": "panel",
+      "ja": "パネル間仕切り",
+      "en": "Panel Partition"
+    },
+    {
+      "id": "movable",
+      "ja": "可動間仕切り",
+      "en": "Movable Partition"
+    },
+    {
+      "id": "none",
+      "ja": "間仕切りなし",
+      "en": "No Partition"
+    }
+  ]
+}

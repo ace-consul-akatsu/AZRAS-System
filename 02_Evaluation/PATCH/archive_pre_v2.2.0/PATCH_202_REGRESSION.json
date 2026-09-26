@@ -1,0 +1,15 @@
+{
+  "patch": 202,
+  "version": "1.0.202",
+  "expected": {
+    "2x6_dimension_lumber_m3": 9.415904,
+    "azras_dimension_lumber_m3": 7.856688,
+    "rc_internal_partition_lgs_steel_t": 0.30557
+  },
+  "invariants": [
+    "new timber totals map to dimension_lumber",
+    "RC LGS total maps to structural_steel",
+    "rc_frame allow-list accepts permanent LGS steel",
+    "audit-only component rows remain excluded"
+  ]
+}

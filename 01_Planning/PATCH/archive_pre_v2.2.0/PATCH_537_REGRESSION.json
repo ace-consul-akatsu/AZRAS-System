@@ -1,0 +1,15 @@
+{
+  "patch": 537,
+  "tests": {
+    "module1_missing_north_save_gate": "implemented",
+    "module5_north_only_fingerprint_unchanged": true,
+    "module5_quantity_change_fingerprint_changes": true,
+    "python_compile": "passed"
+  },
+  "expected_workflow_after_north_only_change": [
+    "Module 1 save",
+    "Module 2 recalculate and save",
+    "Module 9 generate regional Projects"
+  ],
+  "module5_recalculation_required": false
+}

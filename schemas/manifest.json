@@ -1,0 +1,13 @@
+{
+  "purpose": "Public copies of the schemas used by the AZRAS System v2.2.0 products. The originals inside the product folders are what the software reads; tests/check_schemas.py fails if any copy here differs from its original.",
+  "schemas": [
+    {"file": "project_schema_v3_0.json", "title": "Project JSON schema 3.0 (the save format of Planning and Evaluation, read by Compare)",
+     "originals": ["01_Planning/data/project_schema_v3_0.json", "02_Evaluation/data/project_schema_v3_0.json"]},
+    {"file": "AZRAS_AI_TAKEOFF_SCHEMA_v1.0.json", "title": "AI quantity-takeoff answer returned by each AI",
+     "originals": ["01_Planning/module1/AZRAS_AI_TAKEOFF_SCHEMA_v1.0.json"]},
+    {"file": "AZRAS_AI_TAKEOFF_FINAL_REVIEW_SCHEMA_v1.0.json", "title": "Final review of the AI takeoff (after comparing the independent answers)",
+     "originals": ["01_Planning/module1/AZRAS_AI_TAKEOFF_FINAL_REVIEW_SCHEMA_v1.0.json"]},
+    {"file": "AZRAS_AI_Return_Metadata_Schema_v1.1.json", "title": "Metadata each AI returns for longitudinal observation of AI drawing reading",
+     "originals": ["01_Planning/resources/ai_takeoff_contract/AZRAS_AI_Return_Metadata_Schema_v1.1.json"]}
+  ]
+}

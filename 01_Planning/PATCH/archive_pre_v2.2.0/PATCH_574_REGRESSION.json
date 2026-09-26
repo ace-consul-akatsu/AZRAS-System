@@ -1,0 +1,34 @@
+{
+  "patch": 574,
+  "version": "1.0.574",
+  "feature": "AI response filename auto-normalization",
+  "tests": [
+    {
+      "case": "Claude canonical input",
+      "input": "260908_0447_AZRAS_AI_Takeoff_260908_AZRAS_Sample_claude.json",
+      "expected": "unchanged canonical filename"
+    },
+    {
+      "case": "Meta transport hyphens + MetaAI alias",
+      "input": "260908-0447-AZRAS-AI-Takeoff-260908-AZRAS-Sample-MetaAI.json",
+      "expected": "260908_0447_AZRAS_AI_Takeoff_260908_AZRAS_Sample_meta.json"
+    },
+    {
+      "case": "Gemini generic browser name",
+      "input": "gemini-code-1788842756508.json",
+      "expected": "260908_0444_AZRAS_AI_Takeoff_260908_AZRAS_Sample_gemini.json"
+    },
+    {
+      "case": "raw evidence preservation",
+      "expected": "source transport file is not overwritten when canonical copy differs"
+    },
+    {
+      "case": "UTC mismatch",
+      "expected": "reject before canonicalization"
+    },
+    {
+      "case": "canonical collision different content",
+      "expected": "reject without overwrite"
+    }
+  ]
+}

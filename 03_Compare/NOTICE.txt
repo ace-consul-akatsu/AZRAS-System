@@ -1,0 +1,8 @@
+AZRAS Compare v2.2.0
+
+Developed and provided by:
+ACE Comprehensive Consulting Co., Ltd.
+株式会社ACE総合コンサル
+
+Copyright (C) 2026 ACE Comprehensive Consulting Co., Ltd.
+See LICENSE.txt for permissions and disclaimer.

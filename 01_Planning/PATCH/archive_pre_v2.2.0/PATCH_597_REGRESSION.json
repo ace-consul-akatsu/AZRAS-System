@@ -1,0 +1,13 @@
+{
+  "version": "1.0.597",
+  "tests": {
+    "module1_compile": true,
+    "new_FINAL_conflict_reopens_old_human_answer": true,
+    "compound_exterior_wall_two_fields": true,
+    "PATCH_596_NameError_fix_preserved": true,
+    "PATCH_595_guard": true,
+    "PATCH_594_transaction": true,
+    "PATCH_593_viewer": true,
+    "PATCH_592_safe_save": true
+  }
+}

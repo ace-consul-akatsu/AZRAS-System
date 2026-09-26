@@ -1,0 +1,31 @@
+{
+  "patch": 197,
+  "input_projects": [
+    "260906_2×6_Sample(1).json",
+    "260906_azars_Sample(1).json",
+    "260906_RC_MRF_Sample(1).json"
+  ],
+  "material_quantity_source": "module1 canonical physical ownership bridge",
+  "results": {
+    "2x6": {
+      "concrete_m3": 12.255,
+      "reinforcing_steel_t": 1.2255,
+      "net_lifecycle_co2_kg": 1226574.95
+    },
+    "azras": {
+      "concrete_m3": 93.51,
+      "reinforcing_steel_t": 8.4159,
+      "net_lifecycle_co2_kg": 1172301.377,
+      "stale_module5_concrete_m3": 216.06,
+      "stale_module5_rebar_t": 19.4454
+    },
+    "rc_frame": {
+      "concrete_m3": 129.419064,
+      "reinforcing_steel_t": 15.53028768,
+      "net_lifecycle_co2_kg": 1255447.309,
+      "stale_module5_concrete_m3": 243.087676,
+      "stale_module5_rebar_t": 29.17052112
+    }
+  },
+  "policy": "Module 4 never treats saved Module 5 quantity breakdown as authoritative; stale mismatch is logged only."
+}

@@ -1,0 +1,10 @@
+# AZRAS Planning - Python runtime/build dependencies (version: VERSION.json)
+# Tkinter is included with the standard Windows Python installer.
+numpy
+pandas
+Pillow
+opencv-python
+PyMuPDF
+pypdf
+reportlab
+pyflakes  # used by dev_checks only

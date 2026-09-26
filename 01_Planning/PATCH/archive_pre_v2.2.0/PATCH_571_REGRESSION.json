@@ -1,0 +1,12 @@
+{
+  "patch": 571,
+  "version": "1.0.571",
+  "utc_artifact_prefix": "260908_0221",
+  "checks": {
+    "compileall": true,
+    "single_ui_location_field": true,
+    "authoritative_project_location": true,
+    "legacy_city_address_fallback": true,
+    "approx_cost_uses_unified_location": true
+  }
+}

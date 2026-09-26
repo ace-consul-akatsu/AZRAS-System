@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.1",
+  "region_key": "Thailand / Bangkok",
+  "data_date": "2026-08-21",
+  "last_checked_date": "2026-08-21",
+  "source_name": "Arcadis Asia Q1 2025 Bangkok building-cost ranges; planning midpoint basis",
+  "source_type": "market_benchmark_derived_planning_estimate",
+  "source_references": [
+    "https://www.arcadis.com/en/insights/asia/quarterly-construction-cost-review"
+  ],
+  "status": "estimated",
+  "currency": "THB",
+  "fx_jpy_per_local_currency": 4.72,
+  "fx_snapshot_date": "2026-08-21",
+  "regional_indices": {
+    "material_index": 48.0,
+    "labor_index": 39.0,
+    "productivity_index": 104.0
+  },
+  "whole_building_benchmark": {
+    "usd_per_m2": 1200.0,
+    "basis": "generalized building-cost planning benchmark",
+    "source_year": 2025
+  },
+  "unit_costs": {},
+  "unit_costs_status": "city_initial_estimate_via_regional_indices_all_base_items",
+  "note_ja": "代表都市の企画比較用初期値。工事項目別の現地確認済み単価ではない。AZRAS基準単価表の全工種へ地域指数を適用し、現地Unit Rate/見積が登録された項目はそちらを優先する。",
+  "note_en": "Planning-stage initial city profile. It is not a set of verified local trade quotations. Regional indices are applied to the complete AZRAS base cost-item set; verified local unit rates take priority when added."
+}

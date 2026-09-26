@@ -1,0 +1,11 @@
+{
+  "version": "1.0.626",
+  "tests": {
+    "module1_compiles": true,
+    "repair_recomputes_stale_zero_ceiling_using_actual_project_figures": true,
+    "repair_result_matches_expected_270_288118_m2": true,
+    "repair_skips_already_resolved_ceiling_row": true,
+    "substrate_area_and_length_rows_cascade_updated": true,
+    "root_footprint_detection_gap_in_reconcile_function_not_fixed_documented": true
+  }
+}

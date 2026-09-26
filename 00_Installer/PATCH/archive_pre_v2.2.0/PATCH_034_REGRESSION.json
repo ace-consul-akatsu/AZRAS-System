@@ -1,0 +1,11 @@
+{
+  "version": "5.0.4-p034",
+  "tests": {
+    "azras_launcher_compiles": true,
+    "short_folder_alias_01_planning_recognized": true,
+    "short_folder_alias_02_evaluation_recognized": true,
+    "short_folder_alias_03_compare_recognized": true,
+    "reproduced_reported_layout_now_resolves": true,
+    "canonical_0N_AZRAS_names_still_supported": true
+  }
+}

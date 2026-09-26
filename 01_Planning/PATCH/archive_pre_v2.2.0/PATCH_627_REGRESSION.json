@@ -1,0 +1,10 @@
+{
+  "version": "1.0.627",
+  "tests": {
+    "module1_compiles": true,
+    "repair_call_moved_into_synchronize_function": true,
+    "redundant_call_in_publish_function_removed": true,
+    "verified_footprint_and_slope_factor_present_in_actual_002_project": true,
+    "repair_formula_logic_unchanged_from_patch_626": true
+  }
+}

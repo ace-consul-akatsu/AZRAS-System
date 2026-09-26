@@ -1,0 +1,12 @@
+{
+  "version": "1.0.630",
+  "tests": {
+    "module1_compiles": true,
+    "four_requested_translations_added": true,
+    "full_item_name_audit_performed": true,
+    "42_additional_translation_gaps_closed": true,
+    "zero_untranslated_english_item_names_remaining_excluding_schema_text": true,
+    "no_new_duplicate_keys_introduced": true,
+    "pre_existing_duplicate_keys_noted_but_out_of_scope": true
+  }
+}

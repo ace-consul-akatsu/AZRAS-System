@@ -1,0 +1,11 @@
+AZRAS Installer v5.0.4
+Developed and provided by ACE Comprehensive Consulting Co., Ltd. / 株式会社ACE総合コンサル
+Copyright (C) 2026 ACE Comprehensive Consulting Co., Ltd.
+
+Role:
+- initial environment setup
+- one representative AZRAS shortcut
+- launcher for current AZRAS v2.2.0 products: Planning / Evaluation / Compare
+
+Validated release set:
+AZRAS v2.2.0 baseline: Planning 2.2.0 PATCH_048 / Evaluation 2.2.0 PATCH_010 / Compare 2.2.0 PATCH_007

@@ -1,0 +1,14 @@
+{
+  "patch": 531,
+  "policy": {
+    "confirmed": "include",
+    "assumed_yellow": "include",
+    "unknown_red": "exclude",
+    "spec_only": "exclude",
+    "audit_only": "exclude"
+  },
+  "notes": [
+    "stale blocked flag is overridden only when the persisted display/adoption state explicitly says yellow/assumed",
+    "MEP detail remains excluded while package is monetary owner"
+  ]
+}

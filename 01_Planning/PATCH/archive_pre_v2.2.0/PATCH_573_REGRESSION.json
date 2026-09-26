@@ -1,0 +1,13 @@
+{
+  "patch": 573,
+  "base_version": "1.0.572",
+  "target_version": "1.0.573",
+  "checks": [
+    "identity_hard_gate",
+    "required_filename_fallback",
+    "meta_token_is_meta",
+    "opening_spatial_door_association",
+    "false_100_percent_scope_audit",
+    "utc_minute_consistency"
+  ]
+}

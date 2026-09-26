@@ -1,0 +1,11 @@
+{
+  "version": "1.0.625",
+  "tests": {
+    "module1_compiles": true,
+    "saved_m1_window_prefers_source_text_original_item_in_japanese": true,
+    "saved_m1_window_falls_back_to_canonical_item_when_original_missing": true,
+    "english_ui_behavior_unchanged": true,
+    "no_stored_project_json_data_changed": true,
+    "known_limitation_documented_pre_takeoff_english_placeholder_rows": true
+  }
+}

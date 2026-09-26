@@ -1,0 +1,48 @@
+{
+  "AZRAS": {
+    "roof_type": "gable_or_composite",
+    "planes": [
+      {
+        "name": "Roof plane 1",
+        "area_m2": 0.0,
+        "azimuth_deg": 180.0,
+        "slope_deg": 5.71,
+        "assembly_key": "AZRAS",
+        "solar_absorptance": 0.55,
+        "skylights": [],
+        "project_quantity_policy": "unresolved until current Project/drawing supplies roof geometry"
+      }
+    ]
+  },
+  "2x6 Timber": {
+    "roof_type": "gable_or_composite",
+    "planes": [
+      {
+        "name": "Roof plane 1",
+        "area_m2": 0.0,
+        "azimuth_deg": 180.0,
+        "slope_deg": 5.71,
+        "assembly_key": "2x6 Timber",
+        "solar_absorptance": 0.55,
+        "skylights": [],
+        "project_quantity_policy": "unresolved until current Project/drawing supplies roof geometry"
+      }
+    ]
+  },
+  "RC Frame": {
+    "roof_type": "flat",
+    "planes": [
+      {
+        "name": "RC flat roof",
+        "area_m2": 0.0,
+        "azimuth_deg": 180.0,
+        "slope_deg": 0.0,
+        "assembly_key": "RC Frame",
+        "solar_absorptance": 0.65,
+        "skylights": [],
+        "project_quantity_policy": "unresolved until current Project/drawing supplies roof geometry"
+      }
+    ],
+    "profile_data_policy": "reference assembly only; no project-specific roof area"
+  }
+}

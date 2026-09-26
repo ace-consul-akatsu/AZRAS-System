@@ -1,0 +1,48 @@
+{
+  "AZRAS": {
+    "interior_finish": "Gypsum board 13 mm",
+    "structure": "2×6",
+    "insulation_material": "Phenolic foam",
+    "insulation_layers_mm": [
+      140,
+      60
+    ],
+    "total_insulation_mm": 200,
+    "structural_sheathing": "Structural plywood 12 mm",
+    "air_vapour_layer": "Continuous polyethylene air/vapour barrier",
+    "roofing": "Colour-coated standing-seam steel roofing",
+    "rc_slab_mm": 0,
+    "waterproofing_mm": 0
+  },
+  "2x6 Timber": {
+    "interior_finish": "Gypsum board 13 mm",
+    "structure": "2×6 studs approximately 38×140 mm",
+    "insulation_material": "Phenolic foam",
+    "insulation_layers_mm": [
+      140,
+      50
+    ],
+    "total_insulation_mm": 190,
+    "structural_sheathing": "Structural plywood 12 mm",
+    "weather_layer": "Breathable waterproof membrane",
+    "ventilated_cavity": "Furring ventilation cavity",
+    "roofing": "Colour-coated standing-seam steel roofing",
+    "rc_slab_mm": 0,
+    "waterproofing_mm": 0
+  },
+  "RC Frame": {
+    "interior_finish": "Gypsum board 13 mm",
+    "air_vapour_layer": "Continuous polyethylene air/vapour barrier",
+    "structure": "RC roof slab",
+    "rc_slab_mm": 150,
+    "insulation_material": "Phenolic foam",
+    "insulation_layers_mm": [
+      150
+    ],
+    "total_insulation_mm": 150,
+    "exterior_base": "Polymer cement + glass fibre mesh",
+    "waterproofing": "Exposed coating waterproof finish",
+    "waterproofing_mm": 5,
+    "roofing": "Exposed waterproof coating"
+  }
+}

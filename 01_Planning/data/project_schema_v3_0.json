@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "azras-project-schema-v3.0",
+  "title": "AZRAS Platform Project JSON V3.0",
+  "description": "Project JSON save format of AZRAS System v2.2.0 (SCHEMA_VERSION 3.0 in core/project_store.py). Same structure as V2.0; schema_version is 3.0. Older V2.0 files are migrated on load (see project_schema_v2_0.json).",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "platform_version",
+    "project_id",
+    "common",
+    "module_outputs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "3.0"
+    },
+    "platform_version": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "save_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "common": {
+      "type": "object",
+      "required": [
+        "project_identity",
+        "location",
+        "building",
+        "thermal",
+        "renewable_energy",
+        "comparison_interface"
+      ]
+    },
+    "module_outputs": {
+      "type": "object"
+    },
+    "comparison_export": {
+      "type": "object"
+    }
+  }
+}

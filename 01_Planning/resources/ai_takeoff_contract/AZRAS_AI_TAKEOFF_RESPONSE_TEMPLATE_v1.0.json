@@ -1,0 +1,83 @@
+{
+  "schema": "AZRAS_AI_TAKEOFF",
+  "schema_version": "1.0",
+  "canonical_language": "en",
+  "canonical_schema_version": "2.6",
+  "project": "<project_name>",
+  "required_filename": "YYMMDD_HHMM_AZRAS_AI_Takeoff_<project_name>_<ACTUAL_RESPONDER_TOKEN>.json",
+  "analysis": {
+    "type": "AI PDF quantity takeoff",
+    "ai_reviewer": "<actual AI name>",
+    "status": "incomplete",
+    "evolution_observation": {
+      "ai_model_version": null,
+      "response_timestamp": null,
+      "independent_answer": true,
+      "prior_answers_seen": false,
+      "other_ai_answers_seen": false
+    },
+    "drawing_coverage": [],
+    "completeness_audit": {},
+    "quantity_resolution_audit": {
+      "total_items": 0,
+      "numeric_items": 0,
+      "unresolved_items": 0,
+      "unresolved_with_missing_inputs": 0,
+      "calculable_unresolved_count": 0,
+      "resolution_rate_pct": 0.0,
+      "status": "partial"
+    },
+    "completion_gate": {
+      "expected_estimated_local_ids": [],
+      "returned_expected_local_ids": [],
+      "missing_expected_local_ids": [],
+      "duplicate_expected_local_ids": [],
+      "all_expected_rows_returned": false,
+      "takeoff_items_non_empty": false,
+      "final_json_validated": false
+    }
+  },
+  "building_profile": {
+    "geometry": {
+      "storeys": null,
+      "floor_areas_m2": [],
+      "gross_floor_area_m2": null,
+      "footprint_m2": null,
+      "roof_area_m2": null,
+      "exterior_wall_area_m2": null,
+      "window_area_m2": null,
+      "north_rotation_deg": null,
+      "orientation_evidence": {
+        "evidence_status": "unresolved",
+        "confidence": 0.0,
+        "source_file": null,
+        "source_page": null,
+        "drawing_no": null,
+        "drawing_name": null,
+        "source_text_original": null,
+        "calculation_basis": ""
+      }
+    },
+    "surfaces": []
+  },
+  "takeoff_items": [
+    {
+      "local_id": null,
+      "category": "<English canonical category>",
+      "item": "<English canonical item>",
+      "specification": "",
+      "quantity": null,
+      "unit": "<unit>",
+      "evidence_status": "unresolved",
+      "confidence": 0.0,
+      "resolution_action": "add_new",
+      "drawing_proof": [],
+      "calculation_basis": "",
+      "interpretation_basis": "",
+      "resolution_attempted": true,
+      "missing_inputs": [],
+      "checked_sources": [],
+      "uncertainty_note": ""
+    }
+  ]
+}

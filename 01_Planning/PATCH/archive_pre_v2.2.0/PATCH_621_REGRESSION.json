@@ -1,0 +1,15 @@
+{
+  "version": "1.0.621",
+  "tests": {
+    "full_tree_compiles": true,
+    "ai_contract_messages_no_longer_show_raw_codes": true,
+    "raw_codes_still_present_in_saved_contract_validation_json": true,
+    "friendly_exception_text_helper_added": true,
+    "friendly_exception_text_passes_valueerror_through_unchanged": true,
+    "no_raw_showerror_str_exc_remaining_in_planning_tree": true,
+    "i18n_default_is_en": true,
+    "i18n_fallback_for_unknown_code_is_en": true,
+    "lang_json_key_parity_unchanged_758_758": true,
+    "patch_587_patch_620_ai_takeoff_accept_reject_logic_untouched": true
+  }
+}

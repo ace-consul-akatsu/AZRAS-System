@@ -1,0 +1,32 @@
+{
+  "$schema": "https://azras.local/schemas/ai_evolution_return_metadata_v1.1.json",
+  "schema": "AZRAS_AI_EVOLUTION_RETURN_METADATA",
+  "schema_version": "1.1",
+  "description": "AI-origin metadata only. Embed under analysis.evolution_observation in the normal AZRAS_AI_TAKEOFF JSON when possible. AZRAS creates longitudinal comparisons after import.",
+  "analysis.evolution_observation": {
+    "ai_model_version": "Exact model/version if known, otherwise null",
+    "response_timestamp": "ISO8601 if known, otherwise null",
+    "independent_answer": true,
+    "prior_answers_seen": false,
+    "other_ai_answers_seen": false
+  },
+  "takeoff_item_fields_already_used_by_AZRAS": {
+    "value": "takeoff_items[].quantity",
+    "unit": "takeoff_items[].unit",
+    "confidence": "takeoff_items[].confidence",
+    "unresolved": "takeoff_items[].evidence_status == unresolved",
+    "drawing_proof": "takeoff_items[].drawing_proof",
+    "calculation_basis": "takeoff_items[].calculation_basis",
+    "interpretation_basis": "takeoff_items[].interpretation_basis",
+    "uncertainty_note": "takeoff_items[].uncertainty_note"
+  },
+  "azras_side_only": [
+    "previous_record_id",
+    "changed_from_previous",
+    "change_summary",
+    "cross_ai_variance_note",
+    "human_review",
+    "final_adopted_value"
+  ],
+  "required_filename": "Mandatory root field: UTC YYMMDD_HHMM_AZRAS_AI_Takeoff_<project>_<actual responder token>.json; use this when a service/browser cannot control the downloaded filename."
+}

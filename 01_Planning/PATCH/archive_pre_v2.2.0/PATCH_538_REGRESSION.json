@@ -1,0 +1,27 @@
+{
+  "patch": 538,
+  "version": "1.0.538",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "module9_provenance_recovery",
+      "result": "PASS",
+      "detail": "Blank Module 9 selection state is reconstructed only from derived regional JSONs explicitly linked to the active base Project by base_project_id/base_project_file."
+    },
+    {
+      "name": "module9_active_project_storage_rebind",
+      "result": "PASS",
+      "detail": "Module 9 refresh/download/persist/calculate paths now resolve Data/weather/coefficient roots from the live ProjectContext instead of retaining the Project active at window creation."
+    },
+    {
+      "name": "module1_module5_japanese_localization",
+      "result": "PASS",
+      "detail": "Representative RC-MRF canonical labels render as Japanese while canonical stored data remains English."
+    },
+    {
+      "name": "python_compile",
+      "result": "PASS",
+      "detail": "module9_ui.py, module1/app.py, module5/app.py and module0/app.py compiled successfully."
+    }
+  ]
+}

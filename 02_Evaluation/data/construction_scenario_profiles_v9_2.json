@@ -1,0 +1,135 @@
+{
+  "version": "9.2",
+  "profiles": {
+    "AZRAS": {
+      "ja": "AZRAS",
+      "en": "AZRAS",
+      "skeleton_component": "structure_rc_core",
+      "skeleton_service_life_years": 200,
+      "full_rebuild_years": [],
+      "skeleton_infill_strategy": "retain_skeleton_replace_infill",
+      "description_ja": "RCコアを200年保持する。定期点検は行うが、躯体材料の周期的交換は自動計上せず、劣化確認時のみ個別補修とする。木造・内装・設備インフィルは段階更新する。",
+      "description_en": "Retain the RC core for 200 years. Schedule inspections but do not assume cyclic skeleton material replacement; structural repairs are condition-based. Timber, interior and equipment infill are renewed in stages.",
+      "skeleton_repair_policy": "condition_based_no_automatic_material_replacement",
+      "default_rebuild_cycle_years": 0,
+      "rebuild_cycle_basis_ja": "Evaluation標準シナリオ：RCコアを保持し、全面建替えを行わない",
+      "rebuild_cycle_basis_en": "Evaluation standard scenario: retain the RC core; no full rebuild",
+      "rebuild_cycle_editable": false
+    },
+    "2x6 Timber": {
+      "ja": "2×6木造",
+      "en": "2×6 Timber",
+      "skeleton_component": "structure_timber",
+      "skeleton_service_life_years": 60,
+      "full_rebuild_years": [
+        60,
+        120,
+        180
+      ],
+      "skeleton_infill_strategy": "full_rebuild",
+      "description_ja": "同じ用途・規模で、60年ごとに間取りを更新して全面建替えする。200年評価の最終年には追加建替えを行わない。",
+      "description_en": "Rebuild fully at the same use and scale every 60 years with an updated layout. No additional rebuild is assumed at the end of the 200-year evaluation.",
+      "skeleton_repair_policy": "condition_based_no_automatic_material_replacement",
+      "default_rebuild_cycle_years": 60,
+      "rebuild_cycle_basis_ja": "Evaluation標準シナリオ：60年ごとに全面建替え（60・120・180年）",
+      "rebuild_cycle_basis_en": "Evaluation standard scenario: full rebuild every 60 years (years 60, 120 and 180)",
+      "rebuild_cycle_editable": true
+    },
+    "RC Frame": {
+      "ja": "RCラーメン",
+      "en": "RC Frame",
+      "skeleton_component": "structure_rc_frame",
+      "skeleton_service_life_years": 90,
+      "full_rebuild_years": [
+        90,
+        180
+      ],
+      "skeleton_infill_strategy": "repair_then_full_rebuild",
+      "description_ja": "RCラーメン躯体は定期点検・必要補修を行い、評価標準では90年ごとに同じ用途・規模で全面建替えする。90年は日本の公共用地補償における非木造建物等級別標準耐用年数表のうち、住宅・アパート等の鉄筋コンクリート造／鉄骨鉄筋コンクリート造90年を参考にした比較用標準値であり、実建物の物理的寿命を断定するものではない。",
+      "description_en": "The RC frame is inspected and repaired as needed. For Evaluation comparison, full rebuilding is assumed every 90 years (years 90 and 180). The 90-year reference is informed by Japan's public-land-acquisition compensation standard service-life table for RC/SRC residential and apartment buildings; it is a comparison default, not a claim of mandatory physical life.",
+      "skeleton_repair_policy": "condition_based_no_automatic_material_replacement",
+      "default_rebuild_cycle_years": 90,
+      "rebuild_cycle_basis_ja": "Evaluation標準シナリオ：90年ごとに全面建替え（90・180年）。根拠参考：日本の公共用地補償「非木造建物等級別標準耐用年数表」（住宅・アパート等、RC/SRC＝90年）。ユーザー変更可。",
+      "rebuild_cycle_basis_en": "Evaluation standard scenario: full rebuild every 90 years (years 90 and 180). Reference: Japanese public land-acquisition compensation standard service-life table (RC/SRC residential/apartment buildings = 90 years). User-editable.",
+      "rebuild_cycle_editable": true,
+      "reference_note": {
+        "country": "Japan",
+        "framework": "Public land acquisition / building compensation standard service-life table",
+        "rc_src_residential_years": 90,
+        "status": "comparison_reference_not_physical_life_limit"
+      }
+    },
+    "RC Wall": {
+      "ja": "RC壁式",
+      "en": "RC Wall Structure",
+      "skeleton_component": "structure_rc_wall",
+      "skeleton_service_life_years": 100,
+      "full_rebuild_years": [
+        100,
+        200
+      ],
+      "skeleton_infill_strategy": "repair_then_full_rebuild",
+      "description_ja": "RC壁式躯体を修繕し、設定年に同じ用途・規模で全面建替えする。",
+      "description_en": "Repair the RC wall structure and fully rebuild at the specified years.",
+      "skeleton_repair_policy": "condition_based_no_automatic_material_replacement",
+      "default_rebuild_cycle_years": 100,
+      "rebuild_cycle_basis_ja": "Evaluation標準シナリオ",
+      "rebuild_cycle_basis_en": "Evaluation standard scenario",
+      "rebuild_cycle_editable": true
+    },
+    "Steel Frame": {
+      "ja": "鉄骨造",
+      "en": "Steel Frame",
+      "skeleton_component": "structure_steel",
+      "skeleton_service_life_years": 75,
+      "full_rebuild_years": [
+        75,
+        150
+      ],
+      "skeleton_infill_strategy": "repair_then_full_rebuild",
+      "description_ja": "鉄骨躯体を修繕し、設定年に同じ用途・規模で全面建替えする。",
+      "description_en": "Repair the steel frame and fully rebuild at the specified years.",
+      "skeleton_repair_policy": "condition_based_no_automatic_material_replacement",
+      "default_rebuild_cycle_years": 75,
+      "rebuild_cycle_basis_ja": "Evaluation標準シナリオ",
+      "rebuild_cycle_basis_en": "Evaluation standard scenario",
+      "rebuild_cycle_editable": true
+    },
+    "CLT / Mass Timber": {
+      "ja": "CLT・Mass Timber",
+      "en": "CLT / Mass Timber",
+      "skeleton_component": "structure_clt",
+      "skeleton_service_life_years": 75,
+      "full_rebuild_years": [
+        75,
+        150
+      ],
+      "skeleton_infill_strategy": "repair_then_full_rebuild",
+      "description_ja": "木質スケルトンを修繕し、設定年に同じ用途・規模で全面建替えする。",
+      "description_en": "Repair the mass-timber skeleton and fully rebuild at the specified years.",
+      "skeleton_repair_policy": "condition_based_no_automatic_material_replacement",
+      "default_rebuild_cycle_years": 75,
+      "rebuild_cycle_basis_ja": "Evaluation標準シナリオ",
+      "rebuild_cycle_basis_en": "Evaluation standard scenario",
+      "rebuild_cycle_editable": true
+    },
+    "User Defined": {
+      "ja": "ユーザー定義",
+      "en": "User Defined",
+      "skeleton_component": "structure_rc_frame",
+      "skeleton_service_life_years": 100,
+      "full_rebuild_years": [
+        100,
+        200
+      ],
+      "skeleton_infill_strategy": "user_defined",
+      "description_ja": "利用者が各周期と建替え年を設定する。",
+      "description_en": "The user defines all cycles and rebuild years.",
+      "skeleton_repair_policy": "condition_based_no_automatic_material_replacement",
+      "default_rebuild_cycle_years": 100,
+      "rebuild_cycle_basis_ja": "Evaluation仮標準値。ユーザー確認・変更を前提とする",
+      "rebuild_cycle_basis_en": "Evaluation provisional default; user review/change expected",
+      "rebuild_cycle_editable": true
+    }
+  }
+}

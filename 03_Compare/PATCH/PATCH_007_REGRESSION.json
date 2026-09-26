@@ -1,0 +1,48 @@
+{
+  "patch": "PATCH_007",
+  "product": "03 AZRAS Compare",
+  "version": "2.2.0",
+  "date_utc": "260924",
+  "defect": "Market-rent Project reported its inactive target-yield preference as the target yield and listed it as a premise difference; README/NOTICE versions differed from VERSION.json",
+  "reproduction": {
+    "source": "02_Evaluation_09 services/investment_engine_v9_5.calculate_investment, market_rent, preference 6.5",
+    "module6": {
+      "summary": {
+        "target_gross_yield_percent": null,
+        "stored_target_gross_yield_percent": 6.5,
+        "target_gross_yield_active": false
+      },
+      "settings": {
+        "target_gross_yield_percent": 6.5,
+        "target_gross_yield_active": false
+      }
+    },
+    "before": {
+      "target_gross_yield_percent": 6.5
+    },
+    "after": {
+      "target_gross_yield_percent": null,
+      "target_gross_yield_active": false,
+      "stored_target_gross_yield_percent": 6.5
+    }
+  },
+  "self_check": "dev_checks/patch_007_market_rent_yield_contract_self_check.py",
+  "results": {
+    "duplicate_function_definition_self_check": "PASS",
+    "language_combobox_liveness_self_check": "PASS",
+    "patch_003_legend_layout_and_comparison_premise_self_check": "PASS",
+    "patch_004_snapshot_staleness_and_currency_self_check": "PASS",
+    "patch_005_comparison_premise_book_self_check": "PASS",
+    "patch_006_japanese_display_no_english_self_check": "PASS",
+    "patch_007_market_rent_yield_contract_self_check": "PASS",
+    "pyflakes": "no warnings",
+    "gui_startup_smoke": "PASS",
+    "version_consistency_self_check": "PASS",
+    "duplicate_dict_key_self_check": "PASS",
+    "pyflakes_undefined_names_self_check": "PASS",
+    "license_consistency_self_check": "PASS"
+  },
+  "defects": [
+    "LICENSE.txt was a custom permission text while the repository is MIT; now MIT (ACE Comprehensive Consulting Co., Ltd.)"
+  ]
+}

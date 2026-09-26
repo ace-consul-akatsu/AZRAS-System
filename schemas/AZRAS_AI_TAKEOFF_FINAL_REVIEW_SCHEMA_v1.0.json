@@ -1,0 +1,54 @@
+{
+  "schema": "AZRAS_AI_TAKEOFF_FINAL_REVIEW",
+  "schema_version": "1.0",
+  "canonical_language": "en",
+  "project": "PROJECT_NAME",
+  "analysis": {
+    "type": "AI PDF quantity takeoff final review",
+    "ai_reviewer": "ChatGPT",
+    "status": "complete|incomplete",
+    "reviewed_ai_files": [],
+    "decision_method": "drawing_evidence_recheck_not_vote"
+  },
+  "building_profile": {
+    "geometry": {
+      "north_rotation_deg": null,
+      "orientation_evidence": {
+        "evidence_status": "confirmed|estimated|unresolved|conflicting",
+        "confidence": 0.0,
+        "source_file": null,
+        "source_page": null,
+        "drawing_no": null,
+        "drawing_name": null,
+        "source_text_original": null,
+        "calculation_basis": ""
+      }
+    },
+    "surfaces": [],
+    "assemblies": {}
+  },
+  "takeoff_items": [
+    {
+      "local_id": 1,
+      "resolution_action": "resolve_existing|verify_estimated|conflict_with_confirmed|add_new",
+      "category": "structure",
+      "item": "English canonical item name",
+      "specification": "",
+      "quantity": null,
+      "unit": "m3",
+      "evidence_status": "confirmed|estimated|unresolved|conflicting",
+      "confidence": 0.0,
+      "source_file": null,
+      "source_page": null,
+      "drawing_no": null,
+      "drawing_name": null,
+      "calculation_basis": "",
+      "reviewed_ai_values": [],
+      "final_decision": "adopt|retain_planning_basic|unresolved|conflict",
+      "decision_basis": "",
+      "missing_inputs": [],
+      "checked_sources": [],
+      "drawing_proof": []
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "version": "9.1",
+  "notice_ja": "初期値は企画比較用テンプレートです。公的資料または契約電力会社等の最新値に置き換えてください。",
+  "notice_en": "Initial values are planning-comparison templates. Replace them with current official or utility-specific values.",
+  "profiles": {
+    "Japan / Tokyo": {
+      "electricity_co2_kg_per_kWh": 0.43,
+      "primary_energy_factor_MJ_per_kWh": 9.76,
+      "ground_annual_mean_C": 16.0,
+      "ground_amplitude_C": 5.0,
+      "ground_phase_day": 45
+    },
+    "Japan / Nagoya": {
+      "electricity_co2_kg_per_kWh": 0.43,
+      "primary_energy_factor_MJ_per_kWh": 9.76,
+      "ground_annual_mean_C": 16.0,
+      "ground_amplitude_C": 5.5,
+      "ground_phase_day": 45
+    },
+    "Japan / Sapporo": {
+      "electricity_co2_kg_per_kWh": 0.43,
+      "primary_energy_factor_MJ_per_kWh": 9.76,
+      "ground_annual_mean_C": 9.0,
+      "ground_amplitude_C": 7.0,
+      "ground_phase_day": 55
+    },
+    "User Defined": {
+      "electricity_co2_kg_per_kWh": 0.43,
+      "primary_energy_factor_MJ_per_kWh": 9.76,
+      "ground_annual_mean_C": 15.0,
+      "ground_amplitude_C": 5.0,
+      "ground_phase_day": 45
+    }
+  }
+}

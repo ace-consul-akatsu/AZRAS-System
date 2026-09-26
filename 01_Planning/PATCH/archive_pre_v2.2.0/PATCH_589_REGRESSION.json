@@ -1,0 +1,11 @@
+{
+  "version": "1.0.589",
+  "tests": {
+    "module1_compile": true,
+    "single_current_workspace": true,
+    "legacy_R_folders_removed": true,
+    "round_history_removed": true,
+    "same_provider_observation_replaced": true,
+    "no_wrapper_folder_in_full_zip": true
+  }
+}

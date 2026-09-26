@@ -1,0 +1,12 @@
+{
+  "Phenolic foam": 0.02,
+  "PIR": 0.023,
+  "PUR": 0.024,
+  "XPS": 0.028,
+  "EPS": 0.036,
+  "Glass wool": 0.038,
+  "Rock wool": 0.037,
+  "Cellulose": 0.04,
+  "Wood fiber": 0.045,
+  "Vacuum insulation panel": 0.007
+}

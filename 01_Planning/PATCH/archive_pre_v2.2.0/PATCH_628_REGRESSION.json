@@ -1,0 +1,10 @@
+{
+  "version": "1.0.628",
+  "tests": {
+    "module1_compiles": true,
+    "gfa_falls_back_to_footprint_times_storeys": true,
+    "resolves_to_245_10_for_footprint_122_55_storeys_2": true,
+    "per_floor_fallback_now_fires_after_gfa_resolved": true,
+    "does_not_override_independently_resolved_unequal_floor_breakdown": true
+  }
+}

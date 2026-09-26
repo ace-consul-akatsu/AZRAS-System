@@ -1,0 +1,16 @@
+{
+  "product_name": "AZRAS Installer",
+  "version": "5.0.4",
+  "company": "ACE Comprehensive Consulting Co., Ltd.",
+  "copyright": "Copyright (C) 2026 ACE Comprehensive Consulting Co., Ltd.",
+  "product": "AZRAS Installer",
+  "patch": 3,
+  "baseline_of": "5.0.4-p034",
+  "baseline_note": "Re-baselined alongside the AZRAS Planning/Evaluation/Compare v2.2.0 baseline in this same audit. Patch numbering restarts at 1; PATCH_1-034's history is kept under PATCH/archive_pre_v2.2.0/ for reference. version_series remains installer_independent, so this product's own version number (5.0.4) is unchanged; only the patch counter resets.",
+  "executable_name": "AZRAS_Installer_v5_0_4",
+  "version_series": "installer_independent",
+  "role": "AZRAS series initial environment setup and shared external-tool configuration",
+  "language_policy": "English canonical internal/persisted data; UI languages are presentation translations",
+  "product_slot": "00_AZRAS_Installer",
+  "feature": "PATCH_003: v2.2.0 baseline release (four-product audit). Version single source of truth: the screen said 5.0.4-p032, README 5.0.4-p033, NOTICE 5.0.4-p032 and VERSION.json 5.0.4-p001 with patch \"2\". The product version is now 5.0.4 (installer_independent series) with the patch counter only in VERSION.json \"patch\" (a JSON number); azras_installer.py reads the version from VERSION.json; README/NOTICE state 5.0.4. The working folder is 00_Installer_03 so its number matches the patch again (PATCH_002 had been delivered in a folder still named 00_Installer_01). Added dev_checks: version_consistency, duplicate_dict_key, pyflakes_undefined_names, launcher_product_resolution. License unified to the MIT License (copyright ACE Comprehensive Consulting Co., Ltd.); LICENSE.txt now match the AZRAS-System repository LICENSE; dev_checks/license_consistency_self_check.py added."
+}

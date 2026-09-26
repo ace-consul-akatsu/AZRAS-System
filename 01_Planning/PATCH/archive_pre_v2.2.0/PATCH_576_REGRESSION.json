@@ -1,0 +1,21 @@
+{
+  "patch": 576,
+  "tests": [
+    "py_compile module1/app.py",
+    "py_compile core/review_workbook_export.py",
+    "AZRAS mandatory-scope injection is idempotent",
+    "non-AZRAS projects do not receive AZRAS-specific coverage rows",
+    "manual human edit enables downstream quantity gate",
+    "review Excel exporter includes mandatory-scope issue type"
+  ],
+  "status": "passed",
+  "results": {
+    "py_compile": "pass",
+    "coverage_injection_idempotent": "pass",
+    "non_azras_guard": "pass",
+    "review_issue_bottom_rows": "pass",
+    "manual_edit_downstream_gate": "pass",
+    "cost_engine_material_key_linkage": "pass",
+    "review_workbook_zip_integrity": "pass"
+  }
+}

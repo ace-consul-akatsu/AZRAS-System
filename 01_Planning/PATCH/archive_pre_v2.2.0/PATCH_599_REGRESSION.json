@@ -1,0 +1,20 @@
+{
+  "version": "1.0.599",
+  "tests": {
+    "module1_compile": true,
+    "AZRAS_selection_survives_simulated_analyzer_mutation": true,
+    "general_steel_selection_survives_simulated_analyzer_mutation": true,
+    "general_RC_selection_survives_simulated_analyzer_mutation": true,
+    "PDF_auto_detection_blocked_after_explicit_system_choice": true,
+    "PDF_registration_persists_complete_construction_selection": true,
+    "analysis_restores_selection_before_profile_resolution": true,
+    "analysis_restores_selection_before_final_save": true,
+    "PATCH_598_retention_policy_preserved": true,
+    "PATCH_597_final_conflict_reopen_preserved": true,
+    "PATCH_596_NameError_fix_preserved": true,
+    "PATCH_595_omitted_scope_guard_preserved": true,
+    "PATCH_594_transactional_rebuild_preserved": true,
+    "five_patch_regression_policy_applied": true,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

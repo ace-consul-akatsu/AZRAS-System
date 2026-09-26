@@ -1,0 +1,806 @@
+{
+  "AZRAS": {
+    "label_ja": "AZRAS",
+    "geometry": {
+      "floor_area_m2": 0.0,
+      "footprint_m2": 0.0,
+      "volume_m3": 0.0,
+      "roof_area_m2": 0.0,
+      "slab_area_m2": 0.0,
+      "opaque_wall_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "opening_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "window_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "door_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      }
+    },
+    "construction": {
+      "rc_wall_area_m2": 0.0,
+      "light_wall_area_m2": 0.0,
+      "rc_wall_thickness_mm": 300,
+      "slab_thickness_mm": 500,
+      "concrete_volume_m3": {
+        "slab_foundation": 0.0,
+        "rc_walls": 0.0,
+        "columns": 0.0,
+        "beams": 0.0,
+        "upper_slabs": 0.0,
+        "underground_foundations": 0.0,
+        "total": 0.0
+      }
+    },
+    "assemblies": {
+      "rc_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 150
+      },
+      "light_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 190
+      },
+      "roof": {
+        "material": "Phenolic foam",
+        "thickness_mm": 190
+      },
+      "slab": {
+        "material": "XPS",
+        "thickness_mm": 100
+      },
+      "window": {
+        "u_value": 0.9,
+        "shgc": 0.45
+      },
+      "door": {
+        "u_value": 1.5
+      },
+      "shading": {
+        "N": 1.0,
+        "E": 0.85,
+        "S": 0.7,
+        "W": 0.75
+      }
+    },
+    "roof_specification": {
+      "interior_finish": "Gypsum board 13 mm",
+      "structure": "2×6",
+      "insulation_material": "Phenolic foam",
+      "insulation_layers_mm": [
+        140,
+        50
+      ],
+      "total_insulation_mm": 190,
+      "structural_sheathing": "Structural plywood 12 mm",
+      "air_vapour_layer": "Continuous polyethylene air/vapour barrier",
+      "roofing": "Colour-coated standing-seam steel roofing",
+      "rc_slab_mm": 0,
+      "waterproofing_mm": 0
+    },
+    "label_en": "AZRAS",
+    "construction_method_id": "azras",
+    "profile_data_policy": "reference assumptions only; no project-specific geometry or quantities"
+  },
+  "Wood Post-and-Beam": {
+    "label_ja": "木造軸組工法",
+    "geometry": {
+      "floor_area_m2": 0.0,
+      "footprint_m2": 0.0,
+      "volume_m3": 0.0,
+      "roof_area_m2": 0.0,
+      "slab_area_m2": 0.0,
+      "opaque_wall_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "opening_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "window_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "door_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      }
+    },
+    "construction": {
+      "rc_wall_area_m2": 0.0,
+      "light_wall_area_m2": 0.0,
+      "rc_wall_thickness_mm": 0,
+      "slab_thickness_mm": 150,
+      "concrete_volume_m3": {
+        "slab_foundation": 0.0,
+        "rc_walls": 0.0,
+        "columns": 0.0,
+        "beams": 0.0,
+        "upper_slabs": 0.0,
+        "underground_foundations": 0.0,
+        "total": 0.0
+      }
+    },
+    "assemblies": {
+      "rc_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 0
+      },
+      "light_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 190
+      },
+      "roof": {
+        "material": "Phenolic foam",
+        "thickness_mm": 190
+      },
+      "slab": {
+        "material": "XPS",
+        "thickness_mm": 100
+      },
+      "window": {
+        "u_value": 0.9,
+        "shgc": 0.45
+      },
+      "door": {
+        "u_value": 1.5
+      },
+      "shading": {
+        "N": 1.0,
+        "E": 0.85,
+        "S": 0.7,
+        "W": 0.75
+      }
+    },
+    "roof_specification": {
+      "interior_finish": "Gypsum board 13 mm",
+      "structure": "2×6 studs approximately 38×140 mm",
+      "insulation_material": "Phenolic foam",
+      "insulation_layers_mm": [
+        140,
+        50
+      ],
+      "total_insulation_mm": 190,
+      "structural_sheathing": "Structural plywood 12 mm",
+      "weather_layer": "Breathable waterproof membrane",
+      "ventilated_cavity": "Furring ventilation cavity",
+      "roofing": "Colour-coated standing-seam steel roofing",
+      "rc_slab_mm": 0,
+      "waterproofing_mm": 0
+    },
+    "label_en": "Wood Post-and-Beam Construction",
+    "construction_method_id": "wood_post_beam",
+    "profile_status": "provisional_planning_profile",
+    "profile_note_ja": "木造枠組壁工法プロファイルを基礎とした企画比較用初期値。実施設計値へ置換してください。",
+    "profile_note_en": "Initial planning profile based on the framed-wall timber profile. Replace with verified design values.",
+    "profile_data_policy": "reference assumptions only; no project-specific geometry or quantities"
+  },
+  "Wood Framed-Wall": {
+    "label_ja": "木造枠組壁工法",
+    "geometry": {
+      "floor_area_m2": 0.0,
+      "footprint_m2": 0.0,
+      "volume_m3": 0.0,
+      "roof_area_m2": 0.0,
+      "slab_area_m2": 0.0,
+      "opaque_wall_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "opening_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "window_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "door_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      }
+    },
+    "construction": {
+      "rc_wall_area_m2": 0.0,
+      "light_wall_area_m2": 0.0,
+      "rc_wall_thickness_mm": 0,
+      "slab_thickness_mm": 100,
+      "concrete_volume_m3": {
+        "slab_foundation": 0.0,
+        "rc_walls": 0.0,
+        "columns": 0.0,
+        "beams": 0.0,
+        "upper_slabs": 0.0,
+        "underground_foundations": 0.0,
+        "total": 0.0
+      },
+      "foundation_quantity_policy": "If 布基礎伏せ図/詳細 is detected, use dimensioned strip foundation + slab-on-ground geometry; otherwise retain editable planning default and require confirmation."
+    },
+    "assemblies": {
+      "rc_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 0
+      },
+      "light_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 190
+      },
+      "roof": {
+        "material": "Phenolic foam",
+        "thickness_mm": 190
+      },
+      "slab": {
+        "material": "XPS",
+        "thickness_mm": 100
+      },
+      "window": {
+        "u_value": 0.9,
+        "shgc": 0.45
+      },
+      "door": {
+        "u_value": 1.5
+      },
+      "shading": {
+        "N": 1.0,
+        "E": 0.85,
+        "S": 0.7,
+        "W": 0.75
+      }
+    },
+    "roof_specification": {
+      "interior_finish": "Gypsum board 13 mm",
+      "structure": "2×6 studs approximately 38×140 mm",
+      "insulation_material": "Phenolic foam",
+      "insulation_layers_mm": [
+        140,
+        50
+      ],
+      "total_insulation_mm": 190,
+      "structural_sheathing": "Structural plywood 12 mm",
+      "weather_layer": "Breathable waterproof membrane",
+      "ventilated_cavity": "Furring ventilation cavity",
+      "roofing": "Colour-coated standing-seam steel roofing",
+      "rc_slab_mm": 0,
+      "waterproofing_mm": 0
+    },
+    "label_en": "Wood Framed-Wall Construction",
+    "construction_method_id": "wood_frame",
+    "profile_data_policy": "reference assumptions only; no project-specific geometry or quantities"
+  },
+  "Steel Structure": {
+    "label_ja": "S造",
+    "geometry": {
+      "floor_area_m2": 0.0,
+      "footprint_m2": 0.0,
+      "volume_m3": 0.0,
+      "roof_area_m2": 0.0,
+      "slab_area_m2": 0.0,
+      "opaque_wall_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "opening_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "window_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "door_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      }
+    },
+    "construction": {
+      "rc_wall_area_m2": 0.0,
+      "light_wall_area_m2": 0.0,
+      "rc_wall_thickness_mm": 0,
+      "slab_thickness_mm": 150,
+      "concrete_volume_m3": {
+        "slab_foundation": 0.0,
+        "rc_walls": 0.0,
+        "columns": 0.0,
+        "beams": 0.0,
+        "upper_slabs": 0.0,
+        "underground_foundations": 0.0,
+        "total": 0.0
+      },
+      "structural_system": "steel_frame",
+      "profile_assumption": "planning_only"
+    },
+    "assemblies": {
+      "rc_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 150
+      },
+      "light_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 0
+      },
+      "roof": {
+        "material": "Phenolic foam",
+        "thickness_mm": 150
+      },
+      "slab": {
+        "material": "XPS",
+        "thickness_mm": 100
+      },
+      "window": {
+        "u_value": 0.9,
+        "shgc": 0.45
+      },
+      "door": {
+        "u_value": 1.5
+      },
+      "shading": {
+        "N": 1.0,
+        "E": 0.85,
+        "S": 0.7,
+        "W": 0.75
+      }
+    },
+    "roof_specification": {
+      "interior_finish": "Gypsum board 13 mm",
+      "air_vapour_layer": "Continuous polyethylene air/vapour barrier",
+      "structure": "RC roof slab",
+      "rc_slab_mm": 150,
+      "insulation_material": "Phenolic foam",
+      "insulation_layers_mm": [
+        150
+      ],
+      "total_insulation_mm": 150,
+      "exterior_base": "Polymer cement + glass fibre mesh",
+      "waterproofing": "Exposed coating waterproof finish",
+      "waterproofing_mm": 5,
+      "roofing": "Exposed waterproof coating"
+    },
+    "label_en": "Steel Structure",
+    "construction_method_id": "steel",
+    "profile_status": "provisional_planning_profile",
+    "profile_note_ja": "RCラーメン構造の形状条件を保持し、S造の企画比較用初期値として設定。鋼材数量・断面は構造計算後に置換してください。",
+    "profile_note_en": "Uses the RC-frame geometry as a planning placeholder for steel construction. Replace steel quantities and sections after structural design.",
+    "profile_data_policy": "reference assumptions only; no project-specific geometry or quantities"
+  },
+  "RC Frame": {
+    "label_ja": "RCラーメン構造",
+    "geometry": {
+      "floor_area_m2": 0.0,
+      "footprint_m2": 0.0,
+      "volume_m3": 0.0,
+      "roof_area_m2": 0.0,
+      "slab_area_m2": 0.0,
+      "opaque_wall_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "opening_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "window_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "door_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      }
+    },
+    "construction": {
+      "rc_wall_area_m2": 0.0,
+      "light_wall_area_m2": 0.0,
+      "rc_wall_thickness_mm": 150,
+      "slab_thickness_mm": 150,
+      "concrete_volume_m3": {
+        "slab_foundation": 0.0,
+        "rc_walls": 0.0,
+        "columns": 0.0,
+        "beams": 0.0,
+        "upper_slabs": 0.0,
+        "underground_foundations": 0.0,
+        "total": 0.0
+      }
+    },
+    "assemblies": {
+      "rc_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 150
+      },
+      "light_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 0
+      },
+      "roof": {
+        "material": "Phenolic foam",
+        "thickness_mm": 150
+      },
+      "slab": {
+        "material": "XPS",
+        "thickness_mm": 100
+      },
+      "window": {
+        "u_value": 0.9,
+        "shgc": 0.45
+      },
+      "door": {
+        "u_value": 1.5
+      },
+      "shading": {
+        "N": 1.0,
+        "E": 0.85,
+        "S": 0.7,
+        "W": 0.75
+      }
+    },
+    "roof_specification": {
+      "interior_finish": "Gypsum board 13 mm",
+      "air_vapour_layer": "Continuous polyethylene air/vapour barrier",
+      "structure": "RC roof slab",
+      "rc_slab_mm": 150,
+      "insulation_material": "Phenolic foam",
+      "insulation_layers_mm": [
+        150
+      ],
+      "total_insulation_mm": 150,
+      "exterior_base": "Polymer cement + glass fibre mesh",
+      "waterproofing": "Exposed coating waterproof finish",
+      "waterproofing_mm": 5,
+      "roofing": "Exposed waterproof coating"
+    },
+    "label_en": "RC Moment-Resisting Frame",
+    "construction_method_id": "rc_frame",
+    "profile_data_policy": "reference assumptions only; no project-specific geometry or quantities"
+  },
+  "RC Wall Structure": {
+    "label_ja": "RC壁式",
+    "geometry": {
+      "floor_area_m2": 0.0,
+      "footprint_m2": 0.0,
+      "volume_m3": 0.0,
+      "roof_area_m2": 0.0,
+      "slab_area_m2": 0.0,
+      "opaque_wall_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "opening_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "window_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "door_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      }
+    },
+    "construction": {
+      "rc_wall_area_m2": 0.0,
+      "light_wall_area_m2": 0.0,
+      "rc_wall_thickness_mm": 300,
+      "slab_thickness_mm": 500,
+      "concrete_volume_m3": {
+        "slab_foundation": 0.0,
+        "rc_walls": 0.0,
+        "columns": 0.0,
+        "beams": 0.0,
+        "upper_slabs": 0.0,
+        "underground_foundations": 0.0,
+        "total": 0.0
+      },
+      "structural_system": "rc_wall"
+    },
+    "assemblies": {
+      "rc_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 150
+      },
+      "light_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 200
+      },
+      "roof": {
+        "material": "Phenolic foam",
+        "thickness_mm": 200
+      },
+      "slab": {
+        "material": "XPS",
+        "thickness_mm": 100
+      },
+      "window": {
+        "u_value": 0.9,
+        "shgc": 0.45
+      },
+      "door": {
+        "u_value": 1.5
+      },
+      "shading": {
+        "N": 1.0,
+        "E": 0.85,
+        "S": 0.7,
+        "W": 0.75
+      }
+    },
+    "roof_specification": {
+      "interior_finish": "Gypsum board 13 mm",
+      "structure": "2×6",
+      "insulation_material": "Phenolic foam",
+      "insulation_layers_mm": [
+        140,
+        60
+      ],
+      "total_insulation_mm": 200,
+      "structural_sheathing": "Structural plywood 12 mm",
+      "air_vapour_layer": "Continuous polyethylene air/vapour barrier",
+      "roofing": "Colour-coated standing-seam steel roofing",
+      "rc_slab_mm": 0,
+      "waterproofing_mm": 0
+    },
+    "label_en": "RC Wall Structure",
+    "construction_method_id": "rc_wall",
+    "profile_status": "provisional_planning_profile",
+    "profile_note_ja": "AZRASの壁配置・形状を基礎としたRC壁式の企画比較用初期値。上下階の耐力壁連続性を構造設計で確認してください。",
+    "profile_note_en": "Planning RC-wall profile based on AZRAS wall geometry. Verify vertical continuity of structural walls during structural design.",
+    "profile_data_policy": "reference assumptions only; no project-specific geometry or quantities"
+  },
+  "Other": {
+    "label_ja": "その他",
+    "geometry": {
+      "floor_area_m2": 0.0,
+      "footprint_m2": 0.0,
+      "volume_m3": 0.0,
+      "roof_area_m2": 0.0,
+      "slab_area_m2": 0.0,
+      "opaque_wall_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "opening_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "window_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "door_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      }
+    },
+    "construction": {
+      "rc_wall_area_m2": 0.0,
+      "light_wall_area_m2": 0.0,
+      "rc_wall_thickness_mm": 300,
+      "slab_thickness_mm": 500,
+      "concrete_volume_m3": {
+        "slab_foundation": 0.0,
+        "rc_walls": 0.0,
+        "columns": 0.0,
+        "beams": 0.0,
+        "upper_slabs": 0.0,
+        "underground_foundations": 0.0,
+        "total": 0.0
+      }
+    },
+    "assemblies": {
+      "rc_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 150
+      },
+      "light_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 200
+      },
+      "roof": {
+        "material": "Phenolic foam",
+        "thickness_mm": 200
+      },
+      "slab": {
+        "material": "XPS",
+        "thickness_mm": 100
+      },
+      "window": {
+        "u_value": 0.9,
+        "shgc": 0.45
+      },
+      "door": {
+        "u_value": 1.5
+      },
+      "shading": {
+        "N": 1.0,
+        "E": 0.85,
+        "S": 0.7,
+        "W": 0.75
+      }
+    },
+    "roof_specification": {
+      "interior_finish": "Gypsum board 13 mm",
+      "structure": "2×6",
+      "insulation_material": "Phenolic foam",
+      "insulation_layers_mm": [
+        140,
+        60
+      ],
+      "total_insulation_mm": 200,
+      "structural_sheathing": "Structural plywood 12 mm",
+      "air_vapour_layer": "Continuous polyethylene air/vapour barrier",
+      "roofing": "Colour-coated standing-seam steel roofing",
+      "rc_slab_mm": 0,
+      "waterproofing_mm": 0
+    },
+    "label_en": "Other",
+    "construction_method_id": "other",
+    "profile_status": "user_defined_required",
+    "profile_note_ja": "仮の初期値です。対象工法の材料・断面・仕様へ必ず置換してください。",
+    "profile_note_en": "Placeholder values only. Replace all materials, sections and specifications for the selected method.",
+    "profile_data_policy": "reference assumptions only; no project-specific geometry or quantities"
+  },
+  "2x6 Timber": {
+    "label_ja": "木造枠組壁工法（旧互換）",
+    "geometry": {
+      "floor_area_m2": 0.0,
+      "footprint_m2": 0.0,
+      "volume_m3": 0.0,
+      "roof_area_m2": 0.0,
+      "slab_area_m2": 0.0,
+      "opaque_wall_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "opening_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "window_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      },
+      "door_area_by_orientation_m2": {
+        "N": 0.0,
+        "E": 0.0,
+        "S": 0.0,
+        "W": 0.0
+      }
+    },
+    "construction": {
+      "rc_wall_area_m2": 0.0,
+      "light_wall_area_m2": 0.0,
+      "rc_wall_thickness_mm": 0,
+      "slab_thickness_mm": 100,
+      "concrete_volume_m3": {
+        "slab_foundation": 0.0,
+        "rc_walls": 0.0,
+        "columns": 0.0,
+        "beams": 0.0,
+        "upper_slabs": 0.0,
+        "underground_foundations": 0.0,
+        "total": 0.0
+      },
+      "foundation_quantity_policy": "If 布基礎伏せ図/詳細 is detected, use dimensioned strip foundation + slab-on-ground geometry; otherwise retain editable planning default and require confirmation."
+    },
+    "assemblies": {
+      "rc_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 0
+      },
+      "light_wall": {
+        "material": "Phenolic foam",
+        "thickness_mm": 190
+      },
+      "roof": {
+        "material": "Phenolic foam",
+        "thickness_mm": 190
+      },
+      "slab": {
+        "material": "XPS",
+        "thickness_mm": 100
+      },
+      "window": {
+        "u_value": 0.9,
+        "shgc": 0.45
+      },
+      "door": {
+        "u_value": 1.5
+      },
+      "shading": {
+        "N": 1.0,
+        "E": 0.85,
+        "S": 0.7,
+        "W": 0.75
+      }
+    },
+    "roof_specification": {
+      "interior_finish": "Gypsum board 13 mm",
+      "structure": "2×6 studs approximately 38×140 mm",
+      "insulation_material": "Phenolic foam",
+      "insulation_layers_mm": [
+        140,
+        50
+      ],
+      "total_insulation_mm": 190,
+      "structural_sheathing": "Structural plywood 12 mm",
+      "weather_layer": "Breathable waterproof membrane",
+      "ventilated_cavity": "Furring ventilation cavity",
+      "roofing": "Colour-coated standing-seam steel roofing",
+      "rc_slab_mm": 0,
+      "waterproofing_mm": 0
+    },
+    "label_en": "Wood Framed-Wall (Legacy Alias)",
+    "construction_method_id": "wood_frame",
+    "profile_data_policy": "reference assumptions only; no project-specific geometry or quantities"
+  }
+}

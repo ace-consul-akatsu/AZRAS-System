@@ -1,0 +1,11 @@
+{
+  "version": "1.0.624",
+  "tests": {
+    "module1_compiles": true,
+    "start_txt_lists_exact_top_level_keys": true,
+    "start_txt_forbids_outer_wrapper_key": true,
+    "start_txt_mandates_nonempty_takeoff_items": true,
+    "request_zip_contents_unchanged": true,
+    "no_quantity_or_import_logic_changed": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "version": "1.0.593",
+  "tests": {
+    "module1_compile": true,
+    "viewer_button_present": true,
+    "viewer_reads_project_store_without_module1_result": true,
+    "viewer_shows_provider_source_time_status_and_items": true,
+    "rebuild_warning_shows_exact_count_and_provider_names": true,
+    "PATCH_592_post_rebuild_save_guard": true,
+    "PATCH_591_no_Responses_recreation_path": true,
+    "PATCH_590_AZR0001_two_answer_behavior": true,
+    "PATCH_589_single_Current_workspace": true,
+    "PATCH_588_provider_canonicalization": true,
+    "five_patch_regression_policy_applied": true,
+    "full_zip_has_no_wrapper_folder": true
+  }
+}

@@ -1,0 +1,5 @@
+AZRAS Evaluation — Current Build Guide
+Version 2.2.0 (patch number: see VERSION.json)
+EXE version resource: build_AZRAS_Evaluation.bat regenerates version_info_AZRAS_Evaluation.txt from VERSION.json (build_tools/make_version_info.py).
+起動: run_AZRAS_Evaluation_without_build.bat
+EXEビルド: build_AZRAS_Evaluation.bat
