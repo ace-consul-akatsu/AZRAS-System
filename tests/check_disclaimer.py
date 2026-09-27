@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _docx_text import paragraphs  # noqa: E402
 
 PAIRS = (("docs/DISCLAIMER.md", "docs/25_AZRAS_System_v2_2_0_Disclaimer_of_Use_EN.docx"),
-         ("docs/DISCLAIMER.ja.md", "docs/25_AZRAS_System_v2_2_0_利用にあたっての免責_JP.docx"))
+         ("docs/DISCLAIMER.ja.md", "docs/25_AZRAS_System_v2_2_0_Disclaimer_of_Use_JA.docx"))
 
 
 def markdown_paragraphs(text):

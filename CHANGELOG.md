@@ -31,4 +31,4 @@ First public release of AZRAS System, published as a baseline after a cross-prod
 ### Added
 
 - Self-checks in every product for version consistency, duplicate keys, undefined names and license text; Project JSON schema consistency in Planning and Evaluation.
-- Repository: `tests/` (one-command check of all products and of the connections between them), `schemas/`, `examples/`, `docs/` with the disclaimer in English and Japanese, `CITATION.cff`.
+- Repository: `tests/` (one-command check of all products and of the connections between them), `schemas/`, `examples/`, `docs/` with the disclaimer and the detailed documents in English and Japanese, `CITATION.cff`.

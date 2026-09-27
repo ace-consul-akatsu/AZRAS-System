@@ -12,6 +12,7 @@ python tests/run_all.py
 | `check_cross_product.py` | Planning → Evaluation → Compare Project JSON hand-off; Evaluation → Compare market-rent contract; launcher targets |
 | `check_schemas.py` | `schemas/` copies are identical to the originals in the products |
 | `check_disclaimer.py` | `docs/DISCLAIMER*.md` carry exactly the text of the Word versions |
+| `check_filenames.py` | Every file and folder name is plain ASCII (so no ZIP tool can garble it) |
 
 The product checks need the packages in `requirements.txt`. A check that cannot run counts as a failure.
 

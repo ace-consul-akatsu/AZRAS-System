@@ -55,22 +55,24 @@ Windows 用の実行ファイル（EXE）は `build_AZRAS_Planning.bat`・`build
 
 ## 説明文書
 
-詳しい文書（日本語）：
+詳しい文書（Word、日本語・英語）：
 
-- [概要説明](docs/ja/01_AZRAS_%E6%A6%82%E8%A6%81%E8%AA%AC%E6%98%8E_v2_2_0_JA.docx)
-- [取扱説明書](docs/ja/02_AZRAS_%E5%8F%96%E6%89%B1%E8%AA%AC%E6%98%8E%E6%9B%B8_v2_2_0_JA.docx)
-- [特徴](docs/ja/03_AZRAS_%E7%89%B9%E5%BE%B4_v2_2_0_JA.docx)
-- [開発憲章（AIでAZRASを改修する際の原則）](docs/ja/04_AZRAS_%E9%96%8B%E7%99%BA%E6%86%B2%E7%AB%A0_v0_4_%E7%B5%B1%E5%90%88%E7%89%88_JA.docx)
-- [今後の発展方法](docs/ja/05_AZRAS_%E4%BB%8A%E5%BE%8C%E3%81%AE%E7%99%BA%E5%B1%95%E6%96%B9%E6%B3%95_v2_2_0_JA.docx)
-- [正式開発史（2026年6月〜9月7日）](docs/ja/06_AZRAS_%E6%AD%A3%E5%BC%8F%E9%96%8B%E7%99%BA%E5%8F%B2_v2.0_JA.docx)
-- [正式開発史 更新版（2026年9月7日以降）](docs/ja/06_AZRAS_%E6%AD%A3%E5%BC%8F%E9%96%8B%E7%99%BA%E5%8F%B2_v2_4_JA.docx)
+| 文書 | 日本語 | English |
+|---|---|---|
+| 概要説明 | [日本語](docs/ja/01_AZRAS_Overview_v2_2_0_JA.docx) | [English](docs/en/01_AZRAS_Overview_v2_2_0_EN.docx) |
+| 取扱説明書 | [日本語](docs/ja/02_AZRAS_User_Manual_v2_2_0_JA.docx) | [English](docs/en/02_AZRAS_User_Manual_v2_2_0_EN.docx) |
+| 特徴 | [日本語](docs/ja/03_AZRAS_Key_Features_v2_2_0_JA.docx) | [English](docs/en/03_AZRAS_Key_Features_v2_2_0_EN.docx) |
+| 開発憲章（AIでAZRASを改修する際の原則） | [日本語](docs/ja/04_AZRAS_Development_Constitution_v0_4_JA.docx) | [English](docs/en/04_AZRAS_Development_Constitution_v0_4_EN.docx) |
+| 今後の発展方法 | [日本語](docs/ja/05_AZRAS_Further_Development_v2_2_0_JA.docx) | [English](docs/en/05_AZRAS_Further_Development_v2_2_0_EN.docx) |
+| 正式開発史（2026年6月〜9月7日） | [日本語](docs/ja/06_AZRAS_Official_Development_History_v2_0_JA.docx) | [English](docs/en/06_AZRAS_Official_Development_History_v2_0_EN.docx) |
+| 正式開発史 更新版（2026年9月7日以降） | [日本語](docs/ja/06_AZRAS_Official_Development_History_v2_4_JA.docx) | [English](docs/en/06_AZRAS_Official_Development_History_v2_4_EN.docx) |
 
 ## サンプルデータ
 
 同じ建物プランを3つの工法で設計した図面（PDF）です。そのまま AZRAS Planning に読み込めます。
 
 - [AZRAS（RCアップライト工法）](examples/260805_AZRAS.pdf)
-- [木造 2×6](examples/260805_2%C3%976.pdf)
+- [木造 2×6](examples/260805_2x6.pdf)
 - [一般RCラーメン](examples/260805_RC_Rahmen.pdf)
 
 v2.2.0 で最後まで処理したサンプルプロジェクト一式（保存済み結果を含む Project JSON、地域別バリエーション、ChatGPT・Claude・Meta AI の独立回答を含む複数AI積算ラウンド）は、別のデータセットとして Zenodo で公開しています（CC BY 4.0）。<!-- 登録後、ここにデータセットの DOI を追記します。 -->
@@ -116,7 +118,7 @@ Zenodo への登録後、ここに DOI を追記します。
 | 場所 | 内容 |
 |---|---|
 | `00_Installer/` … `03_Compare/` | 4製品 |
-| `docs/` | 免責文（Markdown・Word、日英）、`docs/ja/` に詳しい説明文書 |
+| `docs/` | 免責文（Markdown・Word、日英）、`docs/en/`・`docs/ja/` に詳しい説明文書（英語・日本語） |
 | `schemas/` | 製品が使うスキーマの公開用写し（Project JSON 3.0、AI積算） |
 | `examples/` | 同じプランを3工法で設計した図面 |
 | `tests/` | 全製品と製品間の接続を1コマンドで検査 |
