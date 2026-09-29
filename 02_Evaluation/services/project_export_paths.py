@@ -15,8 +15,10 @@ MODULE_EXPORT_NAMES = {
     3: "Module3_修繕更新シナリオ",
     4: "Module4_長期環境評価",
     5: "Module5_建設費内訳",
-    6: "Module6_修繕更新解体積算",
-    7: "Module7_災害復旧レジリエンス評価",
+    # PATCH_011→012: names follow the current screens (Module 6 = 投資評価,
+    # Module 7 = 改修・更新・解体費). The old names were from a retired numbering.
+    6: "Module6_投資評価",
+    7: "Module7_改修更新解体費",
     8: "Module8_200年事業収支",
     9: "Module9_地域別Project_JSON",
     10: "Module10_地域比較",

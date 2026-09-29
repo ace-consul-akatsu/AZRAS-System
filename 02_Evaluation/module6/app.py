@@ -1259,7 +1259,7 @@ class Module6App(tk.Toplevel):
 
     def save_csv(self):
         if not self.result:return
-        default_path=default_export_path(self.project_path,6,label="Module6_修繕更新解体積算_イベント別")
+        default_path=default_export_path(self.project_path,6,label="Module6_投資評価_キャッシュフロー")
         p=filedialog.asksaveasfilename(initialdir=default_path.parent,initialfile=default_path.name,defaultextension=".csv",filetypes=[("CSV","*.csv")])
         if not p:return
         rows=self.result["cashflow"]

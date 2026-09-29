@@ -1,3 +1,9 @@
+# AZRAS Evaluation v2.2.0 — PATCH_012 (export file names)
+
+- Fixed: Module 6 「キャッシュフローCSV保存」 proposed `Module6_修繕更新解体積算_イベント別.csv` — the same name Module 7 uses, so the files overwrote each other.
+- Module 6 cash flow → `Module6_投資評価_キャッシュフロー.csv`; Module 7 event costs → `Module7_改修更新解体費_イベント別.csv`.
+- `MODULE_EXPORT_NAMES` 6/7 updated to the current screen names. New `dev_checks/export_filename_self_check.py`. No calculation or CSV-content change.
+
 # AZRAS Evaluation v2.2.0 — PATCH_011 (Module 4 annual CSV export fix)
 
 - Fixed: 「年別結果CSV保存」 (Module 4) crashed with `ValueError: dict contains fields not in fieldnames: 'climate_temperature_offset_C', 'operational_change_factor', 'climate_energy_factor'`.
