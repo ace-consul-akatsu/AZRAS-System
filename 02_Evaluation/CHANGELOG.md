@@ -1,3 +1,11 @@
+# AZRAS Evaluation v2.2.0 — PATCH_011 (Module 4 annual CSV export fix)
+
+- Fixed: 「年別結果CSV保存」 (Module 4) crashed with `ValueError: dict contains fields not in fieldnames: 'climate_temperature_offset_C', 'operational_change_factor', 'climate_energy_factor'`.
+- Cause: the CSV header came from the first row (year 0 = initial construction), which lacked the three climate columns present in every yearly row.
+- The year-0 row now includes the three columns; the three columns are written to the annual CSV.
+- New `core/csv_export.py`: result CSVs use the union of all row keys (old saved Project JSONs also export). Applied to Module 4 annual/event, Module 6 cashflow, Module 7 event costs.
+- New `dev_checks/csv_export_fieldnames_self_check.py`. No calculated value changes.
+
 # AZRAS Evaluation v2.2.0 — PATCH_010 (v2.2.0 baseline release)
 
 - Version single source of truth (VERSION.json): NOTICE, FINAL_RELEASE_STATUS, ROOT_MANIFEST, README and the build guide state 2.2.0; patch is a JSON number.

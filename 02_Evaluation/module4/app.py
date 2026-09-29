@@ -1,6 +1,5 @@
 
 from __future__ import annotations
-import csv
 import json
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
@@ -9,6 +8,7 @@ from services.project_export_paths import default_export_path, project_output_di
 
 from core.i18n import I18N, LANGUAGE_OPTIONS
 from core.error_text import friendly_exception_text
+from core.csv_export import write_dict_rows_csv
 from core.ui_style import (apply_common_style, standardize_module_window, create_scrollable_pane_split, add_module_text_copy_button)
 from core.module_report_ui import attach_module_report_button
 from core.project_store import load_project, save_project
@@ -600,9 +600,7 @@ class Module4App(tk.Toplevel):
         p=filedialog.asksaveasfilename(initialdir=default_path.parent,initialfile=default_path.name,defaultextension=".csv",filetypes=[("CSV","*.csv")])
         if not p:return
         rows=self.result["annual_timeline"]
-        with open(p,"w",newline="",encoding="utf-8-sig") as f:
-            writer=csv.DictWriter(f,fieldnames=list(rows[0].keys()))
-            writer.writeheader();writer.writerows(rows)
+        write_dict_rows_csv(p,rows)
 
     def save_event_csv(self):
         if not self.result:return
@@ -611,9 +609,7 @@ class Module4App(tk.Toplevel):
         if not p:return
         rows=self.result["event_impacts"]
         if not rows:return
-        with open(p,"w",newline="",encoding="utf-8-sig") as f:
-            writer=csv.DictWriter(f,fieldnames=list(rows[0].keys()))
-            writer.writeheader();writer.writerows(rows)
+        write_dict_rows_csv(p,rows)
 
     def save_output(self):
         self.refresh_project_from_context()

@@ -1,0 +1,20 @@
+{
+  "patch": "PATCH_011",
+  "product": "02 AZRAS Evaluation",
+  "version": "2.2.0",
+  "date_utc": "260929",
+  "defects": [
+    "Module 4 save_annual_csv ValueError: dict contains fields not in fieldnames (climate_temperature_offset_C, operational_change_factor, climate_energy_factor); header built from year-0 row which lacked the three climate columns"
+  ],
+  "fix_policy": "option 1: output the three columns in the CSV",
+  "calculation_change": false,
+  "results": {
+    "dev_checks_total": 18,
+    "dev_checks_pass": 18,
+    "full_self_check": "PASS",
+    "gui_module4_annual_csv_new_result": "PASS (201 rows, 3 climate columns, year-0 filled)",
+    "gui_module4_annual_csv_legacy_saved_result": "PASS (201 rows, 3 climate columns, year-0 blank)",
+    "gui_module4_event_csv": "PASS",
+    "other_products_changed": false
+  }
+}

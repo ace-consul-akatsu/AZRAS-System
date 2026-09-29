@@ -328,7 +328,14 @@ def evaluate_long_term_environment(project: dict[str, Any], factors: dict[str, A
         "operational_co2_kg":0.0, "embodied_co2_kg":initial_co2,
         "demolition_co2_kg":0.0, "credit_co2_kg":0.0,
         "net_co2_kg":initial_co2,
-        "operational_energy_MJ":0.0, "embodied_energy_MJ":initial_energy,
+        "operational_energy_MJ":0.0,
+        # PATCH_011: the year-0 row carries the same columns as every yearly row
+        # (the values are filled in once the future-climate series exists below).
+        # Without them the annual CSV export raised "dict contains fields not in
+        # fieldnames" because its header came from this first row.
+        "climate_temperature_offset_C":0.0, "climate_energy_factor":1.0,
+        "operational_change_factor":1.0,
+        "embodied_energy_MJ":initial_energy,
         "demolition_energy_MJ":0.0, "total_energy_MJ":initial_energy,
         "waste_kg":0.0, "reused_kg":0.0, "recycled_kg":0.0, "landfill_kg":0.0
     }]
@@ -357,6 +364,11 @@ def evaluate_long_term_environment(project: dict[str, Any], factors: dict[str, A
     )
     climate_energy_factors = future_climate.get("annual_energy_factors") or [1.0] * (period_years + 1)
     climate_offsets = future_climate.get("annual_temperature_offsets_C") or [0.0] * (period_years + 1)
+    # PATCH_011: year 0 = initial construction (no operation). Record the year-0
+    # climate offset/factor for completeness; the operational factor is the
+    # base 1.0. These are informational only -- year-0 operational CO2/energy stay 0.
+    annual[0]["climate_temperature_offset_C"] = float(climate_offsets[0]) if climate_offsets else 0.0
+    annual[0]["climate_energy_factor"] = float(climate_energy_factors[0]) if climate_energy_factors else 1.0
 
     for year in range(1,period_years+1):
         operational_factor=(1.0+operational_change)**(year-1)

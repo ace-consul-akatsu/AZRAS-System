@@ -1,6 +1,5 @@
 
 from __future__ import annotations
-import csv
 import json
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
@@ -9,6 +8,7 @@ from services.project_export_paths import default_export_path
 
 from core.i18n import I18N, LANGUAGE_OPTIONS
 from core.error_text import friendly_exception_text
+from core.csv_export import write_dict_rows_csv
 from core.ui_style import (apply_common_style, standardize_module_window, create_scrollable_module_page, add_module_text_copy_button)
 from core.module_report_ui import attach_module_report_button
 from core.project_store import load_project
@@ -480,10 +480,7 @@ class Module7App(tk.Toplevel):
         if not path:
             return
         rows = self.result["event_costs"]
-        with open(path, "w", newline="", encoding="utf-8-sig") as file:
-            writer = csv.DictWriter(file, fieldnames=rows[0].keys())
-            writer.writeheader()
-            writer.writerows(rows)
+        write_dict_rows_csv(path, rows)
 
     def save_output(self):
         self.refresh_project_from_context()
