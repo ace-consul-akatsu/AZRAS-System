@@ -265,7 +265,9 @@ UNIT_JA = {
     "m2": "m²",
     "m3": "m³",
     "set": "式",
-    "item": "個所"
+    "item": "個所",
+    "storeys": "階",
+    "units": "戸"
 }
 
 VALUE_JA = {
@@ -284,7 +286,8 @@ KIND_JA = {
     "family": "必須部位",
     "package": "設備一式",
     "unit_cost": "単価",
-    "equipment_package": "設備一式"
+    "equipment_package": "設備一式",
+    "building": "建物規模の差"
 }
 
 MODULE_JA = {"module5": "Module 5", "module6": "Module 6", "module7": "Module 7"}

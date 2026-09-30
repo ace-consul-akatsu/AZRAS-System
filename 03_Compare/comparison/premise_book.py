@@ -183,6 +183,58 @@ def _method_premises(project: dict[str, Any]) -> dict[str, str]:
 
 
 # --------------------------------------------------------------- the lists
+
+# PATCH_009: same-building check.  A premise book compares one building built
+# with different methods, so the building itself must be the same size.  A
+# Project whose Module 1 read a per-unit finish area as the whole-building
+# floor area (37.6 m2 against 245.1 m2 on the real terrace-house sample) put
+# every per-m2 result - rent, energy, CO2 - on a different building.
+BUILDING_TOLERANCE = 0.03
+BUILDING_FIELDS = (
+    ("gross_floor_area", "m2", "延床面積", "Gross floor area"),
+    ("footprint", "m2", "建築面積（1階床面積）", "Footprint"),
+    ("storeys", "storeys", "階数", "Storeys"),
+    ("dwelling_units", "units", "戸数", "Dwelling units"),
+)
+
+
+def building_size(project: dict[str, Any]) -> dict[str, Any]:
+    """Size facts of one Project as saved (None when the Project has none)."""
+    common = project.get("common") or {}
+    m1 = (project.get("module_outputs") or {}).get("module1") or {}
+    geo = (((m1.get("drawing_analysis") or {}).get("profile") or {}).get("geometry")
+           or ((m1.get("profile") or {}).get("geometry")) or {})
+    m6 = _settings(project, "module6")
+    gfa = _f(common.get("scale_gfa_m2")) or _f(geo.get("floor_area_m2"))
+    units = _f(m6.get("total_dwelling_units")) or _f(common.get("unit_count"))
+    return {
+        "gross_floor_area": gfa if gfa and gfa > 0 else None,
+        "footprint": (_f(geo.get("footprint_m2")) or None),
+        "storeys": (_f(geo.get("storeys")) or None),
+        "dwelling_units": units if units and units > 0 else None,
+    }
+
+
+def building_rows(projects: list[dict[str, Any]], tolerance: float = BUILDING_TOLERANCE) -> list[dict[str, Any]]:
+    """One row per size fact that differs between the Projects."""
+    sizes = [building_size(p) for p in projects]
+    rows = []
+    for key, unit, ja, en in BUILDING_FIELDS:
+        vals = {i: s[key] for i, s in enumerate(sizes) if s[key] is not None}
+        if len(vals) < 2:
+            continue
+        lo, hi = min(vals.values()), max(vals.values())
+        exact = unit in ("storeys", "units")
+        differs = (hi != lo) if exact else (lo <= 0 or hi / lo > 1 + tolerance)
+        if not differs:
+            continue
+        rows.append({"row_id": f"building:{key}", "kind": "building", "key": key, "class": "building",
+                     "label_ja": ja, "label_en": en, "unit": unit, "values": vals,
+                     "ratio": (hi / lo) if lo > 0 else None,
+                     "present": sorted(vals), "missing": [], "quantities": dict(vals)})
+    return rows
+
+
 def build_lists(projects: list[dict[str, Any]], classification: dict[str, Any],
                 tolerance: float = PRICE_TOLERANCE) -> dict[str, Any]:
     """Difference lists for 2..n loaded Projects (same order as ``projects``)."""
@@ -274,6 +326,9 @@ def build_lists(projects: list[dict[str, Any]], classification: dict[str, Any],
             required = (module == "module6" and k in {"rent_setting_method", "annual_rent_per_m2"})
             business_rows.append({"row_id": f"{module}:{k}", "module": module, "key": k, "values": vals,
                                   "differs": len(distinct) > 1, "required": required})
+    # PATCH_009: the building must be the same size in every Project; each
+    # difference is a C-list row that needs an explicit decision.
+    scope_rows = building_rows(projects) + scope_rows
     method_rows = [{"project_index": i, "label": labels[i], **_method_premises(p)} for i, p in enumerate(projects)]
     return {"labels": labels, "currency": currencies[0] if currencies else "", "blocking": blocking,
             "price_rows": price_rows, "scope_rows": scope_rows, "business_rows": business_rows,

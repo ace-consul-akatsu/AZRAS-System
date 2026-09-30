@@ -1,0 +1,25 @@
+{
+  "patch": "PATCH_009",
+  "product": "03 AZRAS Compare",
+  "version": "2.2.0",
+  "date_utc": "260930",
+  "defects": [
+    "No check that the Projects of a premise-book comparison are the same size (AZRAS 37.6 m2 vs 245.1 m2 went through)",
+    "Not-recalculated comparison copies were only reported in a dismissable popup; graphs looked valid"
+  ],
+  "new_self_checks": [
+    "dev_checks/patch_009_same_building_and_recalc_alert_self_check.py"
+  ],
+  "negative_tests": [
+    "new check fails on PATCH_008 code (no building_rows)"
+  ],
+  "results": {
+    "dev_checks": "13/13 PASS",
+    "real_copies": "building:gross_floor_area {245.1, 37.6, 245.1} ratio 6.52 detected; 2x6+RC only: no row"
+  },
+  "unchanged": [
+    "all calculations",
+    "graphs and values (alerts only)",
+    "ordinary non-copy comparisons"
+  ]
+}

@@ -2,7 +2,7 @@
   "product": "AZRAS Compare",
   "product_name": "AZRAS Compare",
   "version": "2.2.0",
-  "patch": 8,
+  "patch": 9,
   "baseline_of": "1.1.20 + PATCH_021",
   "baseline_note": "Re-baselined after a cross-module regression audit (dev_checks/, pyflakes) found only minor dead-code issues (duplicate translation dict key, unused import/variables) and confirmed no crash-causing bugs. Patch numbering restarts at 1; PATCH_16-20's history is kept under PATCH/archive_pre_v2.2.0/ for reference.",
   "executable_name": "AZRAS_Compare",
@@ -11,7 +11,7 @@
     "3.0"
   ],
   "schema_role": "read_only_consumer",
-  "feature": "PATCH_008: price-basis check after the comparison premise book. comparison/price_basis.py (new, no tkinter) decides the load-time price-basis state. Recalculated copies of ONE premise book were still warned as 'not priced on the same basis' because 01 Planning tags a copy that keeps method-dependent items (concrete, reinforcing steel, formwork, phenolic foam) on the regional database 'mixed_comparison_group_and_regional_database' and one that keeps them on AI rates 'comparison_group_premise_book'; the book leaves those items to each Project by design. Such copies now get an information dialog that lists every Project's own-price items and their origin (regional/AI); originals, copies of different book versions, a copy mixed with an original and a copy still priced on the source basis keep the warning. The warning now lists the regionally priced items and the five-step tab 7 procedure (list -> decide -> create copies -> 01 Planning Module 5 -> 02 Evaluation Modules 6/7 -> reload). Tab 7 lists B/D showed only buildings 1-3 of the 2-7 loaded; they now show all seven, with a horizontal scrollbar. No value is rewritten; 01 Planning is unchanged. Includes PATCH_007 and earlier.",
+  "feature": "PATCH_009: same-building check and persistent comparison alert. (1) Premise book: building size (gross floor area, footprint, storeys, dwelling units) is compared across the Projects; a floor-area difference over 3 % or any storey/unit difference is a red C-list row that must be decided before the copies can be created. (2) A red alert above every tab stays while loaded comparison copies are not recalculated (Module 5, then 6/7) or are of different-sized buildings; the load-time popup alone could be dismissed. Ordinary comparisons of different buildings get no alert. New dev_checks/patch_009_same_building_and_recalc_alert_self_check.py. Includes PATCH_008 and earlier.",
   "product_slot": "03_AZRAS_Compare",
   "language_policy": "English canonical internal/persisted data; UI languages are presentation translations"
 }

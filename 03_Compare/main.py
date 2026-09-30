@@ -467,6 +467,10 @@ class App(tk.Tk):
         ttk.Label(nav,text='言語 / Language').pack(side='left',padx=(2,4))
         self.language_box=ttk.Combobox(nav,textvariable=self.language_var,values=[LANG_LABELS[code] for code in LANGUAGE_ORDER],state='readonly',width=12)
         self.language_box.pack(side='left',padx=(0,8));self.language_box.bind('<<ComboboxSelected>>',self._change_language)
+        # PATCH_009: persistent alert above every tab.  The load-time popup can be
+        # dismissed, after which graphs of un-recalculated copies or of copies
+        # of different-sized buildings looked like valid results.
+        self.alert_label=ttk.Label(self,text='',foreground='#9c0006',background='#ffc7ce',wraplength=1800,justify='left')
         self.tabs=ttk.Notebook(self);self.tabs.pack(fill='both',expand=True,padx=10,pady=4)
         self.select_tab=ttk.Frame(self.tabs); self.overview_tab=ttk.Frame(self.tabs); self.monthly_tab=ttk.Frame(self.tabs); self.co2_tab=ttk.Frame(self.tabs); self.invest_tab=ttk.Frame(self.tabs); self.matrix_tab=ttk.Frame(self.tabs)
         self.tabs.add(self.select_tab,text='1. 建物・JSON選択')
@@ -501,6 +505,8 @@ class App(tk.Tk):
                 for col,h in heads.items():t.heading(col,text=tr(h,self.language))
         if self.projects:
             self.refresh_overview(); self.refresh_comparisons(); self.show_annual(self.annual_metric.get())
+        if hasattr(self,'alert_label'):
+            self.refresh_alerts()
         try:
             if getattr(self.premise_tab,'lists',None):self.premise_tab._refresh()
         except Exception:
@@ -681,6 +687,8 @@ class App(tk.Tk):
         if p:self.paths[i].set(p)
     def clear(self):
         for p in self.paths:p.set('')
+        if hasattr(self,'alert_label'):
+            self.alert_label.config(text='');self.alert_label.pack_forget()
         self.projects=[];self.regional={};self.monthly_city_label.config(text=tr('未読込',self.language));self.co2_city_label.config(text=tr('未読込',self.language));self.invest_city_label.config(text=tr('未読込',self.language));self.matrix.clear()
         if hasattr(self,'overview_tree'):
             for iid in self.overview_tree.get_children():self.overview_tree.delete(iid)
@@ -921,7 +929,45 @@ class App(tk.Tk):
                 )
                 messagebox.showwarning(tr('税金取扱いの確認',self.language),msg,parent=self)
         except Exception as e:return messagebox.showerror(tr('読込エラー',self.language),friendly_exception_text(e,self.language), parent=self)
-        self.show_annual('energy');self.refresh_overview();self.refresh_comparisons();self.tabs.select(self.overview_tab)
+        self.show_annual('energy');self.refresh_overview();self.refresh_comparisons();self.refresh_alerts();self.tabs.select(self.overview_tab)
+    def comparison_alerts(self):
+        """PATCH_009: reasons the loaded comparison copies are not a valid comparison.
+
+        Only for premise-book comparison copies: ordinary comparisons may
+        legitimately compare buildings of different sizes."""
+        raws=[x.get('raw') or {} for x in self.projects]
+        copies=[r for r in raws if isinstance(r.get('comparison_copy'),dict)]
+        if not copies:
+            return []
+        ja=(self.language=='ja')
+        out=[]
+        pending=[]
+        for x in self.projects:
+            codes={i.get('code') for i in PB.verify_copy(x.get('raw') or {})}
+            if 'not_recalculated' in codes:
+                pending.append(self.disp(x['label']))
+        if pending:
+            out.append(('比較用コピーが再計算されていません（01 Planning の Module 5 → 02 Evaluation の Module 6・7）：'
+                        if ja else 'Comparison copies not recalculated (Module 5 in 01 Planning, then Modules 6/7 in 02 Evaluation): ')
+                       +('、' if ja else ', ').join(pending)
+                       +('。比較前提表の統一単価はまだ反映されていません。' if ja else '. The unified premise-book rates are not applied yet.'))
+        labels=[self.disp(x['label']) for x in self.projects]
+        for r in PB.building_rows(raws):
+            vals=(' / ' ).join(f"{labels[i]}: {v:,.2f}".rstrip('0').rstrip('.') for i,v in sorted(r['values'].items()))
+            out.append((f"建物規模が一致しません（{r['label_ja']}）：{vals}。同じ建物の比較ではありません。元Projectを確認してください。"
+                        if ja else f"Building size differs ({r['label_en']}): {vals}. This is not the same building; check the source Projects."))
+        return out
+
+    def refresh_alerts(self):
+        alerts=self.comparison_alerts() if self.projects else []
+        if alerts:
+            self.alert_label.config(text=('⚠ ' if True else '')+'\n⚠ '.join(alerts))
+            if not self.alert_label.winfo_manager():
+                self.alert_label.pack(fill='x',padx=10,pady=(2,2),before=self.tabs)
+        else:
+            self.alert_label.config(text='')
+            if self.alert_label.winfo_manager():
+                self.alert_label.pack_forget()
     def val_at(self,s,year):
         # 正式時系列は指定年の値が存在するときだけ使用する。
         # 最終値の横持ち・補間・外挿は一切行わない。

@@ -133,7 +133,8 @@ class PremiseBookTab(ttk.Frame):
                                      (("item", "工種・部位", 220), ("kind", "種別", 110), ("unit", "単位", 80),
                                       ("have", "あり", 300), ("lack", "なし", 300), ("decision", "決定", 240)))
         self.scope_tree.bind("<Double-1>", self._edit_scope)
-        ttk.Label(self.tab_scope, text="範囲差は単価では直りません。数量の見直しは元Projectで行い、その後コピーを作り直してください。",
+        ttk.Label(self.tab_scope, text="範囲差は単価では直りません。数量の見直しは元Projectで行い、その後コピーを作り直してください。"
+                       "赤い行は建物規模の差です。同じ建物の比較では延床面積・建築面積・階数・戸数が一致している必要があります（面積は±3%まで）。",
                   foreground="#8b0000", wraplength=1380).pack(anchor="w", padx=10, pady=2)
 
         self.class_tree = self._tree(self.tab_class, ("item", "category"),
@@ -211,11 +212,18 @@ class PremiseBookTab(ttk.Frame):
                                    values=(DJ.cost_key_ja(r["key"]), DJ.unit_ja(r["unit"]), ("差あり" if r["differs"] else "一致"),
                                            self._price_text(r["row_id"]), *_pad(vals)))
         for r in L["scope_rows"]:
+            if r["kind"] == "building":
+                # PATCH_009: show each Project's value, and how far apart they are.
+                have = " / ".join(f"{labels[i]}: {_fmt(v)}" for i, v in sorted(r["values"].items()))
+                lack = (f"最大/最小 {r['ratio']:.2f}倍　同じ建物か確認" if r.get("ratio") else "同じ建物か確認")
+            else:
+                have = ", ".join(labels[i] for i in r["present"])
+                lack = ", ".join(labels[i] for i in r["missing"])
             self.scope_tree.insert("", "end", iid=r["row_id"],
                                    values=(r.get("label_ja") or DJ.cost_key_ja(r["key"]), DJ.kind_ja(r["kind"]), DJ.unit_ja(r["unit"]),
-                                           ", ".join(labels[i] for i in r["present"]),
-                                           ", ".join(labels[i] for i in r["missing"]),
-                                           self._scope_text(r["row_id"])))
+                                           have, lack, self._scope_text(r["row_id"])),
+                                   tags=(("building",) if r["kind"] == "building" else ()))
+        self.scope_tree.tag_configure("building", foreground="#9c0006", background="#ffc7ce")
         keys = sorted({c["key"] for c in [r for r in L["price_rows"]]}
                       | {r["key"] for r in L["scope_rows"] if r["kind"] == "item"}
                       | set((self.classification.get("method_specific") or {}).get("keys") or [])
