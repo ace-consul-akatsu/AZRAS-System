@@ -2,6 +2,32 @@
 
 This file records changes to the AZRAS System suite as a whole. Detailed patch notes and regression records of each product are in its `PATCH/` folder.
 
+## v2.2.0 patch update — 2026-09-30
+
+Fixes after the baseline release, found while comparing the 2x6, AZRAS and RC Frame terrace-house samples. No product version change; the patch numbers are:
+
+| Product | Version | Patch |
+|---|---|---|
+| AZRAS Installer | 5.0.4 | PATCH_004 |
+| AZRAS Planning | 2.2.0 | PATCH_051 |
+| AZRAS Evaluation | 2.2.0 | PATCH_014 |
+| AZRAS Compare | 2.2.0 | PATCH_009 |
+
+### Fixed
+
+- **Planning — gross floor area (PATCH_051).** A per-dwelling finish-area note (`天井と床面積：37.60m2/戸`) was read as the building's floor area, giving 37.6 m² instead of 245.1 m² for the AZRAS sample; rent, heating/cooling and CO2 were then computed for a sixth of the building. Per-dwelling/per-room values and finish-area notes are no longer floor-area candidates; footprint × storeys is used when no written area fits the plan.
+- **Planning — foundation earthwork (PATCH_050).** RC Frame projects had no earthwork: Module 5 read a ground-beam length key that nothing wrote, while Module 1 had measured the length on the foundation plan. 2x6 projects had no strip-foundation geometry: internal strip footings were never measured on the foundation plan. The foundation plan is now measured including internal strips, and excavation, backfill, imported fill, soil disposal, blinding concrete and sub-base reach Module 5 for all three methods. The 2x6 slab uses the area inside the stems, and the strip-footing concrete is included in the provisional foundation rebar.
+- **Evaluation — Module 4 annual CSV (PATCH_011).** Saving failed with "dict contains fields not in fieldnames"; result CSVs now use the union of all row keys.
+- **Evaluation — CSV file names (PATCH_012).** Module 6 and Module 7 proposed the same default file name and could overwrite each other.
+- **Installer / Evaluation — missing Python packages (Installer PATCH_004, Evaluation PATCH_013).** Planning and Evaluation stopped at start-up on a Python without packages. The Installer now lists missing packages and shows the install command (it does not install); Evaluation has a `requirements.txt`.
+- **Compare — price-basis warning (PATCH_008).** Comparison copies made with the premise book still got the "unit-price basis differs" warning; the premise-book lists now show buildings 1–7.
+
+### Added
+
+- **Compare — same-building check and persistent alert (PATCH_009).** The premise book compares gross floor area, footprint, storeys and dwelling units; a floor-area difference over 3 % or any storey/unit difference must be decided before copies are made. A red alert above every tab stays while comparison copies are not recalculated or are of different-sized buildings.
+- **Planning / Evaluation — CSV language (Planning PATCH_049, Evaluation PATCH_014).** Result CSVs follow the UI language: Japanese headers and labels in Japanese, English output unchanged.
+- Self-checks for each fix above; `tests/run_all.py` passes 80/80.
+
 ## v2.2.0 — 2026-09-24 (baseline release)
 
 First public release of AZRAS System, published as a baseline after a cross-product audit of all four products.
