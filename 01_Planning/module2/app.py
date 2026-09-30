@@ -2604,7 +2604,10 @@ class Module2App(tk.Toplevel):
             rows = payload.get("display_rows") or []
             with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
                 w = csv.writer(f)
-                w.writerow(["metric", "baseline", "alternative", "delta", "delta_percent"])
+                # PATCH_049: header follows the UI language (the metric labels in
+                # display_rows are already in the UI language); English unchanged.
+                from core.csv_export import header_label
+                w.writerow([header_label(k, self.i18n.language) for k in ("metric", "baseline", "alternative", "delta", "delta_percent")])
                 for row in rows:
                     w.writerow(list(row))
             messagebox.showinfo(
@@ -2709,7 +2712,9 @@ class Module2App(tk.Toplevel):
                         rows = list(csv.reader(f))
                     for iid in tree.get_children():
                         tree.delete(iid)
-                    data_rows = rows[1:] if rows and rows[0] and str(rows[0][0]).lower() == "metric" else rows
+                    # PATCH_049: accept both the English ("metric") and the
+                    # Japanese ("指標") header written by the save function.
+                    data_rows = rows[1:] if rows and rows[0] and str(rows[0][0]).strip().lower() in ("metric", "指標") else rows
                     clean_rows = []
                     for row in data_rows:
                         if not row:

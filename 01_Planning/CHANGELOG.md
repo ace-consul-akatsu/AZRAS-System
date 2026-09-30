@@ -1,3 +1,9 @@
+## v2.2.0 PATCH_049 — 2026-09-30 UTC
+- CSV language: result CSVs follow the UI language at save time. English output unchanged; Japanese output has Japanese headers (lang/csv_ja.json) and translated status codes; numbers untouched; untranslated columns stay in English, never blank. New shared core/csv_export.py.
+- Module 1 detailed-quantity CSV: Japanese item / evidence class / basis / source as on the 詳細数量 tab; AZRAS Key column stays English-canonical. English default file name is now `<project>_Detailed_Quantities.csv`.
+- Module 5 construction-cost CSV: Japanese headers/status codes and a 工種・品目名 column (Japanese only). Module 10 selected-hour regional CSV and Module 2 8760 comparison CSV headers; the 8760 CSV reload accepts both 指標 and metric.
+- Added dev_checks/csv_language_self_check.py. No calculation or Project JSON change.
+
 ## v2.2.0 PATCH_048 — 2026-09-24 UTC
 - module1/app.py: removed two identical duplicated dict keys ('AZRAS actual sloped roof area', 'Exterior doors'); added dev_checks/duplicate_dict_key_self_check.py (pyflakes misses same-value duplicates).
 - dev_checks/pyflakes_undefined_names_self_check.py: FAIL instead of SKIP when pyflakes is missing; FAIL on unparseable files.

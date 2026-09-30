@@ -963,17 +963,17 @@ class RegionalComparisonApp(tk.Toplevel):
         )
         if not path:
             return
-        import csv
+        from core.csv_export import write_dict_rows_csv
         fields = ["region", "datetime", "outdoor_C", "ghi_Wm2", "dni_Wm2", "dhi_Wm2",
                   "heating_electricity_kWh", "cooling_electricity_kWh", "other_electricity_kWh",
                   "total_use_kWh", "pv_generation_kWh", "grid_import_kWh", "grid_export_kWh", "net_energy_kWh"]
-        with open(path, "w", newline="", encoding="utf-8-sig") as f:
-            writer = csv.DictWriter(f, fieldnames=fields)
-            writer.writeheader()
-            for source in self.hourly_rows:
-                row = {key: source.get(key, "") for key in fields}
-                row["datetime"] = str(source.get("datetime", ""))
-                writer.writerow(row)
+        export_rows = []
+        for source in self.hourly_rows:
+            row = {key: source.get(key, "") for key in fields}
+            row["datetime"] = str(source.get("datetime", ""))
+            export_rows.append(row)
+        # PATCH_049: header follows the UI language; English output unchanged.
+        write_dict_rows_csv(path, export_rows, self.language, fields=fields)
         messagebox.showinfo(self.title(), self.t("CSVを保存しました。", "CSV saved."), parent=self)
 
 

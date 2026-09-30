@@ -7,6 +7,7 @@ import hashlib
 import os
 import json, sys, re, tkinter as tk
 import csv
+from core.csv_export import write_dict_rows_csv
 import zipfile, shutil
 from tkinter import ttk, filedialog, messagebox, simpledialog
 from pathlib import Path, PureWindowsPath
@@ -29112,12 +29113,18 @@ This packet is deliberately compact: only items with a discrepancy carry full ev
         if not rows:
             messagebox.showwarning("Warning", "詳細数量がありません。" if self.i18n.language=="ja" else "No detailed quantities are available.")
             return
+        # PATCH_049: the CSV follows the UI language.  Japanese uses the same
+        # item / evidence-class / basis / source text as the 詳細数量 tab and
+        # Japanese headers; the AZRAS Key column stays English-canonical so a
+        # row can always be traced back to the Project JSON.  English output
+        # (headers and values) is unchanged.
+        ja=self.i18n.language=="ja"
         base=Path(str(self.project_path or self.project_file.get() or "project.json"))
         initialdir=base.parent if str(base.parent) not in {"","."} else Path.cwd()
         stem=base.stem or "project"
         path=filedialog.asksaveasfilename(
             initialdir=str(initialdir),
-            initialfile=f"{stem}_詳細数量.csv",
+            initialfile=(f"{stem}_詳細数量.csv" if ja else f"{stem}_Detailed_Quantities.csv"),
             defaultextension=".csv",
             filetypes=[("CSV","*.csv")],
         )
@@ -29128,30 +29135,43 @@ This packet is deliberately compact: only items with a discrepancy carry full ev
             "Quantity Class","Confidence","Calculation Basis","Source",
             "Drawing / Evidence","Unit Price","Currency","Amount","Remarks",
         ]
-        with Path(path).open("w",newline="",encoding="utf-8-sig") as f:
-            writer=csv.DictWriter(f,fieldnames=fields)
-            writer.writeheader()
-            for no,row in enumerate(rows,1):
-                if not isinstance(row,dict):
-                    continue
-                value,unit=self._display_takeoff_value_unit(row)
-                writer.writerow({
-                    "No.":no,
-                    "AZRAS Key":row.get("material_key") or row.get("canonical_key") or row.get("key") or "",
-                    "Category":row.get("canonical_category") or row.get("category") or "",
-                    "Item":row.get("canonical_item") or row.get("item") or "",
-                    "Quantity":value,
-                    "Unit":unit,
-                    "Quantity Class":row.get("quantity_adoption_class") or row.get("quantity_display_state") or row.get("evidence_status") or "",
-                    "Confidence":row.get("confidence", ""),
-                    "Calculation Basis":row.get("canonical_evidence") or row.get("evidence") or row.get("formula") or "",
-                    "Source":row.get("canonical_source_mode") or row.get("source_mode") or "",
-                    "Drawing / Evidence":row.get("evidence_reference") or row.get("drawing_reference") or row.get("source_pdf") or "",
-                    "Unit Price":"",
-                    "Currency":"",
-                    "Amount":"",
-                    "Remarks":"",
-                })
+        export_rows=[]
+        for no,row in enumerate(rows,1):
+            if not isinstance(row,dict):
+                continue
+            value,unit=self._display_takeoff_value_unit(row)
+            if ja:
+                item=self._localize_takeoff_text(row.get("item") or row.get("canonical_item") or "")
+                category=self._localize_takeoff_text(row.get("category") or row.get("canonical_category") or "")
+                quantity_class=self._quantity_display_label(row)
+                basis=self._localize_takeoff_text(row.get("evidence") or row.get("canonical_evidence") or row.get("formula") or "")
+                source=self._localize_takeoff_text(row.get("source_mode") or row.get("canonical_source_mode") or "")
+                evidence=self._localize_takeoff_text(row.get("evidence_reference") or row.get("drawing_reference") or row.get("source_pdf") or "")
+            else:
+                item=row.get("canonical_item") or row.get("item") or ""
+                category=row.get("canonical_category") or row.get("category") or ""
+                quantity_class=row.get("quantity_adoption_class") or row.get("quantity_display_state") or row.get("evidence_status") or ""
+                basis=row.get("canonical_evidence") or row.get("evidence") or row.get("formula") or ""
+                source=row.get("canonical_source_mode") or row.get("source_mode") or ""
+                evidence=row.get("evidence_reference") or row.get("drawing_reference") or row.get("source_pdf") or ""
+            export_rows.append({
+                "No.":no,
+                "AZRAS Key":row.get("material_key") or row.get("canonical_key") or row.get("key") or "",
+                "Category":category,
+                "Item":item,
+                "Quantity":value,
+                "Unit":unit,
+                "Quantity Class":quantity_class,
+                "Confidence":row.get("confidence", ""),
+                "Calculation Basis":basis,
+                "Source":source,
+                "Drawing / Evidence":evidence,
+                "Unit Price":"",
+                "Currency":"",
+                "Amount":"",
+                "Remarks":"",
+            })
+        write_dict_rows_csv(path,export_rows,self.i18n.language,fields=fields)
         messagebox.showinfo(
             self.i18n.t("saved"),
             (("詳細数量CSVを保存しました。単価・通貨・金額欄は外部積算用に空欄です。\n" if self.i18n.language=="ja" else "Detailed quantity CSV saved. Unit price, currency and amount are intentionally blank for external estimating.\n") + str(path)),

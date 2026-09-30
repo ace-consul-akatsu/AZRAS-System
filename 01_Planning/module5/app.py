@@ -1,6 +1,6 @@
 
 from __future__ import annotations
-import csv
+from core.csv_export import write_dict_rows_csv, union_fieldnames
 import json
 import os
 import re
@@ -4194,14 +4194,27 @@ The returned numeric price is the current AZRAS planning price basis only when s
             })
         if not export_rows:
             return
-        fieldnames=[]
-        for row in export_rows:
-            for key in row.keys():
-                if key not in fieldnames:
-                    fieldnames.append(key)
-        with open(p,"w",newline="",encoding="utf-8-sig") as f:
-            writer=csv.DictWriter(f,fieldnames=fieldnames,extrasaction="ignore")
-            writer.writeheader();writer.writerows(export_rows)
+        fieldnames=union_fieldnames(export_rows)
+        # PATCH_049: the CSV follows the UI language.  English output is
+        # unchanged (internal keys as the header).  Japanese translates the
+        # header and status codes, and adds an item-name column right after
+        # cost_item_key (a cost line otherwise carries only its key), using the
+        # same names as the on-screen cost table.
+        localizers={}
+        if self.i18n.language=="ja":
+            for row in export_rows:
+                if row.get("record_type")=="cost_line":
+                    row["item_name"]=self._cost_item_display_name(str(row.get("cost_item_key") or ""))
+                else:
+                    row["item_name"]=self._quantity_item_display_name(row.get("item") or "")
+            pos=fieldnames.index("cost_item_key")+1 if "cost_item_key" in fieldnames else 0
+            fieldnames.insert(pos,"item_name")
+            localizers={"item":lambda v,_row:self._quantity_item_display_name(v) if v else v}
+        write_dict_rows_csv(
+            p,export_rows,self.i18n.language,fields=fieldnames,
+            value_columns=("record_type","pricing_display_status","pricing_status","quantity_source_type","pricing_structure"),
+            localizers=localizers,
+        )
 
     def save_output(self):
         self.refresh_project_from_context()

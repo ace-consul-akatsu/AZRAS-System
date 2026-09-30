@@ -1,0 +1,32 @@
+{
+  "patch": "PATCH_049",
+  "product": "01 AZRAS Planning",
+  "version": "2.2.0",
+  "date_utc": "260930",
+  "defects": [
+    "Module 1 detailed-quantity CSV: English headers and English item/basis/source text even with the Japanese UI",
+    "Module 5 construction-cost CSV: raw internal keys as headers, English status codes, no item name column",
+    "Module 10 selected-hour regional CSV: English headers only",
+    "Module 2 8760 comparison CSV: English header; reload would treat a Japanese header row as data"
+  ],
+  "new_self_checks": [
+    "dev_checks/csv_language_self_check.py"
+  ],
+  "negative_tests": [
+    "removing the 指標 header acceptance in the 8760 reload -> csv_language_self_check NG"
+  ],
+  "results": {
+    "dev_checks": "31/31 PASS (tkinter + PyMuPDF installed; GUI checks under xvfb)",
+    "runtime_export_test": "Module1 save_detailed_quantity_csv and Module5 save_csv called in ja and en; English output identical to previous format"
+  },
+  "unchanged": [
+    "Project JSON",
+    "all calculations",
+    "English CSV headers and values (except the English default file name of the detailed-quantity CSV)",
+    "Module 2 monthly / annual thermal CSVs (already bilingual)",
+    "table right-click CSV export (already follows displayed text)"
+  ],
+  "not_verified_here": [
+    "Windows screen rendering of the save dialogs (same dialogs as before)"
+  ]
+}
