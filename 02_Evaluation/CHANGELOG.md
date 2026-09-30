@@ -1,3 +1,9 @@
+# AZRAS Evaluation v2.2.0 — PATCH_014 (CSV language)
+
+- Result CSVs follow the UI language at save time. English output unchanged; Japanese output has Japanese headers (`lang/csv_ja.json`) and Japanese action / component / scope / category / semantics values (same labels as the screens); numbers untouched.
+- `core/csv_export.py` extended (same file as 01 Planning). Module 3 timeline, Module 4 annual/event, Module 6 cash flow, Module 7 event costs.
+- Added `dev_checks/csv_language_self_check.py`. No calculation or Project JSON change.
+
 # AZRAS Evaluation v2.2.0 — PATCH_013 (four-product audit: requirements.txt)
 
 - Added `requirements.txt` (numpy, pandas, reportlab; pyflakes/jsonschema for dev_checks only). On a fresh Python `main.py` stopped with `ModuleNotFoundError: reportlab`; there was no requirements file. 00 Installer PATCH_004 reads it and shows the missing packages and the pip command.

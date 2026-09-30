@@ -5,10 +5,10 @@
   "schema_version": "3.0",
   "executable_name": "AZRAS_Evaluation",
   "release_channel": "development",
-  "patch": 13,
+  "patch": 14,
   "baseline_of": "1.0.216 + PATCH_217",
   "baseline_note": "Re-baselined after a cross-module regression audit (dev_checks/) found and fixed 3 issues: Module 7 NameError crash (project_currency), Module 4/6 blank language dropdown (StringVar garbage-collected), Module 3 component names staying in the stale language after a UI language switch. Patch numbering restarts at 1; PATCH_197-216's history is kept under PATCH/archive_pre_v2.2.0/ for reference.",
-  "feature": "PATCH_013: four-product audit (v2.2.0). (1) Added requirements.txt (numpy, pandas, reportlab; pyflakes and jsonschema marked 'used by dev_checks only'). Evaluation imports numpy/pandas (thermal/PV engines used by the coordinator) and reportlab (core/module_report.py) at start-up, so on a fresh Python main.py stopped with ModuleNotFoundError: reportlab; the product had no requirements file, and 00 Installer PATCH_004 now reads it to show the missing packages and the pip command. build_AZRAS_Evaluation.bat names the requirements file when build dependencies are missing. (2) Added dev_checks/language_combobox_liveness_self_check.py, the four-product check for the blank-language-dropdown bug class that was first found in this product (Module 4/6) but had never been checked here; it passes. No calculation or Project JSON change. Includes PATCH_012 and earlier.",
+  "feature": "PATCH_014: CSV language. Result CSVs follow the UI language at save time. English output is unchanged; Japanese output has Japanese headers (lang/csv_ja.json), and action / component / scope / category / CO2- and cost-semantics values in Japanese using the same labels as the screens; numbers untouched. core/csv_export.py extended (same file as 01 Planning). Module 3 timeline, Module 4 annual and event CSVs, Module 6 cash flow, Module 7 event costs. New dev_checks/csv_language_self_check.py. No calculation or Project JSON change. Includes PATCH_013 and earlier.",
   "product_slot": "02_AZRAS_Evaluation",
   "language_policy": "English canonical internal/persisted data; UI languages are presentation translations"
 }

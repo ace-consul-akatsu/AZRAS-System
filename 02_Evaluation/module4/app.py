@@ -600,7 +600,8 @@ class Module4App(tk.Toplevel):
         p=filedialog.asksaveasfilename(initialdir=default_path.parent,initialfile=default_path.name,defaultextension=".csv",filetypes=[("CSV","*.csv")])
         if not p:return
         rows=self.result["annual_timeline"]
-        write_dict_rows_csv(p,rows)
+        # PATCH_014: header/category follow the UI language; English unchanged.
+        write_dict_rows_csv(p,rows,self.i18n.language,value_columns=("category",))
 
     def save_event_csv(self):
         if not self.result:return
@@ -609,7 +610,17 @@ class Module4App(tk.Toplevel):
         if not p:return
         rows=self.result["event_impacts"]
         if not rows:return
-        write_dict_rows_csv(p,rows)
+        # PATCH_014: header, action, component and CO2 semantics follow the UI
+        # language; English unchanged.
+        t=self.i18n.t
+        write_dict_rows_csv(
+            p,rows,self.i18n.language,
+            value_columns=("action","co2_event_semantics"),
+            localizers={"component":lambda v,row:(
+                t(f"component_{row.get('component_key','')}")
+                if t(f"component_{row.get('component_key','')}")!=f"component_{row.get('component_key','')}"
+                else v)},
+        )
 
     def save_output(self):
         self.refresh_project_from_context()

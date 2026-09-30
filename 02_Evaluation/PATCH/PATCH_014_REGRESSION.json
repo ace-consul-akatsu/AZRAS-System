@@ -1,0 +1,22 @@
+{
+  "patch": "PATCH_014",
+  "product": "02 AZRAS Evaluation",
+  "version": "2.2.0",
+  "date_utc": "260930",
+  "defects": [
+    "Module 3/4/6/7 result CSVs wrote internal English keys and English codes even with the Japanese UI"
+  ],
+  "reproduction": "Japanese UI -> save Module 3/4/6/7 CSV -> headers were event_id/year/action..., values full_rebuild etc.",
+  "results": {
+    "dev_checks": "21/21 PASS",
+    "full_self_check": "PASS",
+    "negative_tests": "missing header and duplicate header each -> NG",
+    "runtime_export_test": "Module3 save_csv, Module4 save_annual_csv/save_event_csv, Module6 save_csv, Module7 save_csv in ja and en"
+  },
+  "unchanged": [
+    "Project JSON",
+    "all calculations",
+    "English CSV headers and values",
+    "final operation check CSV (already bilingual)"
+  ]
+}

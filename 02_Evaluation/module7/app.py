@@ -480,7 +480,17 @@ class Module7App(tk.Toplevel):
         if not path:
             return
         rows = self.result["event_costs"]
-        write_dict_rows_csv(path, rows)
+        # PATCH_014: header, action and component names follow the UI language
+        # (same labels as the on-screen event table); English unchanged.
+        write_dict_rows_csv(
+            path, rows, self.i18n.language,
+            value_columns=("tax_treatment", "cost_event_semantics"),
+            localizers={
+                "action": lambda v, _row: self.action_label(str(v)),
+                "component": lambda v, row: self.component_label(
+                    row.get("component_key", ""), str(v or "")),
+            },
+        )
 
     def save_output(self):
         self.refresh_project_from_context()

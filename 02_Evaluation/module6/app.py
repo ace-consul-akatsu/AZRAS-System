@@ -1263,7 +1263,8 @@ class Module6App(tk.Toplevel):
         p=filedialog.asksaveasfilename(initialdir=default_path.parent,initialfile=default_path.name,defaultextension=".csv",filetypes=[("CSV","*.csv")])
         if not p:return
         rows=self.result["cashflow"]
-        write_dict_rows_csv(p,rows)
+        # PATCH_014: header follows the UI language; English unchanged.
+        write_dict_rows_csv(p,rows,self.i18n.language)
 
     def save_output(self):
         self.refresh_project_from_context()

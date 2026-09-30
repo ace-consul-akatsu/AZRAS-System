@@ -1,6 +1,6 @@
 
 from __future__ import annotations
-import csv
+from core.csv_export import write_dict_rows_csv
 import json
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
@@ -552,14 +552,20 @@ class Module3App(tk.Toplevel):
         )
         if not p:
             return
-        with open(p,"w",newline="",encoding="utf-8-sig") as f:
-            fields=["event_id","year","action","component_key","component","scope",
-                    "retained_fraction","removed_fraction","reused_fraction",
-                    "recycled_fraction","layout_change","basis"]
-            writer=csv.DictWriter(f,fieldnames=fields)
-            writer.writeheader()
-            for e in self.result["events"]:
-                writer.writerow({k:e.get(k,"") for k in fields})
+        # PATCH_014: the CSV follows the UI language (header, action, scope and
+        # component names in Japanese); English output is unchanged.
+        fields=["event_id","year","action","component_key","component","scope",
+                "retained_fraction","removed_fraction","reused_fraction",
+                "recycled_fraction","layout_change","basis"]
+        t=self.i18n.t
+        write_dict_rows_csv(
+            p,self.result["events"],self.i18n.language,fields=fields,
+            localizers={
+                "action":lambda v,_row:t(str(v)) if t(str(v))!=str(v) else v,
+                "scope":lambda v,_row:t(str(v)) if str(v) in ("all","partial") else v,
+                "component":lambda _v,row:self._component_display_name(row),
+            },
+        )
 
     def save_output(self):
         self.refresh_project_from_context()
