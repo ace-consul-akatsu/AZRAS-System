@@ -24588,7 +24588,19 @@ This packet is deliberately compact: only items with a discrepancy carry full ev
             # Slab-on-ground concrete: only the explicitly repeated 100 mm slab.
             slab=(specs.get("slab_on_ground") or {})
             slab_t=float(slab.get("thickness_mm") or 0.0)/1000.0
-            if footprint>0 and slab_t>0:
+            # PATCH_050: when the foundation plan is resolved, the slab is only
+            # the area inside the stems (the stems are counted in the strip-footing
+            # concrete); using the gross footprint would count the stem zone twice.
+            _fg_slab=(drawing_construction.get("foundation_geometry") or {})
+            _inside=float(_fg_slab.get("slab_area_inside_stems_m2") or 0.0) if _fg_slab.get("status")=="resolved_from_current_pdf_geometry" else 0.0
+            if _inside>0 and slab_t>0:
+                put_basic(
+                    "土間コンクリート",_inside*slab_t,"m3",
+                    f"{_inside:.3f}m2 × {slab_t:.3f}m",
+                    "section図に明記された土間厚を使用。面積は基礎伏図の立上り内側（布基礎立上り部は布基礎コンクリートに計上）",
+                    "structure",0.94
+                )
+            elif footprint>0 and slab_t>0:
                 put_basic(
                     "土間コンクリート",footprint*slab_t,"m3",
                     f"{footprint:.3f}m2 × {slab_t:.3f}m",
@@ -24892,7 +24904,9 @@ This packet is deliberately compact: only items with a discrepancy carry full ev
 
             # Reinforcement for RC foundation/slab.
             # Use only the currently accepted RC concrete quantities in this 2x6 result.
-            rc_items={"土間コンクリート","布基礎コンクリート"}
+            # PATCH_050: the drawing-derived strip footing row is named
+            # "strip-footing concrete"; it was missing here, so its rebar was never counted.
+            rc_items={"土間コンクリート","布基礎コンクリート","strip-footing concrete"}
             rc_total=sum(
                 float(r.get("accepted_quantity",r.get("quantity",0.0)) or 0.0)
                 for r in rows if str(r.get("item") or "") in rc_items

@@ -1,3 +1,9 @@
+## v2.2.0 PATCH_050 — 2026-09-30 UTC
+- Module 5 earthwork (RC): reads the ground-beam length Module 1 measures on the foundation plan (`rc_vector_takeoff.foundation.net_ground_beam_length_m`); the key it read before was never written, so RC projects had no earthwork. Length source recorded.
+- 2x6: new `detect_2x6_strip_foundation_plan_vector` measures the foundation plan including internal strips; Module 5 earthwork accepts the Module 1 foundation-geometry shape (it crashed on a scalar `concrete_volume_m3`).
+- Module 1 (2x6): slab-on-ground uses the area inside the stems when the plan is resolved; strip-footing concrete included in the provisional foundation rebar.
+- Added dev_checks/foundation_earthwork_contract_self_check.py.
+
 ## v2.2.0 PATCH_049 — 2026-09-30 UTC
 - CSV language: result CSVs follow the UI language at save time. English output unchanged; Japanese output has Japanese headers (lang/csv_ja.json) and translated status codes; numbers untouched; untranslated columns stay in English, never blank. New shared core/csv_export.py.
 - Module 1 detailed-quantity CSV: Japanese item / evidence class / basis / source as on the 詳細数量 tab; AZRAS Key column stays English-canonical. English default file name is now `<project>_Detailed_Quantities.csv`.

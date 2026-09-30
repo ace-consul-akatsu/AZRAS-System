@@ -1363,6 +1363,229 @@ def detect_2x6_foundation_from_pdf(pdf_path: str | Path, dimensions: dict[str, A
         doc.close()
 
 
+_FOUNDATION_PLAN_TITLE_RE = re.compile(r"(?:布|ベタ)?基礎伏せ?(?:見下げ)?図")
+
+
+def _strip_foundation_plan_cells(lines, tol: float = 0.6):
+    """Closed rectangles drawn from separate H/V segments, and the cells among them.
+
+    A strip-foundation plan draws every enclosed area (土間) as two concentric
+    rectangles: the outer one is the stem face, the inner one the edge of the
+    wider footing base.  A rectangle that contains a concentric rectangle with
+    the same offset on all four sides is therefore a cell bounded by stem faces.
+    """
+    hs=[l for l in lines if l["orientation"]=="h" and l["length"]>=15.0]
+    vs=[l for l in lines if l["orientation"]=="v" and l["length"]>=15.0]
+
+    def has_v(x, y0, y1):
+        return any(abs(v["coord"]-x)<=tol and v["a"]<=y0+tol and v["b"]>=y1-tol for v in vs)
+
+    rects=[]
+    seen=set()
+    for i,a in enumerate(hs):
+        for b in hs[i+1:]:
+            if abs(a["a"]-b["a"])>tol or abs(a["b"]-b["b"])>tol:
+                continue
+            y0,y1=sorted((a["coord"],b["coord"]))
+            if y1-y0<15.0:
+                continue
+            x0=(a["a"]+b["a"])/2.0; x1=(a["b"]+b["b"])/2.0
+            if not (has_v(x0,y0,y1) and has_v(x1,y0,y1)):
+                continue
+            key=(round(x0,1),round(y0,1),round(x1,1),round(y1,1))
+            if key not in seen:
+                seen.add(key); rects.append(key)
+    cells=[]
+    for r in rects:
+        for q in rects:
+            if q==r:
+                continue
+            offs=(q[0]-r[0],q[1]-r[1],r[2]-q[2],r[3]-q[3])
+            if min(offs)>=2.0 and max(offs)<=20.0 and max(offs)-min(offs)<=0.6:
+                cells.append({"rect":r,"base_overhang_pt":sum(offs)/4.0})
+                break
+    return cells
+
+
+def detect_2x6_strip_foundation_plan_vector(pdf_path: str | Path, dimensions: dict[str, Any]) -> dict[str, Any] | None:
+    """PATCH_050: 2x6 strip foundation measured on the foundation plan itself.
+
+    Earlier logic derived the centerline as "perimeter + party walls x depth"
+    from repeated dwelling bays and could not see internal strip footings
+    around rooms.  This routine reads the current PDF only:
+      - foundation plan (title 基礎伏図 / 基礎伏せ図 / 布基礎伏せ図): every cell
+        bounded by stem faces; stem width = gap between neighbouring cells;
+        base overhang = offset of the inner (footing-edge) rectangle;
+      - total centerline = (sum of cell centerline perimeters + outer
+        centerline perimeter) / 2 — every internal strip is shared by two
+        cells and every perimeter strip by one;
+      - scale from the building width in the current plan dimensions
+        (checked against the depth);
+      - section heights from the dimensioned strip-footing sketch
+        (total = stem height + base thickness);
+      - slab / XPS thickness from the section note.
+    Output keeps the Module 1 contract (status resolved_from_current_pdf_geometry,
+    scalar concrete_volume_m3 ...) and adds the Module 5 earthwork contract
+    (foundation_type, dimensions_mm, centerline_length_breakdown_m).
+    """
+    if fitz is None:
+        return None
+    width=float(dimensions.get("width_m") or 0.0)
+    depth=float(dimensions.get("depth_m") or 0.0)
+    if width<=0 or depth<=0:
+        return None
+    try:
+        doc=fitz.open(str(pdf_path))
+    except Exception:
+        return None
+    result={"status":"unresolved","source":"current_pdf_foundation_plan_vector","requires_confirmation":True}
+    try:
+        all_text=""
+        plan=None
+        for page in doc:
+            t=_norm_drawing_text(page.get_text())
+            all_text+="\n"+t
+            if plan is None:
+                m=_FOUNDATION_PLAN_TITLE_RE.search(t.replace(" ","").replace("\u3000",""))
+                if m and page.search_for(m.group(0)):
+                    plan=(page,m.group(0))
+        if plan is None:
+            result["reason"]="foundation_plan_title_not_found"; return result
+        page,title=plan
+        lines,_box=_fitz_vector_lines_near_title(page,title)
+        if not lines:
+            result["reason"]="foundation_plan_vectors_not_found"; return result
+        # _fitz_vector_lines_near_title drops lines shorter than 20 pt; cell
+        # edges of small rooms are longer than that at 1:100.
+        cells=_strip_foundation_plan_cells(lines)
+        if len(cells)<2:
+            result["reason"]="foundation_plan_cells_not_resolved"; return result
+
+        rects=[c["rect"] for c in cells]
+        gaps=[]
+        for a in rects:
+            for b in rects:
+                if a is b:
+                    continue
+                if min(a[3],b[3])-max(a[1],b[1])>5.0:
+                    g=b[0]-a[2]
+                    if 1.0<=g<=15.0: gaps.append(g)
+                if min(a[2],b[2])-max(a[0],b[0])>5.0:
+                    g=b[1]-a[3]
+                    if 1.0<=g<=15.0: gaps.append(g)
+        if not gaps:
+            result["reason"]="stem_width_not_resolved"; return result
+        stem_pt=statistics.median(gaps)
+        half=stem_pt/2.0
+        expanded=[(r[0]-half,r[1]-half,r[2]+half,r[3]+half) for r in rects]
+        bx0=min(r[0] for r in expanded); by0=min(r[1] for r in expanded)
+        bx1=max(r[2] for r in expanded); by1=max(r[3] for r in expanded)
+        span_x=bx1-bx0; span_y=by1-by0
+        # Plan width/depth may be drawn in either orientation.
+        long_pt,short_pt=max(span_x,span_y),min(span_x,span_y)
+        long_m,short_m=max(width,depth),min(width,depth)
+        mm_per_pt=long_m*1000.0/long_pt
+        if abs(short_pt*mm_per_pt-short_m*1000.0)>max(50.0,short_m*1000.0*0.01):
+            result.update({"reason":"plan_scale_inconsistent_with_building_dimensions",
+                           "measured_mm":[round(long_pt*mm_per_pt),round(short_pt*mm_per_pt)]})
+            return result
+        # Cells must tile the centerline rectangle (no missing strips).
+        cell_area_pt=sum((r[2]-r[0])*(r[3]-r[1]) for r in expanded)
+        if abs(cell_area_pt-span_x*span_y)>0.01*span_x*span_y:
+            result["reason"]="foundation_cells_do_not_tile_plan"; return result
+        m_per_pt=mm_per_pt/1000.0
+        sum_cell_perim=sum(2.0*((r[2]-r[0])+(r[3]-r[1])) for r in expanded)*m_per_pt
+        outer_perim=2.0*(span_x+span_y)*m_per_pt
+        centerline=(sum_cell_perim+outer_perim)/2.0
+        internal=centerline-outer_perim
+
+        def round10(v):
+            return round(float(v)/10.0)*10.0
+        stem_w=round10(stem_pt*mm_per_pt)
+        overhang=round10(statistics.median([c["base_overhang_pt"] for c in cells])*mm_per_pt)
+        base_w=stem_w+2.0*overhang
+        slab_area=sum((r[2]-r[0])*(r[3]-r[1]) for r in rects)*m_per_pt*m_per_pt
+
+        # Section heights from the dimensioned sketch labelled 布基礎.
+        M=page.rotation_matrix
+        words=[]
+        for w in page.get_text("words"):
+            rr=fitz.Rect(w[0],w[1],w[2],w[3])*M
+            words.append((_norm_drawing_text(str(w[4])).strip(),rr))
+        title_rects=[fitz.Rect(r)*M for r in page.search_for(title)]
+        labels=[r for t,r in words if t=="布基礎" and not any(r.intersects(tr) for tr in title_rects)]
+        stem_h=base_t=None
+        section_numbers=[]
+        for lab in labels:
+            cx=(lab.x0+lab.x1)/2.0
+            nums=[]
+            for t,r in words:
+                if re.fullmatch(r"[0-9]{2,4}",t) and abs((r.x0+r.x1)/2.0-cx)<=160.0 and lab.y0-170.0<=r.y0<=lab.y0:
+                    nums.append((float(t),r))
+            for total,_tr in nums:
+                parts=[(v,r) for v,r in nums if v<total]
+                for i,(v1,r1) in enumerate(parts):
+                    for v2,r2 in parts[i+1:]:
+                        if abs(v1+v2-total)<0.5:
+                            # the lower dimension (larger display y) is the base
+                            lower,upper=((v1,r1),(v2,r2)) if r1.y0>r2.y0 else ((v2,r2),(v1,r1))
+                            stem_h,base_t=upper[0],lower[0]
+                            section_numbers=sorted(v for v,_ in nums)
+                            break
+                    if stem_h: break
+                if stem_h: break
+            if stem_h:
+                # Plan-measured widths must agree with the sketch when it states them.
+                if section_numbers and (stem_w not in section_numbers or base_w not in section_numbers):
+                    result.update({"reason":"plan_widths_disagree_with_section_sketch",
+                                   "plan_stem_width_mm":stem_w,"plan_base_width_mm":base_w,
+                                   "section_numbers_mm":section_numbers})
+                    return result
+                break
+        if not stem_h or not base_t:
+            result.update({"status":"plan_resolved_section_heights_not_resolved",
+                           "centerline_total_m":centerline,"stem_width_mm":stem_w,"footing_base_width_mm":base_w})
+            return result
+
+        slab_mm=xps_mm=None
+        m=re.search(r"土間厚\s*([0-9.]+)\s*\+?\s*高性能発泡ポリスチレン厚\s*([0-9.]+)",all_text)
+        if m:
+            slab_mm=float(m.group(1)); xps_mm=float(m.group(2))
+        section_area=(base_w/1000.0)*(base_t/1000.0)+(stem_w/1000.0)*(stem_h/1000.0)
+        concrete=centerline*section_area
+        result.update({
+            "status":"resolved_from_current_pdf_geometry",
+            "foundation_type":"strip_foundation_with_slab_on_ground",
+            "plan_title":title,
+            "plan_scale_mm_per_pt":mm_per_pt,
+            "cell_count":len(cells),
+            "centerline_total_m":centerline,
+            "centerline_formula":(f"(各区画の芯々周長計 {sum_cell_perim:.3f}m＋外周芯々 {outer_perim:.3f}m)÷2"
+                                  f"＝{centerline:.3f}m（外周 {outer_perim:.3f}m＋内部 {internal:.3f}m）"),
+            "centerline_length_breakdown_m":{"perimeter":outer_perim,"internal":internal,"total":centerline},
+            "footing_base_width_mm":base_w,"footing_base_thickness_mm":base_t,
+            "stem_width_mm":stem_w,"stem_height_mm":stem_h,
+            "dimensions_mm":{"footing_width":base_w,"footing_thickness":base_t,"stem_width":stem_w,
+                             "stem_height":stem_h,"total_height":base_t+stem_h,"slab_thickness":slab_mm},
+            "section_area_m2":section_area,
+            "concrete_volume_m3":concrete,
+            "concrete_volume_breakdown_m3":{"strip_foundation":concrete},
+            "slab_area_inside_stems_m2":slab_area,
+            "slab_thickness_mm":slab_mm,"xps_thickness_mm":xps_mm,
+            "evidence":[
+                f"現在PDF {title}：区画{len(cells)}（立上り面）、立上り幅{stem_w:.0f}mm＝隣接区画の間隔、底盤幅{base_w:.0f}mm＝立上り＋底盤はね出し×2",
+                f"現在PDF 布基礎断面スケッチ：立上り高{stem_h:.0f}mm＋底盤厚{base_t:.0f}mm（寸法値 {section_numbers}）",
+                "縮尺：平面の建物外形寸法と伏図の芯々外形を照合（幅・奥行とも1%以内）",
+            ],
+        })
+        if slab_mm and xps_mm:
+            result["under_slab_insulation_area_m2"]=slab_area
+            result["under_slab_insulation_volume_m3"]=slab_area*xps_mm/1000.0
+        return result
+    finally:
+        doc.close()
+
+
 def detect_2x6_strip_foundation(text: str, dimensions: dict[str, Any]) -> dict[str, Any] | None:
     """2x6 foundation geometry from the current PDF only.
 
@@ -4613,7 +4836,11 @@ def analyze_pdf(pdf_path: str | Path, north_rotation_deg: float, profiles: dict[
     explicit_concrete = build_explicit_concrete_quantities(structural_members, dimensions)
     foundation_analysis = None
     if structure == "2x6 Timber":
-        foundation_analysis = detect_2x6_foundation_from_pdf(pdf_path, dimensions)
+        # PATCH_050: measure the foundation plan (internal strips included)
+        # first; the older bay-repeat estimate stays as the fallback.
+        foundation_analysis = detect_2x6_strip_foundation_plan_vector(pdf_path, dimensions)
+        if not foundation_analysis or foundation_analysis.get("status")!="resolved_from_current_pdf_geometry":
+            foundation_analysis = detect_2x6_foundation_from_pdf(pdf_path, dimensions)
         if not foundation_analysis or foundation_analysis.get("status")=="unresolved":
             foundation_analysis = detect_2x6_strip_foundation(text, dimensions)
 

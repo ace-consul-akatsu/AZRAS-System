@@ -1,0 +1,62 @@
+{
+  "patch": "PATCH_050",
+  "product": "01 AZRAS Planning",
+  "version": "2.2.0",
+  "date_utc": "260930",
+  "defects": [
+    "RC: Module 5 read member_geometry.ground_beam_length_m, which no producer writes; the measured length was in rc_vector_takeoff.foundation.net_ground_beam_length_m; all six earthwork items missing",
+    "2x6: strip centerline estimated as perimeter + party walls x depth; internal strips on the foundation plan never measured; no foundation_geometry for the 2_6.pdf drawing set",
+    "Module 5 crashed (AttributeError) on a Module 1-shaped 2x6 foundation_geometry with scalar concrete_volume_m3",
+    "Module 1 2x6 slab concrete used the gross footprint (stem zone counted twice once strips are resolved)",
+    "Module 1 2x6 provisional foundation rebar omitted the 'strip-footing concrete' row (name mismatch)"
+  ],
+  "new_self_checks": [
+    "dev_checks/foundation_earthwork_contract_self_check.py"
+  ],
+  "negative_tests": [
+    "the new check fails on the PATCH_049 code (AttributeError in Module 5 earthwork)"
+  ],
+  "results": {
+    "dev_checks": "32/32 PASS",
+    "RC_Rahmen_json_module5": {
+      "excavation_m3": 56.855,
+      "backfill_m3": 30.57,
+      "imported_fill_m3": 30.57,
+      "soil_disposal_m3": 68.226,
+      "blinding_concrete_m3": 2.824,
+      "ground_preparation_m3": 12.255,
+      "concrete_m3_unchanged": 144.936
+    },
+    "2x6_pdf_foundation_plan": {
+      "cells": 12,
+      "centerline_total_m": 96.794,
+      "perimeter_m": 44.799,
+      "internal_m": 51.995,
+      "slab_area_inside_stems_m2": 109.548,
+      "drawing_note_m2": 109.53,
+      "strip_concrete_m3": 16.842
+    },
+    "2x6_module5": {
+      "concrete_m3": 27.797,
+      "reinforcing_steel_t": 2.224,
+      "formwork_planning_fallback_m2": 55.594,
+      "excavation_m3": 75.499,
+      "backfill_m3": 47.042,
+      "imported_fill_m3": 47.042,
+      "soil_disposal_m3": 90.599,
+      "blinding_concrete_m3": 3.872,
+      "ground_preparation_m3": 14.111
+    },
+    "RC_Rahmen_pdf_analysis_diff": "0 leaves changed",
+    "2_6_pdf_analysis_diff": "foundation_geometry added only"
+  },
+  "unchanged": [
+    "AZRAS earthwork path",
+    "RC PDF analysis output",
+    "unit prices (earthwork stays unpriced until entered)"
+  ],
+  "not_verified_here": [
+    "on-screen Module 1 / Module 5 display on Windows",
+    "projects whose foundation plan is drawn differently (single-line strips, non-rectangular cells) — the detector then declines and the older estimate is used"
+  ]
+}

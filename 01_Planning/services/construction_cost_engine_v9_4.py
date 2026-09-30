@@ -1482,10 +1482,14 @@ def _foundation_earthwork_geometry(profile: dict[str,Any], method: str, soil_han
             return None
         dims=fg.get("dimensions_mm",{}) or {}
         lengths=fg.get("centerline_length_breakdown_m",{}) or {}
-        cv=fg.get("concrete_volume_m3",{}) or {}
-        footing_w=_f(dims.get("footing_width"))/1000.0
-        total_h=_f(dims.get("total_height"))/1000.0
-        length=_f(lengths.get("total"))
+        # PATCH_050: Module 1 stores concrete_volume_m3 as a scalar (its own row
+        # contract) and the breakdown separately; older data used a dict here.
+        cv=fg.get("concrete_volume_m3")
+        if not isinstance(cv,dict):
+            cv=fg.get("concrete_volume_breakdown_m3") or {"strip_foundation":cv}
+        footing_w=_f(dims.get("footing_width") or fg.get("footing_base_width_mm"))/1000.0
+        total_h=_f(dims.get("total_height") or (_f(fg.get("footing_base_thickness_mm"))+_f(fg.get("stem_height_mm"))))/1000.0
+        length=_f(lengths.get("total") or fg.get("centerline_total_m"))
         strip_concrete=_f(cv.get("strip_foundation"))
         if min(footing_w,total_h,length,strip_concrete)<=0:
             return None
@@ -1727,6 +1731,19 @@ def _rc_foundation_earthwork_geometry(profile: dict[str,Any]) -> dict[str,Any] |
         n=int(mg.get("isolated_footing_count") or 0)
         L=float(mg.get("ground_beam_length_m") or 0.0)
     except Exception: return None
+    # PATCH_049→050: Module 1 publishes the ground-beam length measured on the
+    # foundation plan as rc_vector_takeoff.foundation.net_ground_beam_length_m,
+    # never as member_geometry.ground_beam_length_m (no producer writes that
+    # key).  Without this fallback every RC project lost all six earthwork
+    # items even though the length existed.  Only a resolved vector result is
+    # accepted; the earthwork stays requires_confirmation.
+    length_source="member_geometry.ground_beam_length_m"
+    if L<=0:
+        vf=((construction.get("rc_vector_takeoff") or {}).get("foundation") or {})
+        if str(vf.get("status") or "").startswith("vector_foundation_grid_resolved"):
+            try: L=float(vf.get("net_ground_beam_length_m") or 0.0)
+            except Exception: L=0.0
+            length_source="rc_vector_takeoff.foundation.net_ground_beam_length_m"
     if len(f)!=3 or len(b)!=2 or n<=0 or L<=0 or min(f+b)<=0: return None
     footing_b,footing_d,footing_h=f; beam_b,beam_h=b
     working_clearance=0.300; blinding_t=0.050; stone_t=0.100; projection=0.100; bulking=1.20
@@ -1740,7 +1757,7 @@ def _rc_foundation_earthwork_geometry(profile: dict[str,Any]) -> dict[str,Any] |
     return {
         "status":"current_pdf_explicit_geometry","source":"Module 1 current PDF member geometry",
         "pricing_status":"quantity_only_unit_prices_required","requires_confirmation":True,
-        "drawing_supported":{"isolated_footing_count":n,"isolated_footing_mm":[x*1000 for x in f],"ground_beam_mm":[x*1000 for x in b],"ground_beam_length_m":L},
+        "drawing_supported":{"isolated_footing_count":n,"isolated_footing_mm":[x*1000 for x in f],"ground_beam_mm":[x*1000 for x in b],"ground_beam_length_m":L,"ground_beam_length_source":length_source},
         "planning_assumptions":{"working_clearance_each_side_mm":300,"blinding_concrete_thickness_mm":50,"crushed_stone_thickness_mm":100,"soil_bulking_factor":bulking,
             "note_ja":"部材形状・数量根拠は現在PDF明示値。根切り余幅・捨てコン・砕石厚のみ計画仮定。"},
         "quantities":{"excavation_m3":excavation,"excavation_footings_m3":footing_exc,"excavation_ground_beams_m3":beam_exc,"backfill_m3":backfill,
