@@ -1,0 +1,28 @@
+{
+  "patch": "PATCH_051",
+  "product": "01 AZRAS Planning",
+  "version": "2.2.0",
+  "date_utc": "260930",
+  "defects": [
+    "per-dwelling finish-area note 天井と床面積：37.60m2/戸 taken as gross floor area (AZRAS.pdf: 37.6 instead of 245.1 m2)",
+    "values qualified m2/戸 entered the whole-building candidates",
+    "fallback max(area_values) used even when every candidate was < 70 % of one storey"
+  ],
+  "new_self_checks": [
+    "dev_checks/per_unit_finish_area_not_gross_floor_area_self_check.py"
+  ],
+  "negative_tests": [
+    "new check fails on PATCH_050 code"
+  ],
+  "results": {
+    "dev_checks": "33/33 PASS",
+    "AZRAS_pdf": "gross floor area 37.6 -> 245.1, floors 18.8 -> 122.55 (14 area leaves changed)",
+    "2_6_pdf": "0 leaves changed",
+    "RC_Rahmen_pdf": "0 leaves changed"
+  },
+  "unchanged": [
+    "repeated per-unit label corroboration (PATCH_015)",
+    "explicit 延床面積 notes",
+    "all other analysis output"
+  ]
+}

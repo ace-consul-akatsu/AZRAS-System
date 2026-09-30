@@ -1,3 +1,7 @@
+## v2.2.0 PATCH_051 — 2026-09-30 UTC
+- Drawing analysis: per-dwelling / per-room area notes (m2/戸, m2/室, m2 x n戸) and finish-area notes (天井と床面積 …) are no longer taken as the building's floor area; if no written area is plausible for the plan, footprint x storeys is used. AZRAS terrace house: 37.6 m2 -> 245.1 m2. Other sample PDFs unchanged.
+- Added dev_checks/per_unit_finish_area_not_gross_floor_area_self_check.py.
+
 ## v2.2.0 PATCH_050 — 2026-09-30 UTC
 - Module 5 earthwork (RC): reads the ground-beam length Module 1 measures on the foundation plan (`rc_vector_takeoff.foundation.net_ground_beam_length_m`); the key it read before was never written, so RC projects had no earthwork. Length source recorded.
 - 2x6: new `detect_2x6_strip_foundation_plan_vector` measures the foundation plan including internal strips; Module 5 earthwork accepts the Module 1 foundation-geometry shape (it crashed on a scalar `concrete_volume_m3`).

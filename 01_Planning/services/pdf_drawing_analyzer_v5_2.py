@@ -257,19 +257,38 @@ def detect_insulation(text: str, structure: str, profile_defaults: dict[str, Any
     return result
 
 def _extract_area_values(text: str) -> list[float]:
-    patterns = [
-        r"(?:床面積|延床面積|延べ床面積|建築面積)\s*[:：]?\s*([0-9]+(?:\.[0-9]+)?)\s*(?:m2|m²|㎡)",
-        r"([0-9]+(?:\.[0-9]+)?)\s*(?:m2|m²|㎡)\s*(?:/戸|×\s*[0-9]+\s*戸)",
-    ]
+    """Whole-building area candidates written with an area keyword.
+
+    PATCH_051: two kinds of notes are NOT whole-building floor areas and are
+    excluded (real case: AZRAS terrace house, note 「天井と床面積：37.60m2/戸」
+    was taken as the gross floor area 37.6 m2 instead of 245.1 m2):
+      - a value qualified per dwelling / per room (「/戸」「/室」「×n戸」…);
+      - a finish-area note whose keyword is part of a longer phrase such as
+        「天井と床面積」「床仕上面積」「壁・天井面積」 (a surface area to finish,
+        not the building's floor area).
+    Per-unit room labels (「LDK：24.36m2/戸」) were already outside the keyword
+    pattern but entered through the bare ``n m2/戸`` pattern; that pattern is
+    removed for the same reason.  Repeated bare unit labels are handled by
+    _extract_repeated_unit_area_m2() as a separate, explicitly per-unit fact.
+    """
+    norm = _norm_drawing_text(text)
+    pattern = re.compile(
+        r"(?P<pre>[^\s:：、,，]{0,6})(?P<kw>延べ床面積|延床面積|床面積|建築面積)\s*[:：]?\s*"
+        r"(?P<val>[0-9]+(?:\.[0-9]+)?)\s*(?:m2|m²|㎡)(?P<post>\s*(?:/|／)\s*(?:戸|室|住戸|棟)|\s*[×x]\s*[0-9]+\s*戸)?",
+        re.IGNORECASE)
+    finish_prefix = re.compile(r"(?:天井|壁|仕上|内装|外装|塗装|と|・)$")
     values: list[float] = []
-    for pattern in patterns:
-        for match in re.finditer(pattern, text, re.IGNORECASE):
-            try:
-                value = float(match.group(1))
-            except (TypeError, ValueError):
-                continue
-            if 5.0 <= value <= 100000.0:
-                values.append(value)
+    for match in pattern.finditer(norm):
+        if match.group("post"):
+            continue  # per dwelling / per room
+        if match.group("kw") == "床面積" and finish_prefix.search(match.group("pre") or ""):
+            continue  # finish-area note (天井と床面積, 床仕上面積 …)
+        try:
+            value = float(match.group("val"))
+        except (TypeError, ValueError):
+            continue
+        if 5.0 <= value <= 100000.0:
+            values.append(value)
     return values
 
 
@@ -396,7 +415,10 @@ def detect_dimensions(text: str) -> dict[str, Any]:
             plausible=[v for v in area_values if v>=footprint*0.70]
             if plausible:
                 total_area=min(plausible,key=lambda v:abs(v-expected))
-        if total_area is None:
+            # PATCH_051: when every written area is far smaller than one storey
+            # of the plan, none of them is the building's floor area; do not
+            # fall back to the largest of them (footprint x storeys is used below).
+        else:
             total_area=max(area_values)
     if footprint is None and total_area is not None and storeys:
         footprint=total_area/storeys
