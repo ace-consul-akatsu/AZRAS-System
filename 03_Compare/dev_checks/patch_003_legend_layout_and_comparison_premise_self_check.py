@@ -104,7 +104,10 @@ check("location_pricing_mode" in ext and "ai_approximate_cost_session" in ext,
 print("-- 6. the premise warning exists and changes no value")
 check("比較前提の確認" in src and "'比較前提の確認':'Comparison Premise Check'" in src,
       "the premise dialog is defined and translated")
-check("rent_derived_from_cost" in src and "price_basis_token" in src,
+# PATCH_008: the price-basis grouping moved to comparison/price_basis.py,
+# which main.py calls at load time.
+_pb = (ROOT / "comparison" / "price_basis.py").read_text(encoding="utf-8")
+check("rent_derived_from_cost" in src and "PBASIS.assess(self.projects)" in src and "price_basis_token" in _pb,
       "both premises are checked at load time")
 check("値の書き換えや除外は行いません" in src and "No value is rewritten or excluded" in src,
       "the warning states that nothing is rewritten or excluded")

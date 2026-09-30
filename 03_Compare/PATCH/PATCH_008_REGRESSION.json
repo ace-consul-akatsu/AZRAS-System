@@ -1,0 +1,37 @@
+{
+  "patch": "PATCH_008",
+  "product": "03 AZRAS Compare",
+  "version": "2.2.0",
+  "date_utc": "260930",
+  "defects": [
+    "Recalculated copies of one comparison premise book were warned as priced on different bases, because the book keeps method-dependent items on each Project's own price and 01 Planning then tags copies comparison_group_premise_book / mixed_comparison_group_and_regional_database",
+    "The price-basis warning did not state how to align prices (tab 7 procedure)",
+    "Tab 7 lists B and D showed only buildings 1-3 although 2-7 can be loaded"
+  ],
+  "reproduction": {
+    "copies": {
+      "2x6 [CMP]": {"xps": "comparison_group_confirmed", "concrete": "ai_post_review_rechecked_provisional", "token": "comparison_group_premise_book"},
+      "AZRAS [CMP]": {"xps": "comparison_group_confirmed", "concrete": "planning_city_initial_estimate_2026", "reinforcing_steel": "planning_city_initial_estimate_2026", "token": "mixed_comparison_group_and_regional_database"}
+    },
+    "tokens_confirmed_with": "01_Planning_48 services/construction_cost_engine_v9_4._price_basis_fingerprint",
+    "before": "warning '【単価根拠の前提】比較対象のProjectで建設費の単価根拠が揃っていません。'",
+    "after": "information '【単価根拠】共通工種の単価は比較前提表（版 v1）で統一されています。' listing own-price items per Project"
+  },
+  "self_check": "dev_checks/patch_008_price_basis_premise_book_self_check.py",
+  "results": {
+    "duplicate_dict_key_self_check": "PASS",
+    "duplicate_function_definition_self_check": "PASS",
+    "language_combobox_liveness_self_check": "PASS",
+    "license_consistency_self_check": "PASS",
+    "patch_003_legend_layout_and_comparison_premise_self_check": "PASS",
+    "patch_004_snapshot_staleness_and_currency_self_check": "PASS",
+    "patch_005_comparison_premise_book_self_check": "PASS",
+    "patch_006_japanese_display_no_english_self_check": "PASS",
+    "patch_007_market_rent_yield_contract_self_check": "PASS",
+    "patch_008_price_basis_premise_book_self_check": "PASS (GUI section run under Xvfb)",
+    "pyflakes_undefined_names_self_check": "PASS",
+    "version_consistency_self_check": "PASS",
+    "01_Planning_48_dev_checks": "30/30 PASS (unchanged product)"
+  },
+  "unchanged": ["values, graphs and summaries", "premise book decisions and copy format", "01 Planning"]
+}

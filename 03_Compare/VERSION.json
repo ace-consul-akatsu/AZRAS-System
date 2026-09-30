@@ -2,7 +2,7 @@
   "product": "AZRAS Compare",
   "product_name": "AZRAS Compare",
   "version": "2.2.0",
-  "patch": 7,
+  "patch": 8,
   "baseline_of": "1.1.20 + PATCH_021",
   "baseline_note": "Re-baselined after a cross-module regression audit (dev_checks/, pyflakes) found only minor dead-code issues (duplicate translation dict key, unused import/variables) and confirmed no crash-causing bugs. Patch numbering restarts at 1; PATCH_16-20's history is kept under PATCH/archive_pre_v2.2.0/ for reference.",
   "executable_name": "AZRAS_Compare",
@@ -11,7 +11,7 @@
     "3.0"
   ],
   "schema_role": "read_only_consumer",
-  "feature": "PATCH_007: follows the 02 Evaluation PATCH_009 market-rent contract (summary.target_gross_yield_percent = null, summary.stored_target_gross_yield_percent = preference, target_gross_yield_active = false). comparison/extractor.py no longer returns the inactive preference as the target yield (it did, through an 'or' fallback into settings); it reports target_gross_yield_active and the stored preference separately. premise_book.py no longer lists the inactive yield as a premise difference and marks market-rent copies target_gross_yield_active = false while keeping the user's preference, exactly as 02 Evaluation saves it. Version single source of truth: README/NOTICE state 2.2.0, VERSION.json patch is a number; dev_checks version_consistency, duplicate_dict_key and pyflakes_undefined_names added (same set as the other three products). v2.2.0 baseline release. Includes PATCH_006 and earlier. License unified to the MIT License (copyright ACE Comprehensive Consulting Co., Ltd.); LICENSE.txt now match the AZRAS-System repository LICENSE; dev_checks/license_consistency_self_check.py added.",
+  "feature": "PATCH_008: price-basis check after the comparison premise book. comparison/price_basis.py (new, no tkinter) decides the load-time price-basis state. Recalculated copies of ONE premise book were still warned as 'not priced on the same basis' because 01 Planning tags a copy that keeps method-dependent items (concrete, reinforcing steel, formwork, phenolic foam) on the regional database 'mixed_comparison_group_and_regional_database' and one that keeps them on AI rates 'comparison_group_premise_book'; the book leaves those items to each Project by design. Such copies now get an information dialog that lists every Project's own-price items and their origin (regional/AI); originals, copies of different book versions, a copy mixed with an original and a copy still priced on the source basis keep the warning. The warning now lists the regionally priced items and the five-step tab 7 procedure (list -> decide -> create copies -> 01 Planning Module 5 -> 02 Evaluation Modules 6/7 -> reload). Tab 7 lists B/D showed only buildings 1-3 of the 2-7 loaded; they now show all seven, with a horizontal scrollbar. No value is rewritten; 01 Planning is unchanged. Includes PATCH_007 and earlier.",
   "product_slot": "03_AZRAS_Compare",
   "language_policy": "English canonical internal/persisted data; UI languages are presentation translations"
 }

@@ -7,6 +7,7 @@ from tkinter import font as tkfont
 from comparison.extractor import extract_core_project,regional_projects,MONTHS_JA
 # PATCH_005: comparison premise book (see comparison/premise_book.py).
 from comparison import premise_book as PB
+from comparison import price_basis as PBASIS
 from comparison.premise_book_ui import PremiseBookTab
 # PATCH_006: Japanese display names for English-canonical identifiers.
 from comparison import display_ja as DJ
@@ -758,24 +759,74 @@ class App(tk.Tk):
                         +'\n  With the yield fixed, simple payback does not depend on construction cost, and a more expensive Project is given proportionally higher rent.'
                         '\n  To compare buildings, switch Module 6 to "Enter market rent directly" and use the same rent for every Project.'
                     )
-            basis={}
-            for x in self.projects:
-                basis.setdefault(str(x.get('price_basis_token') or 'unknown'),[]).append(self.disp(x['label']))
-            if len(basis)>1:
-                detail='\n'.join(f'  {k}: '+('、'.join(v) if self.language=='ja' else ', '.join(v)) for k,v in basis.items())
-                if self.language=='ja':
+            # PATCH_008: price basis.  See comparison/price_basis.py: copies
+            # of ONE premise book differ only in the origin of the items the
+            # book leaves to each Project, which is information, not a
+            # warning; a real mismatch now states the tab 7 procedure.
+            pb=PBASIS.assess(self.projects)
+            ja=(self.language=='ja')
+            sep='、' if ja else ', '
+            def _items(keys):
+                return sep.join((DJ.cost_key_ja(k) if ja else k) for k in keys)
+            premise_info=[]
+            if pb['status']==PBASIS.MISALIGNED:
+                detail='\n'.join(f'  {k}: '+sep.join(self.disp(v) for v in labs) for k,labs in pb['groups'].items())
+                reg=[f'    {self.disp(lab)}: {_items(keys)}' for lab,keys in pb['regional_items'].items() if keys]
+                if ja:
                     premise.append(
                         '【単価根拠の前提】比較対象のProjectで建設費の単価根拠が揃っていません。\n'+detail
+                        +(('\n  内蔵地域単価で値付けされた工種（これ以外はAI概算単価）：\n'+'\n'.join(reg)) if reg else '')
                         +'\n  AI概算単価は施工込み一本値、内蔵地域単価は材料/労務/機械の分離単価で、単価水準そのものが異なります。'
                         '\n  建設費差の一部は工法差ではなく価格根拠差です。全Projectを同じ根拠で値付けしてから比較してください。'
+                        '\n  そろえる手順（元Projectは変更しません）：'
+                        '\n   ①「7. 比較前提表」タブで「一覧を作成」を押し、B 単価差リストで共通工種の採用単価を、D 事業前提で家賃を決める'
+                        '\n   ②「比較用コピーを作成」で比較グループのフォルダーと各Projectのコピーを書き出す'
+                        '\n   ③各コピーを 01 Planning の Module 5 で再計算・保存する'
+                        '\n   ④02 Evaluation の Module 6・7 で再計算・保存する'
+                        '\n   ⑤コピーをこの画面で読み込み直す'
                     )
                 else:
                     premise.append(
                         '[Price basis premise] The compared Projects were not priced on the same basis.\n'+detail
+                        +(('\n  Items priced from the built-in regional database (all others are AI approximate rates):\n'+'\n'.join(reg)) if reg else '')
                         +'\n  An AI approximate-cost session returns installed all-in rates; the built-in regional estimate returns a material/labor/equipment split, at a different price level.'
                         '\n  Part of the cost difference is a price-origin difference, not a construction-method difference. Price every Project on one basis before comparing.'
+                        '\n  How to align them (source Projects are never changed):'
+                        '\n   1. In tab "7. Comparison Premise Book" press the list button, choose the adopted rate for each shared item (B) and the rent (D)'
+                        '\n   2. Create the comparison copies (a group folder with one copy per Project)'
+                        '\n   3. Recalculate and save every copy in Module 5 of 01 Planning'
+                        '\n   4. Recalculate and save Modules 6 and 7 in 02 Evaluation'
+                        '\n   5. Load the copies here'
                     )
-            if premise:
+            elif pb['status']==PBASIS.PREMISE_BOOK_ALIGNED or (pb['premise_book_version'] and pb['mixed_own_origins']):
+                own=[]
+                for lab,keys in pb['own_price_items'].items():
+                    reg=set(pb['regional_items'].get(lab) or [])
+                    if not keys:
+                        continue
+                    if ja:
+                        parts=[DJ.cost_key_ja(k)+('（地域単価）' if k in reg else '（AI単価）') for k in keys]
+                    else:
+                        parts=[k+(' (regional)' if k in reg else ' (AI)') for k in keys]
+                    own.append(f'    {self.disp(lab)}: '+sep.join(parts))
+                if ja:
+                    premise_info.append(
+                        f'【単価根拠】共通工種の単価は比較前提表（版 {pb["premise_book_version"]}）で統一されています。'
+                        '\n  工法固有の工種と、工法で仕事の中身が違う工種は、比較前提表の区分どおり各Projectの単価のままです：'
+                        +('\n'+'\n'.join(own) if own else '')
+                        +'\n  これらの工種を統一したい場合は「7. 比較前提表」の A 除外工種リストで区分を「共通」に変えてコピーを作り直してください。'
+                    )
+                else:
+                    premise_info.append(
+                        f'[Price basis] Shared items are priced from the premise book (version {pb["premise_book_version"]}).'
+                        '\n  Method-specific items and items whose work differs by method keep each Project\'s own rate, as classified in the book:'
+                        +('\n'+'\n'.join(own) if own else '')
+                        +'\n  To unify one of them, set it to common in list A of tab 7 and create the copies again.'
+                    )
+            if premise_info and not premise:
+                messagebox.showinfo(tr('比較前提の確認',self.language),'\n\n'.join(premise_info),parent=self)
+            premise.extend(premise_info)
+            if premise and len(premise)>len(premise_info):
                 messagebox.showwarning(
                     tr('比較前提の確認',self.language),
                     '\n\n'.join(premise)

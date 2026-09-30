@@ -31,6 +31,16 @@ SCOPE_DECISIONS = [("accept_method_difference", "工法差として了承", "Acc
                    ("fix_source_quantity", "元Projectの数量を見直す", "Revise the quantity in the source Project")]
 
 
+MAX_BUILDINGS = 7  # 03 Compare accepts 2..7 Project JSONs
+BUILDING_COLS = tuple(f"p{i}" for i in range(1, MAX_BUILDINGS + 1))
+BUILDING_HEADS = tuple((f"p{i}", f"建物{i}", 130) for i in range(1, MAX_BUILDINGS + 1))
+
+
+def _pad(vals):
+    vals = list(vals)[:MAX_BUILDINGS]
+    return vals + [""] * (MAX_BUILDINGS - len(vals))
+
+
 def _fmt(v):
     return "-" if v is None else (f"{v:,.2f}" if isinstance(v, float) else str(v))
 
@@ -111,10 +121,10 @@ class PremiseBookTab(ttk.Frame):
         nb.add(self.tab_business, text="D 事業前提")
         nb.add(self.tab_method, text="E 工法差の前提（表示のみ）")
 
-        self.price_tree = self._tree(self.tab_price, ("item", "unit", "diff", "decision", "p1", "p2", "p3"),
+        # PATCH_008: Compare loads 2-7 buildings; buildings 4-7 were cut off here.
+        self.price_tree = self._tree(self.tab_price, ("item", "unit", "diff", "decision", *BUILDING_COLS),
                                      (("item", "工種", 200), ("unit", "単位", 80), ("diff", "差", 90),
-                                      ("decision", "採用", 240), ("p1", "建物1", 150), ("p2", "建物2", 150),
-                                      ("p3", "建物3", 150)))
+                                      ("decision", "採用", 240), *BUILDING_HEADS))
         self.price_tree.bind("<Double-1>", self._edit_price)
         ttk.Label(self.tab_price, text="行をダブルクリックして採用単価を選びます。「個別のまま」を選ぶとその工種は統一しません。",
                   foreground="#555").pack(anchor="w", padx=10, pady=2)
@@ -130,9 +140,8 @@ class PremiseBookTab(ttk.Frame):
                                      (("item", "工種", 300), ("category", "区分", 420)))
         self.class_tree.bind("<Double-1>", self._edit_class)
 
-        self.business_tree = self._tree(self.tab_business, ("item", "value", "p1", "p2", "p3"),
-                                        (("item", "前提", 380), ("value", "統一値", 200), ("p1", "建物1", 180),
-                                         ("p2", "建物2", 180), ("p3", "建物3", 180)))
+        self.business_tree = self._tree(self.tab_business, ("item", "value", *BUILDING_COLS),
+                                        (("item", "前提", 380), ("value", "統一値", 200), *BUILDING_HEADS))
         self.business_tree.bind("<Double-1>", self._edit_business)
 
         self.method_tree = self._tree(self.tab_method, ("item", "structure", "rebuild", "retain"),
@@ -147,9 +156,11 @@ class PremiseBookTab(ttk.Frame):
             tree.heading(c, text=h)
             tree.column(c, width=w, anchor="w")
         y = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
-        tree.configure(yscrollcommand=y.set)
+        x = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)  # PATCH_008: up to 7 building columns
+        tree.configure(yscrollcommand=y.set, xscrollcommand=x.set)
         tree.grid(row=0, column=0, sticky="nsew")
         y.grid(row=0, column=1, sticky="ns")
+        x.grid(row=1, column=0, sticky="ew")
         frame.rowconfigure(0, weight=1)
         frame.columnconfigure(0, weight=1)
         return tree
@@ -198,7 +209,7 @@ class PremiseBookTab(ttk.Frame):
             vals = [_fmt(rates.get(i)) for i in range(len(labels))]
             self.price_tree.insert("", "end", iid=r["row_id"],
                                    values=(DJ.cost_key_ja(r["key"]), DJ.unit_ja(r["unit"]), ("差あり" if r["differs"] else "一致"),
-                                           self._price_text(r["row_id"]), *vals[:3]))
+                                           self._price_text(r["row_id"]), *_pad(vals)))
         for r in L["scope_rows"]:
             self.scope_tree.insert("", "end", iid=r["row_id"],
                                    values=(r.get("label_ja") or DJ.cost_key_ja(r["key"]), DJ.kind_ja(r["kind"]), DJ.unit_ja(r["unit"]),
@@ -217,7 +228,7 @@ class PremiseBookTab(ttk.Frame):
                 continue
             vals = [_fmt_ja(r["values"].get(i)) for i in range(len(labels))]
             self.business_tree.insert("", "end", iid=r["row_id"],
-                                      values=(DJ.setting_ja(r["row_id"]), _fmt_ja(D["business"].get(r["row_id"])), *vals[:3]))
+                                      values=(DJ.setting_ja(r["row_id"]), _fmt_ja(D["business"].get(r["row_id"])), *_pad(vals)))
         for r in L["method_premise_rows"]:
             idx = r.get("project_index")
             shown = labels[idx] if isinstance(idx, int) and idx < len(labels) else r["label"]
