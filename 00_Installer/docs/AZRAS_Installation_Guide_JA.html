@@ -6,11 +6,14 @@
 <p>AZRASのソース版起動・EXEビルドで必要となる外部ソフトは <strong>Python 3.13（64-bit）</strong> です。</p>
 <ol>
 <li>AZRAS Installerを起動します。</li>
-<li>Pythonが「検出済み」の場合は、追加インストールは不要です。</li>
+<li>Pythonが「検出済み」の場合は、同じ一覧の下に各製品が使うPythonパッケージ（numpy、pandas、reportlab など）の状態が表示されます。</li>
 <li>Pythonが未検出の場合は、Python公式Windowsダウンロードページを開きます。</li>
 <li>Python 3.13系の「Windows installer (64-bit)」をダウンロードし、通常どおりWindowsへインストールします。</li>
 <li>AZRAS Installerへ戻り「再確認」を押し、Pythonが「検出済み」になることを確認します。</li>
+<li>「ソース版起動」のパッケージに「未検出」がある場合は「インストール用コマンド」を押します。表示されたコマンド（クリップボードにもコピーされます）をコマンドプロンプトに貼り付けて実行してください。Installerが自動でインストールすることはありません。</li>
+<li>もう一度「再確認」を押し、すべて「検出済み」になったことを確認してから各製品を起動します。パッケージが不足したまま起動すると、Planning と Evaluation は起動時に停止します。</li>
 </ol>
+<p>「自己検査（任意）」のパッケージ（pyflakes、jsonschema）は、dev_checks を実行する場合だけ必要です。</p>
 <h2>図面PDF</h2>
 <p>CAD等から直接PDF出力した詳細図PDFを使用します。紙図面をスキャンした画像PDFは原則対象外です。</p>
 <p>AZRAS専用フォルダーへのPython登録や共通ツール設定ファイルの作成は不要です。</p>

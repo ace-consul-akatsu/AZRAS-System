@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
 
+import package_check as PC
+
 APP_NAME="AZRAS Installer"
 
 
@@ -60,7 +62,18 @@ TEXT={
 "invalid_python":"Pythonの実行ファイルとして認識できません。\n\npython.exe / python3x.exe / py.exe を指定してください。",
 "config_note":"AZRAS専用の共通設定フォルダーは使用しません。\nPythonは通常どおりWindowsへインストールしてください。",
 "finished":"Pythonの確認が完了しました。","python_purpose":"AZRASのソース版起動・EXEビルド","python_required":"開発版・ソース版",
-"python_note":"配布EXEだけを使う場合は不要です。"},
+"python_note":"配布EXEだけを使う場合は不要です。",
+"pkg_purpose":"{products} が使用","pkg_required":"ソース版起動","pkg_optional":"自己検査（任意）",
+"pkg_unchecked":"未確認","pkg_no_python":"Python検出後に確認",
+"pkg_note":"不足している場合は、次のコマンドをコマンドプロンプトで実行してください（Installerはインストールしません）：\n{command}",
+"pkg_all_ok":"ソース版の起動に必要なPythonパッケージはすべて検出されました。",
+"pkg_missing_footer":"不足パッケージ {count} 件：{names}　→「インストール用コマンド」を押してください。",
+"pkg_probe_failed":"PythonパッケージをPythonで確認できませんでした。Pythonの実行ファイルを指定し直して「再確認」を押してください。",
+"pkg_command":"インストール用コマンド",
+"pkg_command_title":"不足パッケージのインストール",
+"pkg_command_body":"次のコマンドをコマンドプロンプトに貼り付けて実行してください。\nInstallerは自動でインストールしません。コマンドはクリップボードにコピーしました。\n\n{command}\n\n実行後、「再確認」を押して「検出済み」になることを確認してください。",
+"pkg_command_none":"不足している必須パッケージはありません。",
+"pkg_optional_hint":"\n\n自己検査（dev_checks）も行う場合は、次も実行してください：\n{command}"},
 "en":{
 "subtitle":f"Version {APP_VERSION}  |  Initial Setup / Required Software Check",
 "note":"Checks external tools used by AZRAS. Not every tool is required for every use case.\nDetailed PDF drawings are the standard drawing input.",
@@ -73,7 +86,18 @@ TEXT={
 "invalid_python":"The selected file is not recognized as a Python executable.\n\nSelect python.exe / python3x.exe / py.exe.",
 "config_note":"AZRAS does not use a dedicated shared-settings folder.\nInstall Python normally in Windows.",
 "finished":"Python check is complete.","python_purpose":"Run the AZRAS source edition / build the EXE",
-"python_required":"Development / source edition","python_note":"Not required when using only the distributed EXE."}
+"python_required":"Development / source edition","python_note":"Not required when using only the distributed EXE.",
+"pkg_purpose":"Used by {products}","pkg_required":"Source edition start-up","pkg_optional":"Self-checks (optional)",
+"pkg_unchecked":"Not checked","pkg_no_python":"Checked after Python is detected",
+"pkg_note":"If it is missing, run this command in a Command Prompt (the Installer does not install anything):\n{command}",
+"pkg_all_ok":"All Python packages needed to start the source edition were detected.",
+"pkg_missing_footer":"{count} package(s) missing: {names}  -> press \"Install Command\".",
+"pkg_probe_failed":"The Python packages could not be checked with the detected Python. Select the Python executable again and press \"Check Again\".",
+"pkg_command":"Install Command",
+"pkg_command_title":"Install Missing Packages",
+"pkg_command_body":"Paste this command into a Command Prompt and run it.\nThe Installer does not install anything itself. The command has been copied to the clipboard.\n\n{command}\n\nThen press \"Check Again\" and confirm that every package is detected.",
+"pkg_command_none":"No required package is missing.",
+"pkg_optional_hint":"\n\nTo run the self-checks (dev_checks) as well, also run:\n{command}"}
 }
 URLS={"python":"https://www.python.org/downloads/windows/"}
 
@@ -195,6 +219,8 @@ class InstallerApp(tk.Tk):
         self.language_var=tk.StringVar(value=LANG_LABELS[self.language])
         self.config_data=load_config()
         self.results={}
+        self.packages=[]
+        self.package_probe_ok=False
         self._build_ui()
         self.after(150,self.scan)
 
@@ -221,6 +247,7 @@ class InstallerApp(tk.Tk):
         ttk.Button(toolbar,text=txt["config"],command=self.open_config_folder).pack(side="left",padx=8)
         ttk.Button(toolbar,text=txt["guide"],command=self.open_guide).pack(side="left")
         ttk.Button(toolbar,text=txt["shortcuts"],command=self.create_azras_shortcuts).pack(side="left",padx=8)
+        ttk.Button(toolbar,text=txt["pkg_command"],command=self.show_install_command).pack(side="left")
         ttk.Button(toolbar,text=txt["finish"],command=self.finish).pack(side="right")
         cols=("tool","purpose","required","status","path")
         self.tree=ttk.Treeview(self,columns=cols,show="headings",height=12)
@@ -255,12 +282,72 @@ class InstallerApp(tk.Tk):
             self.tree.insert("","end",iid=r.key,values=(r.label,purpose,required_for,status,r.path or "—"),tags=("ok" if r.found else "missing",))
         self.tree.tag_configure("ok",foreground="#1a7f37");self.tree.tag_configure("missing",foreground="#b42318")
         found=sum(1 for r in results if r.found);self.footer_var.set(txt["done_count"].format(found=found,total=len(results)))
+        self._scan_packages(results[0])
+
+    # PATCH_004: Python packages of the products beside this Installer.
+    def _python_path(self)->str:
+        r=self.results.get("python")
+        return r.path if r is not None and r.found else ""
+
+    def _scan_packages(self,python_result)->None:
+        txt=TEXT[self.language]
+        try:
+            import azras_launcher as AL
+            if getattr(sys,"frozen",False):
+                # A frozen EXE's __file__ is inside its bundle; search beside the EXE.
+                AL.BASE=Path(sys.executable).resolve().parent
+            self.packages=PC.collect_packages(PC.product_folders(AL.resolve_product))
+        except Exception:
+            self.packages=[]
+        py=self._python_path()
+        self.package_probe_ok=PC.check_installed(py,self.packages) if py else False
+        for p in self.packages:
+            if not py: status=txt["pkg_no_python"]
+            elif p.installed is None: status=txt["pkg_unchecked"]
+            else: status=localize_status(STATUS_CODES[bool(p.installed)],self.language)
+            tag="ok" if p.installed else ("missing" if p.installed is False and not p.optional else "optional")
+            self.tree.insert("","end",iid="pkg:"+p.pip_name,
+                             values=(p.pip_name,txt["pkg_purpose"].format(products=", ".join(p.products)),
+                                     txt["pkg_optional"] if p.optional else txt["pkg_required"],status,"—"),tags=(tag,))
+        self.tree.tag_configure("optional",foreground="#6b6b6b")
+        if not py or not self.packages:
+            return
+        if not self.package_probe_ok:
+            self.footer_var.set(txt["pkg_probe_failed"]);return
+        need=PC.missing(self.packages)
+        if need:
+            self.footer_var.set(txt["pkg_missing_footer"].format(count=len(need),names=", ".join(p.pip_name for p in need)))
+        else:
+            self.footer_var.set(self.footer_var.get()+"  "+txt["pkg_all_ok"])
+
+    def show_install_command(self)->None:
+        txt=TEXT[self.language];py=self._python_path()
+        if not py:
+            messagebox.showinfo(APP_NAME,txt["select_python"]);return
+        need=[p.pip_name for p in PC.missing(self.packages)]
+        opt=[p.pip_name for p in self.packages if p.optional and p.installed is False]
+        if not need:
+            msg=txt["pkg_command_none"]
+            if opt:msg+=txt["pkg_optional_hint"].format(command=PC.install_command(py,opt))
+            messagebox.showinfo(APP_NAME,msg);return
+        command=PC.install_command(py,need)
+        try:
+            self.clipboard_clear();self.clipboard_append(command)
+        except tk.TclError:
+            pass
+        msg=txt["pkg_command_body"].format(command=command)
+        if opt:msg+=txt["pkg_optional_hint"].format(command=PC.install_command(py,opt))
+        messagebox.showinfo(txt["pkg_command_title"],msg)
 
     def selected_key(self):
         s=self.tree.selection();return s[0] if s else None
     def on_select(self,_event=None):
         k=self.selected_key()
         if not k:return
+        if k.startswith("pkg:"):
+            txt=TEXT[self.language];name=k[4:]
+            self.detail_var.set(txt["pkg_note"].format(command=PC.install_command(self._python_path(),[name])))
+            return
         r=self.results[k];sep="：" if self.language=="ja" else ": ";pun="。" if self.language=="ja" else ". "
         txt=TEXT[self.language]
         purpose = txt["python_purpose"] if r.key=="python" else r.purpose
@@ -269,6 +356,7 @@ class InstallerApp(tk.Tk):
     def open_download(self):
         k=self.selected_key()
         if not k:messagebox.showinfo(APP_NAME,TEXT[self.language]["select_tool"]);return
+        if k.startswith("pkg:"):self.show_install_command();return
         webbrowser.open(URLS[k])
     def browse_tool(self):
         k=self.selected_key();txt=TEXT[self.language]

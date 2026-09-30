@@ -4,7 +4,7 @@
   "company": "ACE Comprehensive Consulting Co., Ltd.",
   "copyright": "Copyright (C) 2026 ACE Comprehensive Consulting Co., Ltd.",
   "product": "AZRAS Installer",
-  "patch": 3,
+  "patch": 4,
   "baseline_of": "5.0.4-p034",
   "baseline_note": "Re-baselined alongside the AZRAS Planning/Evaluation/Compare v2.2.0 baseline in this same audit. Patch numbering restarts at 1; PATCH_1-034's history is kept under PATCH/archive_pre_v2.2.0/ for reference. version_series remains installer_independent, so this product's own version number (5.0.4) is unchanged; only the patch counter resets.",
   "executable_name": "AZRAS_Installer_v5_0_4",
@@ -12,5 +12,5 @@
   "role": "AZRAS series initial environment setup and shared external-tool configuration",
   "language_policy": "English canonical internal/persisted data; UI languages are presentation translations",
   "product_slot": "00_AZRAS_Installer",
-  "feature": "PATCH_003: v2.2.0 baseline release (four-product audit). Version single source of truth: the screen said 5.0.4-p032, README 5.0.4-p033, NOTICE 5.0.4-p032 and VERSION.json 5.0.4-p001 with patch \"2\". The product version is now 5.0.4 (installer_independent series) with the patch counter only in VERSION.json \"patch\" (a JSON number); azras_installer.py reads the version from VERSION.json; README/NOTICE state 5.0.4. The working folder is 00_Installer_03 so its number matches the patch again (PATCH_002 had been delivered in a folder still named 00_Installer_01). Added dev_checks: version_consistency, duplicate_dict_key, pyflakes_undefined_names, launcher_product_resolution. License unified to the MIT License (copyright ACE Comprehensive Consulting Co., Ltd.); LICENSE.txt now match the AZRAS-System repository LICENSE; dev_checks/license_consistency_self_check.py added."
+  "feature": "PATCH_004: Python package check (four-product audit). On a fresh Python, 01 Planning and 02 Evaluation stopped at start-up (ModuleNotFoundError: reportlab) while the Installer and the installation guide said nothing more had to be installed once Python was detected. New package_check.py (no tkinter) reads requirements.txt of every product folder beside the Installer (the launcher's own folder search), asks the DETECTED Python which packages it can import (an import probe, nothing is installed) and builds the pip command. The list shows each package, the products using it, required (source edition start-up) or optional (dev_checks only) and Detected/Not Detected; the footer names the missing packages; the new 'Install Command' button shows the command and copies it to the clipboard for the user to run. A frozen EXE searches beside the EXE. Installation guides (JA/EN) no longer say that no additional installation is needed and describe the new step. dev_checks/patch_004_python_package_check_self_check.py added. Installer version stays 5.0.4 (installer_independent)."
 }

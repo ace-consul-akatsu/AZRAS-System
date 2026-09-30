@@ -5,10 +5,13 @@
 <p>Python 3.13 (64-bit) is required when running the AZRAS source edition or building an EXE.</p>
 <ol>
 <li>Start AZRAS Installer.</li>
-<li>If Python is shown as detected, no additional installation is required.</li>
+<li>When Python is detected, the same list shows the status of the Python packages each product uses (numpy, pandas, reportlab and others).</li>
 <li>If Python is not detected, open the official Python Windows download page.</li>
 <li>Install a Python 3.13 series Windows installer (64-bit) normally.</li>
 <li>Return to AZRAS Installer, click <b>Check Again</b>, and confirm that Python is detected.</li>
+<li>If any package required for <b>Source edition start-up</b> is Not Detected, click <b>Install Command</b>. Paste the command shown (it is also copied to the clipboard) into a Command Prompt and run it. The Installer never installs anything itself.</li>
+<li>Click <b>Check Again</b> and confirm that every package is detected before starting the products. With a package missing, Planning and Evaluation stop at start-up.</li>
 </ol>
+<p>Packages marked <b>Self-checks (optional)</b> (pyflakes, jsonschema) are needed only to run dev_checks.</p>
 <p>The distributed EXE edition does not require a separate Python installation.</p>
 </body></html>

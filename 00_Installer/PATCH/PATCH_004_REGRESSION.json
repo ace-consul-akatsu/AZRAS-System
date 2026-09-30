@@ -1,0 +1,16 @@
+{
+  "patch": "PATCH_004",
+  "product": "00 AZRAS Installer",
+  "version": "5.0.4",
+  "date_utc": "260930",
+  "defect": "Installer and guide said no additional installation was needed after Python detection; 01 Planning and 02 Evaluation stop at start-up on a fresh Python (ModuleNotFoundError: reportlab)",
+  "reproduction": {
+    "fresh_python_before": {"01_Planning": "ModuleNotFoundError: reportlab", "02_Evaluation": "ModuleNotFoundError: reportlab", "03_Compare": "starts"},
+    "installer_list_on_fresh_python": ["numpy", "opencv-python", "pandas", "Pillow", "PyMuPDF", "pypdf", "reportlab"],
+    "command_shown": "<python> -m pip install numpy opencv-python pandas Pillow PyMuPDF pypdf reportlab",
+    "after_user_runs_command": {"installer_list": "all detected", "01_Planning": "starts", "02_Evaluation": "starts"}
+  },
+  "policy": "display only; the Installer never runs pip",
+  "self_check": "dev_checks/patch_004_python_package_check_self_check.py",
+  "results": {"dev_checks": "8/8 PASS", "pyflakes": "no warnings", "gui": "JA/EN rows, footer, command dialog and clipboard checked under Xvfb"}
+}
