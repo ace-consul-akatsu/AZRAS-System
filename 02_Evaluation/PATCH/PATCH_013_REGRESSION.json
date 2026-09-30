@@ -1,0 +1,20 @@
+{
+  "patch": "PATCH_013",
+  "product": "02 AZRAS Evaluation",
+  "version": "2.2.0",
+  "date_utc": "260930",
+  "defects": [
+    "No requirements.txt; on a fresh Python main.py stopped with ModuleNotFoundError: reportlab",
+    "language_combobox_liveness_self_check missing in the product where the bug class was found"
+  ],
+  "reproduction": {
+    "before": "fresh venv (no packages): python main.py -> ModuleNotFoundError: No module named 'reportlab' (core/module_report.py line 8)",
+    "after": "pip install numpy opencv-python pandas Pillow PyMuPDF pypdf reportlab (command shown by 00 Installer PATCH_004) -> main.py starts"
+  },
+  "results": {
+    "dev_checks": "20/20 PASS",
+    "full_self_check": "PASS",
+    "pyflakes_undefined_names": "PASS"
+  },
+  "unchanged": ["calculations", "Project JSON", "screens"]
+}

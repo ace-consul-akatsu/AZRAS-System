@@ -7,7 +7,8 @@ if errorlevel 1 (
     echo.
     echo ERROR: EXE build dependencies are missing.
     echo Required: PyInstaller, numpy, pandas, reportlab
-    echo Please install the missing package(s) and run this BAT again.
+    echo Install them with:  python -m pip install -r requirements.txt pyinstaller
+    echo Then run this BAT again.
     echo.
     pause
     exit /b 1

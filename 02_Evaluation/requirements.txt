@@ -1,0 +1,7 @@
+# AZRAS Evaluation - Python runtime/build dependencies (version: VERSION.json)
+# Tkinter is included with the standard Windows Python installer.
+numpy
+pandas
+reportlab
+pyflakes  # used by dev_checks only
+jsonschema  # used by dev_checks only (full JSON Schema validation)

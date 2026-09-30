@@ -1,3 +1,9 @@
+# AZRAS Evaluation v2.2.0 — PATCH_013 (four-product audit: requirements.txt)
+
+- Added `requirements.txt` (numpy, pandas, reportlab; pyflakes/jsonschema for dev_checks only). On a fresh Python `main.py` stopped with `ModuleNotFoundError: reportlab`; there was no requirements file. 00 Installer PATCH_004 reads it and shows the missing packages and the pip command.
+- `build_AZRAS_Evaluation.bat` names the requirements file when build dependencies are missing.
+- Added `dev_checks/language_combobox_liveness_self_check.py` (the four-product check; passes). No calculation change.
+
 # AZRAS Evaluation v2.2.0 — PATCH_012 (export file names)
 
 - Fixed: Module 6 「キャッシュフローCSV保存」 proposed `Module6_修繕更新解体積算_イベント別.csv` — the same name Module 7 uses, so the files overwrote each other.
