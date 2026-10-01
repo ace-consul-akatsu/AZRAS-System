@@ -71,9 +71,9 @@ Windows 用の実行ファイル（EXE）は `build_AZRAS_Planning.bat`・`build
 
 同じ建物プランを3つの工法で設計した図面（PDF）です。そのまま AZRAS Planning に読み込めます。
 
-- [AZRAS（RCアップライト工法）](examples/260805_AZRAS.pdf)
-- [木造 2×6](examples/260805_2x6.pdf)
-- [一般RCラーメン](examples/260805_RC_Rahmen.pdf)
+- [AZRAS（RCアップライト工法）](examples/261001_0150_AZRAS.pdf)
+- [木造 2×6](examples/261001_0150_2x6.pdf)
+- [一般RCラーメン](examples/261001_0150_RC_Rahmen.pdf)
 
 v2.2.0 で最後まで処理したサンプルプロジェクト一式（保存済み結果を含む Project JSON、地域別バリエーション、ChatGPT・Claude・Meta AI の独立回答を含む複数AI積算ラウンド）は、別のデータセットとして Zenodo で公開しています（CC BY 4.0）。<!-- 登録後、ここにデータセットの DOI を追記します。 -->
 

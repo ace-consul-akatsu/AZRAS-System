@@ -71,9 +71,9 @@ Detailed documents in English and Japanese (Word):
 
 Drawing sets of the same building plan in three construction methods, printed to PDF — ready to load into AZRAS Planning:
 
-- [AZRAS (RC Upright Method)](examples/260805_AZRAS.pdf)
-- [Timber 2×6](examples/260805_2x6.pdf)
-- [Conventional RC frame](examples/260805_RC_Rahmen.pdf)
+- [AZRAS (RC Upright Method)](examples/261001_0150_AZRAS.pdf)
+- [Timber 2×6](examples/261001_0150_2x6.pdf)
+- [Conventional RC frame](examples/261001_0150_RC_Rahmen.pdf)
 
 The complete sample projects processed with v2.2.0 — Project JSON with saved results, regional variants, and the full multi-AI takeoff round with the independent answers of ChatGPT, Claude and Meta AI — are published as a separate dataset on Zenodo (CC BY 4.0). <!-- Add the dataset DOI here after registration. -->
 
