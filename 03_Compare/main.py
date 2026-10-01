@@ -777,7 +777,32 @@ class App(tk.Tk):
             def _items(keys):
                 return sep.join((DJ.cost_key_ja(k) if ja else k) for k in keys)
             premise_info=[]
-            if pb['status']==PBASIS.MISALIGNED:
+            # PATCH_010: regional unit-price table (01 Planning PATCH_052).
+            if pb.get('price_table_conflict'):
+                tb=pb['price_table']
+                tl=[]
+                for region,vers in tb['version_conflicts'].items():
+                    for ver,labs in sorted(vers.items()):
+                        tl.append((f'    {region} 版 {ver}：' if ja else f'    {region} version {ver}: ')+sep.join(self.disp(v) for v in labs))
+                for c in tb['price_conflicts'][:12]:
+                    vals=sep.join(f'{self.disp(lab)} {v:,.2f}' for lab,v in c['prices'].items())
+                    tl.append(f'    {DJ.cost_key_ja(c["cost_item_key"]) if ja else c["cost_item_key"]}（{c["entry_key"]}）：{vals}' if ja else
+                              f'    {c["cost_item_key"]} ({c["entry_key"]}): {vals}')
+                if ja:
+                    premise.append(
+                        '【地域単価表】同じ地域なのに、地域単価表の版または単価が揃っていません。\n'+'\n'.join(tl)
+                        +'\n  そろえる手順：01 Planning の Module 5 で各Projectに同じ版の「地域単価表を適用」→ 再計算・保存'
+                         ' → 02 Evaluation の Module 6・7 を再計算・保存 → ここで読み込み直す。'
+                        '\n  （規模区分の違いによる単価差は正常な差なので、ここでは警告しません。）'
+                    )
+                else:
+                    premise.append(
+                        '[Regional price table] Projects in the same region were priced from different table versions or prices.\n'+'\n'.join(tl)
+                        +'\n  To align: in 01 Planning Module 5 apply the same table version to every Project, recalculate and save;'
+                         ' recalculate and save Modules 6 and 7 in 02 Evaluation; then load the Projects here again.'
+                        '\n  (Price differences caused by different scale classes are normal and are not warned about.)'
+                    )
+            if pb['status']==PBASIS.MISALIGNED and not (pb.get('price_table_conflict') and len(pb['groups'])<=1):
                 detail='\n'.join(f'  {k}: '+sep.join(self.disp(v) for v in labs) for k,labs in pb['groups'].items())
                 reg=[f'    {self.disp(lab)}: {_items(keys)}' for lab,keys in pb['regional_items'].items() if keys]
                 if ja:
@@ -810,12 +835,13 @@ class App(tk.Tk):
                 own=[]
                 for lab,keys in pb['own_price_items'].items():
                     reg=set(pb['regional_items'].get(lab) or [])
+                    tab=set((pb.get('price_table_items') or {}).get(lab) or [])
                     if not keys:
                         continue
                     if ja:
-                        parts=[DJ.cost_key_ja(k)+('（地域単価）' if k in reg else '（AI単価）') for k in keys]
+                        parts=[DJ.cost_key_ja(k)+('（地域単価）' if k in reg else ('（地域単価表）' if k in tab else '（AI単価）')) for k in keys]
                     else:
-                        parts=[k+(' (regional)' if k in reg else ' (AI)') for k in keys]
+                        parts=[k+(' (regional)' if k in reg else (' (price table)' if k in tab else ' (AI)')) for k in keys]
                     own.append(f'    {self.disp(lab)}: '+sep.join(parts))
                 if ja:
                     premise_info.append(

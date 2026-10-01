@@ -1254,10 +1254,10 @@ class Module1App(tk.Toplevel):
             inb, text=("PDF/ZIP読込" if self.i18n.language=="ja" else "Load PDF/ZIP"),
             command=lambda:self.register_drawing_files(replace=True),
         ).grid(row=0,column=2,padx=4,pady=4)
-        ttk.Button(
-            inb, text=("図面追加" if self.i18n.language=="ja" else "Add drawings"),
-            command=lambda:self.register_drawing_files(replace=False),
-        ).grid(row=0,column=3,padx=4,pady=4)
+        # PATCH_052: the "図面追加" (append) button was removed.  When even one
+        # drawing changes, the complete final drawing set is loaded again with
+        # "PDF/ZIP読込" (several PDFs can be selected at once, or one ZIP), so
+        # AI results always belong to exactly one drawing set.
         ttk.Button(inb,text=t("analyze"),command=self.start_run).grid(row=0,column=4,padx=6,pady=4)
         ttk.Button(
             inb,
@@ -10333,7 +10333,8 @@ This packet is deliberately compact: only items with a discrepancy carry full ev
     # PATCH_217: local-PDF-first workflow.  Users can register either loose PDFs
     # or ZIP archives containing PDFs.  ZIPs are safely expanded into a persistent
     # project-side folder so the existing vector/text analyzers can operate on real
-    # PDF paths.  "PDF/ZIP読込" replaces the active set; "図面追加" appends.
+    # PDF paths.  "PDF/ZIP読込" replaces the active set (PATCH_052: the
+    # append button "図面追加" was removed; a changed set is reloaded whole).
     def _detect_true_north_from_pdf(self, pdf_path):
         """Detect True North from the geometric centre axis of a vector north symbol.
 
@@ -10730,7 +10731,10 @@ This packet is deliberately compact: only items with a discrepancy carry full ev
                 extracted.append(str(target))
         return extracted
 
-    def register_drawing_files(self, replace=False):
+    def register_drawing_files(self, replace=True):
+        # PATCH_052: always used as a full replacement ("PDF/ZIP読込").  The
+        # append mode has no button any more; replace=False is kept only so an
+        # old caller cannot crash, and behaves the same as before.
         initialdir=str(Path(self.project_path).parent) if self.project_path is not None else None
         kwargs={
             "filetypes":[("PDF / ZIP","*.pdf *.zip"),("PDF","*.pdf"),("ZIP","*.zip"),("All files","*.*")],

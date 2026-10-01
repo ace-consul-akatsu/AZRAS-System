@@ -2,6 +2,27 @@
 
 This file records changes to the AZRAS System suite as a whole. Detailed patch notes and regression records of each product are in its `PATCH/` folder.
 
+## v2.2.0 patch update — 2026-10-01
+
+No product version change; the patch numbers are:
+
+| Product | Version | Patch |
+|---|---|---|
+| AZRAS Installer | 5.0.4 | PATCH_004 |
+| AZRAS Planning | 2.2.0 | PATCH_052 |
+| AZRAS Evaluation | 2.2.0 | PATCH_014 |
+| AZRAS Compare | 2.2.0 | PATCH_010 |
+
+### Added
+
+- **Planning — regional unit-price table (PATCH_052).** Projects in the same region used to get different AI unit prices for the same item, because each Project asked the AIs again. Module 5 can now register a Project's adopted multi-AI prices in one standalone, versioned table per region (`<JSON folder>/Regional_Unit_Price_Tables/AZRAS_UNIT_PRICE_TABLE_<region>_<YYYY-MM>.json`, not per construction method) and apply it to later Projects of that region before AI research. Prices are matched by item, spec (construction method only for formwork, concrete, reinforcing steel and phenolic foam), unit and scale class (gross floor area up to 300 m², up to 3,000 m², larger; boundaries editable in the table). Only unregistered items are sent to the AIs; a registered price is never overwritten (new prices need a new version), and no price is borrowed from another scale class. The Project's price-basis record carries the table version and SHA-256.
+- **Compare — regional price-table check (PATCH_010).** Projects of the same region priced from different table versions, or with different prices for the same table entry, get a warning with the procedure to align them. Different regions and different scale classes are not conflicts.
+- Self-checks for each change above; `tests/run_all.py` passes 82/82.
+
+### Changed
+
+- **Planning — drawing registration (PATCH_052).** The Module 1 *Add drawings* (図面追加) button was removed. When any drawing changes, the complete drawing set is loaded again with *Load PDF/ZIP* (several PDFs at once, or one ZIP), so AI results always belong to one drawing set.
+
 ## v2.2.0 patch update — 2026-09-30
 
 Fixes after the baseline release, found while comparing the 2x6, AZRAS and RC Frame terrace-house samples. No product version change; the patch numbers are:

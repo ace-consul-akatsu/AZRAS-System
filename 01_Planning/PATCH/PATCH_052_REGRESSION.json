@@ -1,0 +1,17 @@
+{
+  "patch": "PATCH_052",
+  "product": "01 AZRAS Planning",
+  "version": "2.2.0",
+  "date_utc": "261001",
+  "requests": [
+    "fix unit prices per region: reuse the first Project's adopted multi-AI prices, research only unregistered items",
+    "scale class column; standalone table per region with a version (e.g. 2026-10), not per construction method",
+    "remove the Module 1 append-drawings button (図面追加)"
+  ],
+  "new_files": ["services/regional_unit_price_table.py", "dev_checks/patch_052_regional_unit_price_table_self_check.py"],
+  "new_self_checks": ["dev_checks/patch_052_regional_unit_price_table_self_check.py"],
+  "negative_tests": ["new check fails on PATCH_051 code"],
+  "results": {"dev_checks": "34/34 PASS", "pyflakes": "warning set unchanged"},
+  "unchanged": ["Projects without a table: prices, totals and basis_token", "AI cost steps 1-6 and adoption rules", "02 Evaluation"],
+  "left_for_cleanup": ["module1 register_drawing_files replace=False branch (no caller)"]
+}

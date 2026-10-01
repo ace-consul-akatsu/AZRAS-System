@@ -1,0 +1,11 @@
+{
+  "patch": "PATCH_010",
+  "product": "03 AZRAS Compare",
+  "version": "2.2.0",
+  "date_utc": "261001",
+  "pairs_with": "01 AZRAS Planning PATCH_052",
+  "new_self_checks": ["dev_checks/patch_010_regional_price_table_self_check.py"],
+  "negative_tests": ["new check fails on PATCH_009 code"],
+  "results": {"dev_checks": "14/14 PASS", "pyflakes": "no warnings"},
+  "unchanged": ["values, graphs, summaries", "premise book", "Projects without a regional price table"]
+}

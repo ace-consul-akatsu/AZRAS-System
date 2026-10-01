@@ -35,14 +35,83 @@ PREMISE_BOOK_ALIGNED = "premise_book_aligned"
 MISALIGNED = "misaligned"
 
 
+PRICE_TABLE_TOKENS = {"regional_unit_price_table", "regional_unit_price_table_with_ai_items",
+                      "mixed_regional_unit_price_table_and_regional_database"}
+
+
 def line_origin(status: Any) -> str:
     """Same classification as 01 Planning _price_basis_fingerprint."""
     s = str(status or "unresolved")
     if s.startswith("comparison_group"):
         return "premise_book"
+    if s.startswith("regional_price_table"):
+        return "price_table"
     if s.startswith("ai_"):
         return "ai"
     return "regional"
+
+
+def _table_ref(raw: dict[str, Any]) -> dict[str, Any] | None:
+    fp = (_saved_module(raw, "module5") or {}).get("price_basis_fingerprint") or {}
+    ref = fp.get("regional_unit_price_table") if isinstance(fp, dict) else None
+    return ref if isinstance(ref, dict) and ref.get("region_key") else None
+
+
+def _line_rate(line: dict[str, Any]) -> float | None:
+    try:
+        return float(line.get("material_unit_cost") or 0) + float(line.get("labor_unit_cost") or 0) + float(line.get("equipment_unit_cost") or 0)
+    except (TypeError, ValueError):
+        return None
+
+
+def price_table_check(projects: list[dict[str, Any]]) -> dict[str, Any]:
+    """PATCH_010: Projects priced from the 01 Planning regional unit-price table.
+
+    Within one region every Project must use the same table version, and the
+    same table entry (item + spec + unit + scale class) must carry the same
+    price.  Different regions legitimately use different tables, and a
+    different scale class legitimately gives a different price: neither is a
+    conflict.  Only reads; never changes a value.
+    """
+    refs: dict[str, dict[str, Any]] = {}
+    for x in projects:
+        ref = _table_ref(x.get("raw") or {})
+        if ref:
+            refs[x.get("label")] = ref
+    versions: dict[str, dict[str, list[str]]] = {}
+    for lab, ref in refs.items():
+        versions.setdefault(str(ref.get("region_key")), {}).setdefault(str(ref.get("version")), []).append(lab)
+    version_conflicts = {r: v for r, v in versions.items() if len(v) > 1}
+    prices: dict[tuple[str, str, str], dict[str, float]] = {}
+    for x in projects:
+        lab = x.get("label")
+        ref = refs.get(lab)
+        if not ref:
+            continue
+        m5 = _saved_module(x.get("raw") or {}, "module5") or {}
+        for line in m5.get("cost_lines") or []:
+            if not isinstance(line, dict) or line_origin(line.get("pricing_status")) != "price_table":
+                continue
+            meta = line.get("regional_unit_cost_metadata") or {}
+            ek = str(meta.get("regional_price_table_entry") or "") if isinstance(meta, dict) else ""
+            rate = _line_rate(line)
+            if ek and rate is not None:
+                prices.setdefault((str(ref.get("region_key")), str(ref.get("version")), ek), {})[lab] = rate
+    price_conflicts = []
+    for (region, version, ek), by_lab in sorted(prices.items()):
+        vals = list(by_lab.values())
+        if len(vals) > 1 and max(vals) - min(vals) > max(abs(max(vals)), 1.0) * 1e-6:
+            price_conflicts.append({"region_key": region, "version": version, "entry_key": ek,
+                                    "cost_item_key": ek.split("|", 1)[0], "prices": by_lab})
+    scale = {lab: ref.get("scale_class") for lab, ref in refs.items()}
+    return {
+        "refs": refs,
+        "version_conflicts": version_conflicts,
+        "price_conflicts": price_conflicts,
+        "scale_classes": scale,
+        "mixed_scale_classes": len({v for v in scale.values()}) > 1,
+        "projects_without_table": [x.get("label") for x in projects if x.get("label") not in refs],
+    }
 
 
 def own_price_lines(raw: dict[str, Any]) -> list[dict[str, Any]]:
@@ -98,7 +167,13 @@ def assess(projects: list[dict[str, Any]]) -> dict[str, Any]:
         fv = fp.get("premise_book_version") if isinstance(fp, dict) else None
         if fv not in (None, _copy_version(raw)):
             fp_ok = False
-    if len(groups) <= 1:
+    table = price_table_check(projects)
+    table_conflict = bool(table["version_conflicts"] or table["price_conflicts"])
+    if table_conflict:
+        # PATCH_010: one token for everyone does not help when the regional
+        # table versions or prices differ.
+        status = MISALIGNED
+    elif len(groups) <= 1:
         status = UNIFORM
     elif one_book and fp_ok and set(groups) <= PREMISE_BOOK_TOKENS:
         status = PREMISE_BOOK_ALIGNED
@@ -111,4 +186,8 @@ def assess(projects: list[dict[str, Any]]) -> dict[str, Any]:
         "regional_items": regional,
         "own_price_items": {lab: sorted({ln["key"] for ln in lines if ln["key"]}) for lab, lines in own.items()},
         "mixed_own_origins": len(origins) > 1,
+        "price_table_items": {lab: sorted({ln["key"] for ln in lines if ln["origin"] == "price_table" and ln["key"]})
+                              for lab, lines in own.items()},
+        "price_table": table,
+        "price_table_conflict": table_conflict,
     }

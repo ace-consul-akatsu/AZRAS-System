@@ -1,3 +1,9 @@
+## v2.2.0 PATCH_052 — 2026-10-01 UTC
+- Module 5: new 地域単価表 (regional unit-price table) panel — apply / register adopted AI prices / view / remove. One standalone versioned table per region in `<JSON folder>/Regional_Unit_Price_Tables/` (file `AZRAS_UNIT_PRICE_TABLE_<region>_<YYYY-MM>.json`), outside every Project folder. Matching by item + spec + unit + scale class; unregistered items only are sent to AI research; registered prices are never overwritten.
+- Engine: price_basis_fingerprint records the table reference; new basis tokens regional_unit_price_table / regional_unit_price_table_with_ai_items / mixed_regional_unit_price_table_and_regional_database. Table prices display as provisional (yellow).
+- Module 1: the 図面追加 (append drawings) button was removed; a changed drawing set is reloaded whole with PDF/ZIP読込.
+- Added dev_checks/patch_052_regional_unit_price_table_self_check.py.
+
 ## v2.2.0 PATCH_051 — 2026-09-30 UTC
 - Drawing analysis: per-dwelling / per-room area notes (m2/戸, m2/室, m2 x n戸) and finish-area notes (天井と床面積 …) are no longer taken as the building's floor area; if no written area is plausible for the plan, footprint x storeys is used. AZRAS terrace house: 37.6 m2 -> 245.1 m2. Other sample PDFs unchanged.
 - Added dev_checks/per_unit_finish_area_not_gross_floor_area_self_check.py.

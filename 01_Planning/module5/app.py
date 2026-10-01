@@ -8,7 +8,8 @@ from datetime import datetime, timezone
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from pathlib import Path
-from services.project_export_paths import default_export_path, project_output_directory
+from services.project_export_paths import default_export_path, project_output_directory, find_json_directory
+from services import regional_unit_price_table as RUPT
 
 from core.i18n import I18N
 from core.error_text import friendly_exception_text
@@ -25,7 +26,8 @@ from core.number_format import format_number, header_with_unit, parse_number, fo
 from ui.editable_remarks import bind_editable_remarks, merge_note
 from services.construction_cost_engine_v9_4 import (
     calculate_construction_cost, resolve_location_profile_from_project,
-    evaluate_unit_cost_dataset_freshness, extract_quantities
+    evaluate_unit_cost_dataset_freshness, extract_quantities,
+    _construction_method as _cost_construction_method
 )
 
 INPUT_BG="#fff4b8"
@@ -77,6 +79,7 @@ class Module5App(tk.Toplevel):
         # The raw AI response is not copied into AZRAS and no global unit-cost DB is written.
         self.ai_cost_session=None
         self.ai_cost_session_status=tk.StringVar(value=("AI概算単価: 未取込" if language=="ja" else "AI approximate prices: Not imported"))
+        self.price_table_status=tk.StringVar(value=("地域単価表: 未適用" if language=="ja" else "Regional price table: not applied"))
         # PATCH 420: make incomplete pricing visible beside the total itself.
         self.total_completeness_notice=tk.StringVar(value="")
         self.cost_year=tk.StringVar(value="2026")
@@ -479,6 +482,19 @@ class Module5App(tk.Toplevel):
         ttk.Label(costdata,text=ui("AI依頼時: TXT等を添付後、依頼画面の「AIへ送る短文をコピー」をAIチャット本文へ貼り付けて送信してください。","When requesting AI research: attach the TXT/files, then use “Copy short message for AI” and paste it into the AI chat."),foreground="#8B4513").grid(row=12,column=0,columnspan=3,sticky="w",padx=8,pady=(0,4))
         costdata.columnconfigure(1,weight=1)
 
+        # PATCH_052: fixed regional unit-price table (one standalone versioned
+        # file per region).  Apply it BEFORE AI research; only unregistered
+        # items then go to the AIs.
+        ptable=ttk.LabelFrame(upper_panel,text=ui("地域単価表（同一地域の単価固定）","Regional Unit-Price Table (fixed prices per region)"))
+        ptable.pack(fill="x",padx=10,pady=5)
+        ttk.Label(ptable,textvariable=self.price_table_status,wraplength=900,justify="left").grid(row=0,column=0,rowspan=4,sticky="nw",padx=8,pady=3)
+        ttk.Button(ptable,text=ui("地域単価表を適用（AI調査の前に）","Apply Regional Price Table (before AI research)"),command=self.apply_regional_price_table).grid(row=0,column=1,sticky="ew",padx=8,pady=3)
+        ttk.Button(ptable,text=ui("AI採用単価を地域単価表へ登録","Register Adopted AI Prices in Table"),command=self.register_regional_price_table).grid(row=1,column=1,sticky="ew",padx=8,pady=3)
+        ttk.Button(ptable,text=ui("地域単価表の内容を確認","View Regional Price Table"),command=self.show_regional_price_table).grid(row=2,column=1,sticky="ew",padx=8,pady=3)
+        ttk.Button(ptable,text=ui("地域単価表の適用を解除","Remove Regional Price Table"),command=self.clear_regional_price_table).grid(row=3,column=1,sticky="ew",padx=8,pady=3)
+        ptable.columnconfigure(0,weight=1)
+        self._refresh_price_table_status()
+
         soil_handling=ttk.LabelFrame(upper_panel,text=ui("根切土の現場内仮置場","On-site Excavated-Soil Stockpile"))
         soil_handling.pack(fill="x",padx=10,pady=5)
         ttk.Radiobutton(
@@ -671,6 +687,7 @@ class Module5App(tk.Toplevel):
             binding.setdefault("project_id",str((self.project or {}).get("project_id") or ""))
             binding.setdefault("project_name",str(((self.project or {}).get("common") or {}).get("project_name") or ""))
         loc["_session_ai_unit_cost_overlay"]=overlay
+        self._refresh_price_table_status()
         evidence=overlay.get("session_evidence")
         self.ai_cost_session=json.loads(json.dumps(evidence,ensure_ascii=False)) if isinstance(evidence,dict) else None
         if isinstance(self.ai_cost_session,dict):
@@ -972,6 +989,7 @@ class Module5App(tk.Toplevel):
                     self.market_validity_summary.set((f"建設費妥当性: {float(est or 0):,.0f} {cur}/㎡ / 基準 {float(bm):,.0f} {cur}/㎡ / 差 {float(gap or 0):+.1f}%" if self.i18n.language=="ja" else f"Construction-cost validity: {cur} {float(est or 0):,.0f}/m² / benchmark {cur} {float(bm):,.0f}/m² / gap {float(gap or 0):+.1f}%"))
         self._refresh_project_state_notice()
         self._refresh_project_cost_location()
+        self._refresh_price_table_status()
 
     def change_language(self,language):
         # PATCH 422: Module 5 is now launched from the Planning shell, so its
@@ -1670,7 +1688,22 @@ class Module5App(tk.Toplevel):
             pass
 
     def _ai_cost_request_scope(self):
-        """Return only the cost scopes actually needed by the current Module 1 result."""
+        """Return only the cost scopes actually needed by the current Module 1 result.
+
+        PATCH_052: items already priced from the regional unit-price table are
+        not sent to the AIs again (and AI answers for them are not adopted).
+        """
+        scope=self._full_cost_scope()
+        applied=self._price_table_applied_keys()
+        if applied:
+            scope=dict(scope)
+            scope["items"]=[x for x in scope["items"] if x["cost_item_key"] not in applied]
+            scope["equipment_packages"]=[x for x in scope["equipment_packages"] if x["package_key"] not in applied]
+            scope["regional_price_table_excluded_keys"]=sorted(applied)
+        return scope
+
+    def _full_cost_scope(self):
+        """All cost items and equipment packages the current Module 1 result needs."""
         self.refresh_project_from_context()
         if not isinstance(self.project,dict) or self.project_path is None:
             raise ValueError(self._ui("先にModule 0でProject JSONを選択してください。","Select a Project JSON in Module 0 first."))
@@ -2201,6 +2234,16 @@ The returned numeric price is the current AZRAS planning price basis only when s
                     "AIによる地域単価調査の前に、先に『図面解析・数量計算』を実行してください。数量・単位・工種範囲を確定してから単価調査を行います。",
                     "Before AI regional unit-cost research, run Drawing Analysis / Quantity Calculation first. Unit-cost research must follow the established quantities, units, and work scope."),
                 parent=self); return
+        # PATCH_052: nothing to research when the regional price table
+        # already prices every item this Project needs.
+        try:
+            _scope=self._ai_cost_request_scope()
+        except Exception as exc:
+            messagebox.showerror("AI Approximate Cost",friendly_exception_text(exc,self.i18n.language),parent=self); return
+        if self._price_table_overlay_ref() and not _scope.get("items") and not _scope.get("equipment_packages"):
+            messagebox.showinfo("AI Approximate Cost",self._ui(
+                "地域単価表ですべての品目が値付けされています。AI調査は不要です。",
+                "Every item is priced from the regional price table. No AI research is needed."),parent=self); return
         try:
             request=self._ai_cost_request_text()
             path=self._save_ai_cost_request_txt(request)
@@ -2775,6 +2818,343 @@ The returned numeric price is the current AZRAS planning price basis only when s
             return True
         return False
 
+    # ------------------------------------------------------------------
+    # PATCH_052: regional unit-price table (地域単価表)
+    # One standalone versioned file per region, outside every Project folder
+    # (<JSON folder>/Regional_Unit_Price_Tables).  See
+    # services/regional_unit_price_table.py for the rules.
+    # ------------------------------------------------------------------
+    def _price_table_dir(self):
+        return RUPT.table_directory(find_json_directory(self.root_dir))
+
+    def _price_table_overlay_ref(self):
+        ov=self._current_ai_cost_overlay() or {}
+        ref=ov.get("regional_unit_price_table")
+        return ref if isinstance(ref,dict) else None
+
+    def _price_table_applied_keys(self):
+        ref=self._price_table_overlay_ref()
+        if not ref:
+            return set()
+        return {str(k).split("|",1)[0] for k in (ref.get("registered_entry_keys") or [])}
+
+    def _price_table_item_name(self, key, kind="unit_cost"):
+        if kind in {"equipment","equipment_per_gfa"}:
+            meta=(self.db.get("equipment_packages") or {}).get(key) or {}
+            return str((meta.get("ja") if self.i18n.language=="ja" else meta.get("en")) or meta.get("en") or key)
+        try:
+            return self._cost_item_display_name(key)
+        except Exception:
+            return str(key)
+
+    def _refresh_price_table_status(self):
+        try:
+            ref=self._price_table_overlay_ref()
+        except Exception:
+            ref=None
+        if not ref:
+            self.price_table_status.set(self._ui(
+                "地域単価表: 未適用。同じ地域の表があれば、AI調査（①）の前に「地域単価表を適用」を押してください。",
+                "Regional price table: not applied. If this region has a table, press Apply before AI research (step 1)."))
+            return
+        unreg=ref.get("unregistered_items") or []
+        names=", ".join(self._price_table_item_name(x.get("cost_item_key"),x.get("kind")) for x in unreg[:8])+(" …" if len(unreg)>8 else "")
+        gfa=float(ref.get("gross_floor_area_m2") or 0.0)
+        self.price_table_status.set(self._ui(
+            f"地域単価表: {ref.get('region_key')} 版 {ref.get('version')} / 規模区分 {ref.get('scale_class')}（延床 {gfa:,.1f}㎡） / "
+            f"表の単価 {len(ref.get('registered_entry_keys') or [])} 件 / 未登録 {len(unreg)} 件"
+            +(f"（AI調査の対象: {names}）" if unreg else "（AI調査は不要）"),
+            f"Regional price table: {ref.get('region_key')} version {ref.get('version')} / scale class {ref.get('scale_class')} (GFA {gfa:,.1f} m²) / "
+            f"table prices {len(ref.get('registered_entry_keys') or [])} / unregistered {len(unreg)}"
+            +(f" (sent to AI: {names})" if unreg else " (no AI research needed)")))
+
+    def _price_table_project_info(self):
+        common=(self.project or {}).get("common") or {}
+        return {"project_id":str((self.project or {}).get("project_id") or ""),
+                "project_name":str(common.get("project_name") or ""),
+                "project_cost_location":self._authoritative_project_cost_location()}
+
+    def _price_table_ready(self, title):
+        """Common checks. Returns False (after telling the user) when not possible."""
+        if self._comparison_copy_price_block("module5_ai_cost_import"):
+            return False
+        self.refresh_project_from_context()
+        if self.project is None or self.project_path is None:
+            messagebox.showwarning(title,self._ui("先にModule 0でProject JSONを選択してください。","Select a Project JSON in Module 0 first."),parent=self); return False
+        try:
+            require_current_module_output(self.project,"module1","Module 1")
+        except Exception:
+            messagebox.showwarning(title,self._ui("先に『図面解析・数量計算』を実行してください。","Run Drawing Analysis / Quantity Calculation first."),parent=self); return False
+        basis=self._cost_profile_match_basis()
+        if basis in {"matched_project_city","matched_prefecture_representative_city"}:
+            return True
+        if basis=="manually_selected_profile":
+            msg=self._ui(f"地域プロファイル「{self.location.get()}」は手動で選ばれています。\nこの案件を「{self.location.get()}」の地域単価表で扱ってよいですか？",
+                         f"The regional profile '{self.location.get()}' was selected manually.\nUse the '{self.location.get()}' regional price table for this Project?")
+        else:
+            msg=self._ui(f"地域プロファイル「{self.location.get()}」は案件所在地の都市ではありません（国の基準都市による自動選択など）。\n続けると、別の都市の案件と同じ単価表になります。続けますか？",
+                         f"The regional profile '{self.location.get()}' is not the project city (for example a country reference city).\nContinuing shares one price table with Projects in other cities. Continue?")
+        return bool(messagebox.askyesno(title,msg,parent=self))
+
+    def _price_table_needs(self):
+        scope=self._full_cost_scope()
+        cost_items={x["cost_item_key"]:x["unit"] for x in scope["items"]}
+        equipment=[x["package_key"] for x in scope["equipment_packages"]]
+        return cost_items,equipment,float(scope.get("gross_floor_area_m2") or 0.0),_cost_construction_method(self.project)
+
+    def _apply_price_table_path(self, path):
+        """Write the table prices into this Project's overlay.  Returns (result, replaced_ai_keys)."""
+        table=RUPT.load_table(path)
+        currency=str(self.currency.get() or "JPY").upper()
+        if str(table.get("currency")).upper()!=currency:
+            raise ValueError(self._ui(f"通貨が違います（表: {table.get('currency')} / この案件: {currency}）。",
+                                      f"Currency mismatch (table: {table.get('currency')} / Project: {currency})."))
+        cost_items,equipment,gfa,method=self._price_table_needs()
+        if gfa<=0:
+            raise ValueError(self._ui("延床面積が0のため規模区分を決められません。Module 0 / Module 1 で延床面積を確認してください。",
+                                      "Gross floor area is 0, so the scale class cannot be decided. Check the floor area in Module 0 / Module 1."))
+        res=RUPT.apply_table(table,cost_items=cost_items,equipment_keys=equipment,construction_method=method,
+                             gross_floor_area_m2=gfa,table_file=Path(path).name)
+        loc=self.db["locations"][self.location.get()]
+        old=loc.get("_session_ai_unit_cost_overlay")
+        ov=json.loads(json.dumps(old,ensure_ascii=False)) if isinstance(old,dict) else {}
+        old_ref=ov.get("regional_unit_price_table") if isinstance(ov.get("regional_unit_price_table"),dict) else {}
+        stash=json.loads(json.dumps(old_ref.get("replaced_ai_records") or {"unit_costs":{},"equipment_packages":[]},ensure_ascii=False))
+        # Undo a previous application first, so re-applying never stacks.
+        uc={k:v for k,v in (ov.get("unit_costs") or {}).items() if not (isinstance(v,dict) and v.get("pricing_status")==RUPT.TABLE_PRICING_STATUS)}
+        uc.update(stash.get("unit_costs") or {})
+        pk=[x for x in (ov.get("equipment_packages") or []) if isinstance(x,dict) and x.get("adoption_basis")!="regional_price_table"]
+        _pk_keys={str(x.get("package_key")) for x in pk}
+        pk+=[x for x in (stash.get("equipment_packages") or []) if str(x.get("package_key")) not in _pk_keys]
+        new_pkg_keys={x["package_key"] for x in res["equipment_packages"]}
+        replaced={"unit_costs":{k:v for k,v in uc.items() if k in res["unit_costs"]},
+                  "equipment_packages":[x for x in pk if str(x.get("package_key")) in new_pkg_keys]}
+        uc={k:v for k,v in uc.items() if k not in res["unit_costs"]}; uc.update(res["unit_costs"])
+        pk=[x for x in pk if str(x.get("package_key")) not in new_pkg_keys]+res["equipment_packages"]
+        ref=dict(res["ref"]); ref["replaced_ai_records"]=replaced
+        ov.update({"unit_costs":uc,"equipment_packages":pk,"regional_unit_price_table":ref})
+        ov["project_binding"]={"project_id":str((self.project or {}).get("project_id") or ""),
+                               "project_name":str(((self.project or {}).get("common") or {}).get("project_name") or "")}
+        ov.setdefault("ai_candidate_sessions",[]); ov.setdefault("reconciliation_audit",{})
+        if not isinstance(ov.get("unit_cost_dataset"),dict):
+            ov["unit_cost_dataset"]={"region_key":self._authoritative_project_cost_location(),"representative_profile":self.location.get(),
+                                     "data_date":table.get("price_basis_date"),"last_checked_date":datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                                     "source_name":f"AZRAS Regional Unit-Price Table {table.get('version')}","source_reference":Path(path).name,
+                                     "source_type":"regional_unit_price_table","status":"estimated"}
+        loc["_session_ai_unit_cost_overlay"]=ov
+        for p in res["equipment_packages"]:
+            if p["package_key"] in self.equipment_vars:
+                self.equipment_vars[p["package_key"]]["include"].set(True)
+                self.equipment_vars[p["package_key"]]["cost"].set(format_input_number(p["cost"]))
+        self._refresh_price_table_status()
+        return res,sorted(replaced["unit_costs"])+sorted(str(x.get("package_key")) for x in replaced["equipment_packages"])
+
+    def apply_regional_price_table(self):
+        title=self._ui("地域単価表","Regional price table")
+        if not self._price_table_ready(title):
+            return
+        folder=self._price_table_dir()
+        path=RUPT.latest_table_path(folder,self.location.get())
+        if path is None:
+            messagebox.showinfo(title,self._ui(
+                f"「{self.location.get()}」の地域単価表はまだありません。\n\n"
+                "通常どおり①〜⑥でAI調査を行い、終了後に「AI採用単価を地域単価表へ登録」を押すと、この地域の表が作られます。\n\n"
+                f"保存先: {folder}",
+                f"There is no regional price table for '{self.location.get()}' yet.\n\n"
+                "Run AI research steps 1-6 as usual, then press 'Register Adopted AI Prices in Table' to create it.\n\n"
+                f"Folder: {folder}"),parent=self)
+            return
+        try:
+            res,replaced=self._apply_price_table_path(path)
+        except Exception as exc:
+            messagebox.showerror(title,friendly_exception_text(exc,self.i18n.language),parent=self); return
+        self.calculate(silent_success=True)
+        ref=res["ref"]; unreg=ref["unregistered_items"]
+        names="\n".join("  ・"+self._price_table_item_name(x["cost_item_key"],x["kind"]) for x in unreg)
+        messagebox.showinfo(title,self._ui(
+            f"地域単価表 {path.name}（版 {ref['version']}）を適用しました。\n"
+            f"規模区分: {ref['scale_class']}（延床 {ref['gross_floor_area_m2']:,.1f}㎡）\n"
+            f"表の単価で値付けした品目: {len(ref['registered_entry_keys'])}\n"
+            +(f"AI単価から表の単価に置き換えた品目: {len(replaced)}\n" if replaced else "")
+            +(f"未登録の品目: {len(unreg)}\n{names}\n\n未登録の品目だけが①〜⑥のAI調査の対象です。調査後に「AI採用単価を地域単価表へ登録」で表に追加してください。"
+              if unreg else "\nすべて表の単価で値付けしました。AI調査は不要です。")
+            +"\n\nProjectに残すにはModule 5の「保存」を押してください。",
+            f"Applied regional price table {path.name} (version {ref['version']}).\n"
+            f"Scale class: {ref['scale_class']} (GFA {ref['gross_floor_area_m2']:,.1f} m²)\n"
+            f"Items priced from the table: {len(ref['registered_entry_keys'])}\n"
+            +(f"AI prices replaced by table prices: {len(replaced)}\n" if replaced else "")
+            +(f"Unregistered items: {len(unreg)}\n{names}\n\nOnly the unregistered items go to AI research (steps 1-6). Afterwards, register them in the table."
+              if unreg else "\nEvery item is priced from the table. No AI research is needed.")
+            +"\n\nPress Module 5 Save to keep this in the Project."),parent=self)
+
+    def register_regional_price_table(self):
+        title=self._ui("地域単価表へ登録","Register in regional price table")
+        if not self._price_table_ready(title):
+            return
+        ov=self._current_ai_cost_overlay() or {}
+        _st=((ov.get("regional_unit_price_table") or {}).get("replaced_ai_records") or {}) if isinstance(ov.get("regional_unit_price_table"),dict) else {}
+        _all_uc=list((ov.get("unit_costs") or {}).values())+list((_st.get("unit_costs") or {}).values())
+        _all_pk=list(ov.get("equipment_packages") or [])+list(_st.get("equipment_packages") or [])
+        has_ai=any(isinstance(v,dict) and str(v.get("pricing_status") or "").startswith("ai_") for v in _all_uc)
+        has_ai=has_ai or any(isinstance(x,dict) and x.get("pricing_mode")=="unit_rate_per_gfa" and x.get("adoption_basis")!="regional_price_table" for x in _all_pk)
+        if not has_ai:
+            messagebox.showinfo(title,self._ui("登録できるAI採用単価がありません。①〜⑥のAI調査を終えてから押してください。",
+                                               "There are no adopted AI prices to register. Finish AI research steps 1-6 first."),parent=self); return
+        region=self.location.get(); currency=str(self.currency.get() or "JPY").upper()
+        folder=self._price_table_dir()
+        try:
+            tables=RUPT.list_tables(folder,region)
+            cost_items,equipment,gfa,method=self._price_table_needs()
+            mode="create"
+            if tables:
+                latest_version,latest_path=tables[-1]
+                latest=RUPT.load_table(latest_path)
+                if str(latest.get("currency")).upper()!=currency:
+                    raise ValueError(self._ui(f"通貨が違います（表: {latest.get('currency')} / この案件: {currency}）。",
+                                              f"Currency mismatch (table: {latest.get('currency')} / Project: {currency})."))
+                nv=RUPT.next_version([v for v,_ in tables])
+                ans=messagebox.askyesnocancel(title,self._ui(
+                    f"この地域には地域単価表 {latest_path.name}（版 {latest_version}）があります。\n\n"
+                    f"［はい］この版に、まだ登録されていない品目だけを追加します。登録済みの単価は変えません。\n"
+                    f"［いいえ］新しい版 {nv} を作り、このProjectのAI採用単価で置き換えます。前の版のほかの品目は引き継ぎます。以後の案件は新しい版を使います。\n"
+                    f"［キャンセル］何もしません。",
+                    f"This region already has table {latest_path.name} (version {latest_version}).\n\n"
+                    f"[Yes] Add only items not yet registered to this version. Registered prices are not changed.\n"
+                    f"[No] Create version {nv} with this Project's adopted AI prices replacing the same items; other items are carried over. Later Projects use the new version.\n"
+                    f"[Cancel] Do nothing."),parent=self)
+                if ans is None:
+                    return
+                if ans:
+                    target=latest; mode="append"
+                else:
+                    target=RUPT.new_table(region,currency,nv,previous=latest); mode="new_version"
+            else:
+                nv=RUPT.next_version([])
+                if not messagebox.askokcancel(title,self._ui(
+                        f"「{region}」の地域単価表はまだありません。\nこのProjectのAI採用単価で新しい表（版 {nv}）を作ります。\n\n保存先: {folder}",
+                        f"No regional price table exists for '{region}'.\nA new table (version {nv}) is created from this Project's adopted AI prices.\n\nFolder: {folder}"),parent=self):
+                    return
+                target=RUPT.new_table(region,currency,nv)
+            scale=RUPT.scale_class_for(gfa,target.get("scale_classes") or [])
+            if scale is None:
+                raise ValueError(self._ui("延床面積が0のため規模区分を決められません。","Gross floor area is 0, so the scale class cannot be decided."))
+            # AI prices this Project adopted but set aside when a table was
+            # applied earlier are still this Project's AI adoptions.
+            _stash=((ov.get("regional_unit_price_table") or {}).get("replaced_ai_records") or {}) if isinstance(ov.get("regional_unit_price_table"),dict) else {}
+            ov_for_entries=dict(ov)
+            _uc=dict(ov.get("unit_costs") or {})
+            for _k,_v in (_stash.get("unit_costs") or {}).items():
+                if not (isinstance(_uc.get(_k),dict) and str(_uc[_k].get("pricing_status") or "").startswith("ai_")):
+                    _uc[_k]=_v
+            ov_for_entries["unit_costs"]=_uc
+            ov_for_entries["equipment_packages"]=list(ov.get("equipment_packages") or [])+list(_stash.get("equipment_packages") or [])
+            entries=RUPT.entries_from_overlay(ov_for_entries,target,units=cost_items,construction_method=method,scale_class=scale,
+                                              project_info=self._price_table_project_info())
+            if mode=="new_version":
+                for e in entries:
+                    (target.get("entries") or {}).pop(e["entry_key"],None)
+            added,skipped=RUPT.add_entries(target,entries)
+            path=RUPT.save_table(target,folder)
+            differing=[]
+            store=target.get("entries") or {}
+            for e in entries:
+                if e["entry_key"] in skipped:
+                    tv=(store.get(e["entry_key"]) or {}).get("adopted_value")
+                    try:
+                        if tv is not None and abs(float(tv)-float(e["adopted_value"]))>max(abs(float(tv)),1.0)*1e-6:
+                            differing.append(self._price_table_item_name(e["cost_item_key"],e["kind"]))
+                    except (TypeError,ValueError):
+                        pass
+            res,_replaced=self._apply_price_table_path(path)
+        except Exception as exc:
+            messagebox.showerror(title,friendly_exception_text(exc,self.i18n.language),parent=self); return
+        self.calculate(silent_success=True)
+        unreg=res["ref"]["unregistered_items"]
+        messagebox.showinfo(title,self._ui(
+            f"地域単価表 {path.name} を保存しました。\n版: {target['version']} / 規模区分: {scale}\n"
+            f"新しく登録した品目: {len(added)}\n"
+            +(f"登録済みのため表の単価を使う品目: {len(skipped)}\n" if skipped else "")
+            +(("  このProjectのAI単価と表の単価が違う品目（表の単価に統一しました）: "+", ".join(differing)+"\n") if differing else "")
+            +(f"まだ表に無い品目: {len(unreg)}（AIの価格が採用されていない品目）\n" if unreg else "")
+            +"\nこのProjectにも表を適用しました。Projectに残すにはModule 5の「保存」を押してください。",
+            f"Saved regional price table {path.name}.\nVersion: {target['version']} / scale class: {scale}\n"
+            f"Newly registered items: {len(added)}\n"
+            +(f"Already registered, table price used: {len(skipped)}\n" if skipped else "")
+            +(("  Items whose AI price differed from the table (unified to the table): "+", ".join(differing)+"\n") if differing else "")
+            +(f"Items still not in the table: {len(unreg)} (no adopted AI price)\n" if unreg else "")
+            +"\nThe table has also been applied to this Project. Press Module 5 Save to keep it."),parent=self)
+
+    def clear_regional_price_table(self):
+        title=self._ui("地域単価表の適用を解除","Remove regional price table")
+        if self._comparison_copy_price_block("module5_ai_cost_import"):
+            return
+        loc=(self.db.get("locations") or {}).get(self.location.get())
+        ov=loc.get("_session_ai_unit_cost_overlay") if isinstance(loc,dict) else None
+        if not isinstance(ov,dict) or not isinstance(ov.get("regional_unit_price_table"),dict):
+            messagebox.showinfo(title,self._ui("地域単価表は適用されていません。","No regional price table is applied."),parent=self); return
+        if not messagebox.askyesno(title,self._ui("表の単価を外し、適用前のAI単価に戻します。よろしいですか？",
+                                                  "Remove the table prices and restore the AI prices used before? "),parent=self):
+            return
+        stash=ov["regional_unit_price_table"].get("replaced_ai_records") or {}
+        uc={k:v for k,v in (ov.get("unit_costs") or {}).items() if not (isinstance(v,dict) and v.get("pricing_status")==RUPT.TABLE_PRICING_STATUS)}
+        uc.update(stash.get("unit_costs") or {})
+        pk=[x for x in (ov.get("equipment_packages") or []) if isinstance(x,dict) and x.get("adoption_basis")!="regional_price_table"]
+        pk+=list(stash.get("equipment_packages") or [])
+        for x in (ov.get("equipment_packages") or []):
+            if isinstance(x,dict) and x.get("adoption_basis")=="regional_price_table":
+                key=str(x.get("package_key"))
+                if key in self.equipment_vars and key not in {str(y.get("package_key")) for y in pk}:
+                    self.equipment_vars[key]["cost"].set(format_input_number(0))
+        for x in (stash.get("equipment_packages") or []):
+            key=str(x.get("package_key"))
+            if key in self.equipment_vars and x.get("cost") is not None:
+                self.equipment_vars[key]["cost"].set(format_input_number(x.get("cost")))
+        ov["unit_costs"]=uc; ov["equipment_packages"]=pk; ov.pop("regional_unit_price_table",None)
+        self._refresh_price_table_status()
+        self.calculate(silent_success=True)
+
+    def show_regional_price_table(self):
+        title=self._ui("地域単価表の内容","Regional price table")
+        folder=self._price_table_dir()
+        region=self.location.get()
+        tables=RUPT.list_tables(folder,region)
+        if not tables:
+            messagebox.showinfo(title,self._ui(f"「{region}」の地域単価表はまだありません。\n保存先: {folder}",
+                                               f"No regional price table for '{region}' yet.\nFolder: {folder}"),parent=self); return
+        version,path=tables[-1]
+        try:
+            table=RUPT.load_table(path)
+        except Exception as exc:
+            messagebox.showerror(title,friendly_exception_text(exc,self.i18n.language),parent=self); return
+        win=tk.Toplevel(self); win.title(title); fit_window_to_screen(win,1100,600,760,420)
+        classes=" / ".join(f"{c.get('id')}: "+(f"〜{float(c['max_gross_floor_area_m2']):,.0f}㎡" if c.get("max_gross_floor_area_m2") is not None else self._ui("上限なし","no upper bound"))
+                           for c in table.get("scale_classes") or [])
+        head=self._ui(f"{path.name}\n版 {version}（全 {len(tables)} 版）/ 通貨 {table.get('currency')} / 単価基準日 {table.get('price_basis_date')} / 登録 {len(table.get('entries') or {})} 件\n"
+                      f"規模区分（延床面積）: {classes}　※境界値はこのファイルの scale_classes で変更できます。",
+                      f"{path.name}\nVersion {version} ({len(tables)} versions) / currency {table.get('currency')} / price basis date {table.get('price_basis_date')} / {len(table.get('entries') or {})} entries\n"
+                      f"Scale classes (gross floor area): {classes}  Boundaries can be edited in scale_classes of this file.")
+        ttk.Label(win,text=head,justify="left").pack(anchor="w",padx=12,pady=(10,6))
+        host=ttk.Frame(win); host.pack(fill="both",expand=True,padx=12,pady=4); host.rowconfigure(0,weight=1); host.columnconfigure(0,weight=1)
+        cols=("item","spec","unit","scale","price","ai","project","added")
+        heads=[self._ui("品目","Item"),self._ui("仕様","Spec"),self._ui("単位","Unit"),self._ui("規模","Scale"),
+               self._ui("採用単価","Adopted price"),self._ui("採用AI","Adopted by"),self._ui("登録元Project","Source Project"),self._ui("登録日時","Added")]
+        tree=ttk.Treeview(host,columns=cols,show="headings")
+        for c,h,w in zip(cols,heads,(220,90,80,60,120,110,220,160)):
+            tree.heading(c,text=h); tree.column(c,width=w,anchor="w")
+        ys=ttk.Scrollbar(host,orient="vertical",command=tree.yview); xs=ttk.Scrollbar(host,orient="horizontal",command=tree.xview)
+        tree.configure(yscrollcommand=ys.set,xscrollcommand=xs.set)
+        tree.grid(row=0,column=0,sticky="nsew"); ys.grid(row=0,column=1,sticky="ns"); xs.grid(row=1,column=0,sticky="ew")
+        for k,e in sorted((table.get("entries") or {}).items()):
+            try: price=f"{float(e.get('adopted_value')):,.2f}"
+            except (TypeError,ValueError): price="-"
+            tree.insert("", "end", values=(self._price_table_item_name(e.get("cost_item_key"),e.get("kind")),e.get("spec_key"),e.get("unit"),
+                                           e.get("scale_class"),price,e.get("adopted_by") or "-",
+                                           (e.get("added_from_project") or {}).get("project_name") or "-",e.get("added_at") or "-"))
+        bar=ttk.Frame(win); bar.pack(fill="x",padx=12,pady=(4,12))
+        if hasattr(os,"startfile"):
+            ttk.Button(bar,text=self._ui("フォルダーを開く","Open folder"),command=lambda:os.startfile(str(folder))).pack(side="left")
+        ttk.Button(bar,text=self._ui("閉じる","Close"),command=win.destroy).pack(side="right")
+
     def import_ai_cost_json(self):
         if self._comparison_copy_price_block("module5_ai_cost_import"):
             return
@@ -2827,6 +3207,15 @@ The returned numeric price is the current AZRAS planning price basis only when s
                                            decision_summary={"research_role":sess.get("research_role"),"research_execution_status":sess.get("research_execution_status"),"incomplete_item_count":len(sess.get("incomplete_items") or [])})
             adopted,audit=self._reconcile_ai_cost_candidates(sessions,scope)
             adopted_packages=self._reconcile_ai_equipment_candidates(sessions,scope,expected_currency)
+            # PATCH_052: prices from the regional unit-price table stay in the
+            # overlay; the AI scope above never contained those items.
+            _table_ref=(previous_overlay or {}).get("regional_unit_price_table") if isinstance(previous_overlay,dict) else None
+            _table_costs={k:v for k,v in ((previous_overlay or {}).get("unit_costs") or {}).items()
+                          if isinstance(v,dict) and v.get("pricing_status")==RUPT.TABLE_PRICING_STATUS}
+            _ai_pkg_keys={str(x.get("package_key")) for x in adopted_packages if isinstance(x,dict)}
+            _table_pkgs=[x for x in ((previous_overlay or {}).get("equipment_packages") or [])
+                         if isinstance(x,dict) and x.get("adoption_basis")=="regional_price_table" and str(x.get("package_key")) not in _ai_pkg_keys]
+            merged_unit_costs=dict(adopted); merged_unit_costs.update(_table_costs)
             reviewers=[]
             for x in sessions:
                 r=str(x.get("reviewer") or "UnknownAI")
@@ -2843,14 +3232,16 @@ The returned numeric price is the current AZRAS planning price basis only when s
                     "project_id":str((self.project or {}).get("project_id") or ""),
                     "project_name":str(((self.project or {}).get("common") or {}).get("project_name") or ""),
                 },
-                "unit_costs":adopted,"ai_candidate_sessions":sessions,"ai_sessions":[{"reviewer":x.get("reviewer"),"source_json":x.get("source_json"),"completed_at":x.get("completed_at")} for x in sessions],
+                "unit_costs":merged_unit_costs,"ai_candidate_sessions":sessions,"ai_sessions":[{"reviewer":x.get("reviewer"),"source_json":x.get("source_json"),"completed_at":x.get("completed_at")} for x in sessions],
                 "unit_cost_dataset":{"region_key":self._authoritative_project_cost_location(),"representative_profile":self.location.get(),"data_date":latest_completed[:10] if latest_completed else None,"last_checked_date":datetime.now(timezone.utc).strftime("%Y-%m-%d"),"source_name":"AI Approximate Cost Research (primary basis + independent review)","source_reference":"; ".join(str(x.get("source_json")) for x in sessions),"source_type":"ai_web_research_user_supplied_json","status":"estimated","note_ja":"ChatGPT一次調査の価格根拠を出発点とし、他AIが再調査・反証・補完し、その新しい根拠をChatGPTが再確認する。多数決では価格を決めない。共通DBへ保存しない。"},
                 "session_evidence":session,"reconciliation_audit":audit,
                 # PATCH 469: equipment-package prices are part of the same session-only
                 # AI Cost Provider overlay.  The construction-cost engine must consume
                 # these directly rather than relying on Tk entry widgets as a data bus.
-                "equipment_packages":adopted_packages,
+                "equipment_packages":adopted_packages+_table_pkgs,
             }
+            if isinstance(_table_ref,dict):
+                loc["_session_ai_unit_cost_overlay"]["regional_unit_price_table"]=_table_ref
             self.ai_cost_session=session
             self.unit_cost_data_date.set(latest_completed[:10] if latest_completed else datetime.now(timezone.utc).strftime("%Y-%m-%d"))
             self.unit_cost_source.set("AI Approximate Cost Research ("+", ".join(reviewers)+")")
@@ -2877,7 +3268,7 @@ The returned numeric price is the current AZRAS planning price basis only when s
             # ②/④/⑥ AI-JSON import steps. The window also offers Save/Load so
             # a changelog can be kept and reviewed later.
             try:
-                changelog_rows=self._build_ai_cost_changelog(previous_adopted,previous_audit,adopted,audit,scope)
+                changelog_rows=self._build_ai_cost_changelog(previous_adopted,previous_audit,merged_unit_costs,audit,scope)
                 self._show_ai_cost_changelog(changelog_rows,session_meta={"reviewers":reviewers,"imported_at":session.get("imported_at")})
             except Exception as exc:
                 messagebox.showerror("AI Approximate Cost",friendly_exception_text(exc,self.i18n.language),parent=self)
@@ -3017,6 +3408,7 @@ The returned numeric price is the current AZRAS planning price basis only when s
                          f"Construction-cost validity: {_cur} {_est:,.0f}/m² / benchmark {_cur} {_bm:,.0f}/m² / gap {_gap:+.1f}%")
                     )
             self.show_result()
+            self._refresh_price_table_status()
             if not silent_success:
                 messagebox.showinfo("OK",self.i18n.t("cost_complete"))
             return True

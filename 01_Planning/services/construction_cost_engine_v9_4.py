@@ -2961,17 +2961,27 @@ def _price_basis_fingerprint(location: dict[str,Any], lines: list[dict[str,Any]]
     ai_lines=sum(c for k,c in statuses.items() if k.startswith("ai_"))
     # PATCH_043: prices written by 03 Compare from a comparison premise book.
     cg_lines=sum(c for k,c in statuses.items() if k.startswith("comparison_group"))
+    # PATCH_052: prices taken from the fixed regional unit-price table.
+    rt_lines=sum(c for k,c in statuses.items() if k.startswith("regional_price_table"))
     total_lines=sum(statuses.values())
     _cc=(project or {}).get("comparison_copy") if isinstance(project,dict) else None
     _cc=_cc if isinstance(_cc,dict) else {}
+    _rt=location.get("regional_unit_price_table") if isinstance(location.get("regional_unit_price_table"),dict) else None
     if total_lines<=0:
         basis="no_priced_lines"
-    elif cg_lines>0 and cg_lines+ai_lines>=total_lines:
+    elif cg_lines>0 and cg_lines+ai_lines+rt_lines>=total_lines:
         # Shared items from the premise book; method-specific items keep this
-        # Project's own AI price by design.
+        # Project's own AI (or regional-table) price by design.
         basis="comparison_group_premise_book"
     elif cg_lines>0:
         basis="mixed_comparison_group_and_regional_database"
+    elif rt_lines>=total_lines:
+        basis="regional_unit_price_table"
+    elif rt_lines>0 and rt_lines+ai_lines>=total_lines:
+        # Items not yet in the table were priced by this Project's AI session.
+        basis="regional_unit_price_table_with_ai_items"
+    elif rt_lines>0:
+        basis="mixed_regional_unit_price_table_and_regional_database"
     elif ai_lines>=total_lines:
         basis="ai_approximate_cost_session"
     elif ai_lines>0:
@@ -2986,6 +2996,8 @@ def _price_basis_fingerprint(location: dict[str,Any], lines: list[dict[str,Any]]
         "priced_line_count":total_lines,
         "ai_priced_line_count":ai_lines,
         "comparison_group_priced_line_count":cg_lines,
+        "regional_price_table_priced_line_count":rt_lines,
+        "regional_unit_price_table":({k:_rt.get(k) for k in ("table_file","region_key","currency","version","sha256","scale_class","gross_floor_area_m2","construction_method")} if _rt else None),
         "comparison_group_id":_cc.get("group_id"),
         "premise_book_file":_cc.get("premise_book_file"),
         "premise_book_version":_cc.get("premise_book_version"),
@@ -3377,6 +3389,9 @@ def calculate_construction_cost(project: dict[str, Any], database: dict[str, Any
         location["pricing_mode"]="ai_approximate_cost_session_local_currency"
         location["pricing_status"]="estimated"
         location["session_ai_cost_overlay_applied"]=True
+        # PATCH_052: reference of the regional unit-price table, audit only.
+        if isinstance(_session_overlay.get("regional_unit_price_table"),dict):
+            location["regional_unit_price_table"]={k:v for k,v in _session_overlay["regional_unit_price_table"].items() if k!="replaced_ai_records"}
     base_costs=database["base_unit_costs_jpy"]
     quantities,quantity_provenance,excluded_quantities=extract_quantities(project,module1,settings)
     common_2004_enabled,common_escalation,common_market_calibration=_common_2004_price_settings(settings)
@@ -3503,7 +3518,7 @@ def calculate_construction_cost(project: dict[str, Any], database: dict[str, Any
                     ))
                 else ("confirmed_override" if (override_applied or str((((location.get("unit_costs") or {}).get(key) or {}).get("pricing_status") or "")).lower() in {"user_manual_current_project_override","user_manual_detail_rollup"}) else
                       ("estimated_price" if (
-                          str((((location.get("unit_costs") or {}).get(key) or {}).get("pricing_status") or "")).lower() in {"ai_rational_estimate_provisional","ai_multi_disagreement_provisional","ai_single_source_provisional","ai_post_review_rechecked_provisional","ai_primary_basis_provisional","ai_research_provisional","estimated","provisional"}
+                          str((((location.get("unit_costs") or {}).get(key) or {}).get("pricing_status") or "")).lower() in {"ai_rational_estimate_provisional","ai_multi_disagreement_provisional","ai_single_source_provisional","ai_post_review_rechecked_provisional","ai_primary_basis_provisional","ai_research_provisional","regional_price_table_fixed","estimated","provisional"}
                           or str((quantity_provenance.get(key) or {}).get("source_type") or "").lower() in {"module1_blocked_contract_planning_estimate","method_fallback_estimate","planning_estimate"}
                           or str((quantity_provenance.get(key) or {}).get("certainty") or "").lower() in {"estimated","provisional"}
                       ) else "confirmed_price"))

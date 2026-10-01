@@ -2,7 +2,7 @@
   "product": "AZRAS Compare",
   "product_name": "AZRAS Compare",
   "version": "2.2.0",
-  "patch": 9,
+  "patch": 10,
   "baseline_of": "1.1.20 + PATCH_021",
   "baseline_note": "Re-baselined after a cross-module regression audit (dev_checks/, pyflakes) found only minor dead-code issues (duplicate translation dict key, unused import/variables) and confirmed no crash-causing bugs. Patch numbering restarts at 1; PATCH_16-20's history is kept under PATCH/archive_pre_v2.2.0/ for reference.",
   "executable_name": "AZRAS_Compare",
@@ -11,7 +11,7 @@
     "3.0"
   ],
   "schema_role": "read_only_consumer",
-  "feature": "PATCH_009: same-building check and persistent comparison alert. (1) Premise book: building size (gross floor area, footprint, storeys, dwelling units) is compared across the Projects; a floor-area difference over 3 % or any storey/unit difference is a red C-list row that must be decided before the copies can be created. (2) A red alert above every tab stays while loaded comparison copies are not recalculated (Module 5, then 6/7) or are of different-sized buildings; the load-time popup alone could be dismissed. Ordinary comparisons of different buildings get no alert. New dev_checks/patch_009_same_building_and_recalc_alert_self_check.py. Includes PATCH_008 and earlier.",
+  "feature": "PATCH_010: regional unit-price table check (01 Planning PATCH_052). Projects of the same region must use the same table version and the same price per table entry; otherwise the load-time premise check warns with the versions/items and the procedure. Different regions and different scale classes are not conflicts. Table prices are labelled 地域単価表 in the premise-book information. New dev_checks/patch_010_regional_price_table_self_check.py. Includes PATCH_009 and earlier.",
   "product_slot": "03_AZRAS_Compare",
   "language_policy": "English canonical internal/persisted data; UI languages are presentation translations"
 }
