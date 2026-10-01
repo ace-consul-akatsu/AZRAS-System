@@ -76,7 +76,8 @@ def _resolve_project_currency(project, root_dir):
     if declared and declared!="JPY":
         return declared
     try:
-        db=json.loads((Path(root_dir)/"data"/"construction_cost_database_v9_4.json").read_text(encoding="utf-8"))
+        from services.regional_profile_catalog import load_construction_cost_database  # PATCH_053
+        db=load_construction_cost_database(root_dir)
         currencies=set()
         for name,rec in (db.get("locations") or {}).items():
             if str(name).lower().startswith(country.lower()+" /") and rec.get("currency"):

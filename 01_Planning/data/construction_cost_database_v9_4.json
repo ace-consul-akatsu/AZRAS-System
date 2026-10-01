@@ -30,7 +30,10 @@
       "benchmark_usd_per_m2": 5801.2,
       "benchmark_source": "Turner & Townsend GCMI 2026",
       "benchmark_source_year": 2026,
-      "fx_snapshot_date": "2026-08-21"
+      "fx_snapshot_date": "2026-08-21",
+      "latitude": 35.6812,
+      "longitude": 139.7671,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "Japan / Nagoya": {
       "currency": "JPY",
@@ -54,7 +57,10 @@
       },
       "dataset_file": "data/regional_cost/JP_Nagoya_2026.json",
       "dataset_pattern": "data/regional_cost/JP_Nagoya_*.json",
-      "dataset_selection_policy": "latest_data_date"
+      "dataset_selection_policy": "latest_data_date",
+      "latitude": 35.1709,
+      "longitude": 136.8815,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "Japan / Sapporo": {
       "currency": "JPY",
@@ -82,7 +88,10 @@
       "benchmark_usd_per_m2": 5476.9,
       "benchmark_source": "Turner & Townsend GCMI 2026",
       "benchmark_source_year": 2026,
-      "fx_snapshot_date": "2026-08-21"
+      "fx_snapshot_date": "2026-08-21",
+      "latitude": 43.0687,
+      "longitude": 141.3508,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "United States / New York": {
       "currency": "USD",
@@ -111,7 +120,10 @@
       "benchmark_usd_per_m2": 7937.5,
       "benchmark_source": "Turner & Townsend GCMI 2026",
       "benchmark_source_year": 2026,
-      "fx_snapshot_date": "2026-08-21"
+      "fx_snapshot_date": "2026-08-21",
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "United Kingdom / London": {
       "currency": "GBP",
@@ -140,7 +152,10 @@
       "benchmark_usd_per_m2": 6032.4,
       "benchmark_source": "Turner & Townsend GCMI 2026",
       "benchmark_source_year": 2026,
-      "fx_snapshot_date": "2026-08-21"
+      "fx_snapshot_date": "2026-08-21",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "United States / Los Angeles": {
       "currency": "USD",
@@ -168,7 +183,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 34.0522,
+      "longitude": -118.2437,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "France / Paris": {
       "currency": "EUR",
@@ -196,7 +214,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 48.8566,
+      "longitude": 2.3522,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "United Arab Emirates / Dubai": {
       "currency": "AED",
@@ -224,7 +245,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 25.2048,
+      "longitude": 55.2708,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "Singapore / Singapore": {
       "currency": "SGD",
@@ -252,7 +276,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 1.2903,
+      "longitude": 103.8519,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "Thailand / Bangkok": {
       "currency": "THB",
@@ -280,7 +307,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 13.7563,
+      "longitude": 100.5018,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "India / Delhi": {
       "currency": "INR",
@@ -308,7 +338,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "Australia / Sydney": {
       "currency": "AUD",
@@ -336,7 +369,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "Germany / Berlin": {
       "currency": "EUR",
@@ -364,7 +400,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 52.52,
+      "longitude": 13.405,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "Norway / Oslo": {
       "currency": "NOK",
@@ -392,7 +431,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 59.9139,
+      "longitude": 10.7522,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "Canada / Toronto": {
       "currency": "CAD",
@@ -420,7 +462,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 43.6532,
+      "longitude": -79.3832,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "Mexico / Mexico City": {
       "currency": "MXN",
@@ -448,7 +493,10 @@
         "source_type": "market_benchmark_derived_planning_estimate",
         "status": "estimated",
         "note_ja": "都市別初期値。現地の工事項目別見積・Unit Rateを取得した場合は、その確認単価を優先する。"
-      }
+      },
+      "latitude": 19.4326,
+      "longitude": -99.1332,
+      "coordinates_basis": "city_centre_reference_patch053"
     },
     "User Defined": {
       "currency": "JPY",

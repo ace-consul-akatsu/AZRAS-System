@@ -1,0 +1,32 @@
+{
+  "patch": "PATCH_053",
+  "product": "01 AZRAS Planning",
+  "version": "2.2.0",
+  "date_utc": "261001",
+  "requests": [
+    "a profile picked manually (Nagoya) jumps back to Tokyo immediately",
+    "automatic selection: nearest profile city in the same country by latitude/longitude",
+    "use cities beyond the fixed list when data exists; allow adding profiles"
+  ],
+  "root_cause": "Module 5 <FocusIn> -> refresh_project_from_context -> _apply_project_location_initial_profile re-applied the automatic profile on every focus change while Module 5 was unsaved; the romanised Aichi address matched no alias/prefecture, so the automatic profile was the country reference city Tokyo",
+  "reproduced_on_previous_code": "Module5App with the Kasugai Project: open -> Japan / Tokyo; select Japan / Nagoya + FocusIn -> Japan / Tokyo",
+  "new_files": [
+    "services/regional_profile_catalog.py",
+    "data/regional_profiles/README.txt",
+    "dev_checks/patch_053_regional_profile_selection_self_check.py"
+  ],
+  "new_self_checks": ["dev_checks/patch_053_regional_profile_selection_self_check.py"],
+  "negative_tests": [
+    "manual selection survives FocusIn (fails on PATCH_052 code)",
+    "built-in profile cannot be replaced by a user profile",
+    "invalid profile input (blank city, latitude out of range, bad currency, non-positive index) is refused",
+    "'mie' is matched as a whole word only"
+  ],
+  "results": {"dev_checks": "35/35 PASS (GUI checks run under Xvfb)", "pyflakes": "warning set unchanged"},
+  "unchanged": [
+    "regional indices, unit prices and currencies of every built-in profile",
+    "construction cost when a built-in profile is selected",
+    "saved Module 5 profile choice",
+    "regional unit-price table (PATCH_052) and AI cost steps 1-6"
+  ]
+}
