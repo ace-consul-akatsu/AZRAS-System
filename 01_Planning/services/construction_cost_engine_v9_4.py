@@ -1925,6 +1925,20 @@ def load_external_regional_cost_dataset(location: dict[str,Any], database_path_h
             if glob_root.exists():
                 candidates.extend(glob_root.glob(glob_pat))
 
+    # PATCH_055: regional-cost JSONs imported/edited by the user may be kept
+    # in a folder the user chose (AZRAS storage settings).  Search it with the
+    # same file-name pattern; the built-in data/regional_cost stays searched.
+    try:
+        from services.project_export_paths import configured_user_data_directory
+        _user_rc=configured_user_data_directory("regional_cost")
+    except Exception:
+        _user_rc=None
+    if _user_rc is not None and _user_rc.exists():
+        if pattern:
+            candidates.extend(_user_rc.glob(Path(str(pattern)).name))
+        if location.get("dataset_file"):
+            candidates.append(_user_rc / Path(str(location.get("dataset_file"))).name)
+
     # Fixed file remains a fallback / candidate.
     dataset_file=location.get("dataset_file")
     if dataset_file:

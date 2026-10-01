@@ -111,14 +111,19 @@ def configured_json_directory() -> Path | None:
         return None
 
 
-def configured_price_table_directory() -> Path | None:
-    """PATCH_054: folder chosen for the regional unit-price tables (地域単価表).
+# PATCH_055: user data folders that the user can choose (remembered in the
+# AZRAS storage settings shared by all AZRAS products).  None = not chosen;
+# each caller then uses its own default.  A chosen folder is used exactly as
+# chosen (no sub-folder is added).
+USER_DATA_FOLDER_KEYS = {
+    "price_table": "regional_price_table_directory",       # PATCH_054 地域単価表
+    "regional_cost": "regional_cost_user_directory",        # PATCH_055 地域単価JSON（手動取込・編集）
+    "regional_profile": "regional_profile_directory",       # PATCH_055 地域プロファイル（追加分）
+}
 
-    None when the user has not chosen one; the caller then uses the default
-    ``<Project JSON folder>/Regional_Unit_Price_Tables``.  The folder is used
-    exactly as chosen (no sub-folder is added).
-    """
-    raw = load_storage_settings().get("regional_price_table_directory")
+
+def configured_user_data_directory(kind: str) -> Path | None:
+    raw = load_storage_settings().get(USER_DATA_FOLDER_KEYS[kind])
     if not raw:
         return None
     try:
@@ -129,19 +134,29 @@ def configured_price_table_directory() -> Path | None:
         return None
 
 
-def set_configured_price_table_directory(directory: str | Path | None) -> Path | None:
-    """PATCH_054: remember (or clear with None) the regional unit-price table folder."""
+def set_configured_user_data_directory(kind: str, directory: str | Path | None) -> Path | None:
+    key = USER_DATA_FOLDER_KEYS[kind]
     settings = load_storage_settings()
     if directory:
         path = Path(directory).expanduser().resolve()
         path.mkdir(parents=True, exist_ok=True)
-        settings["regional_price_table_directory"] = str(path)
+        settings[key] = str(path)
     else:
-        settings.pop("regional_price_table_directory", None)
+        settings.pop(key, None)
         path = None
     settings["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     save_storage_settings(settings)
     return path
+
+
+def configured_price_table_directory() -> Path | None:
+    """PATCH_054: folder chosen for the regional unit-price tables (地域単価表)."""
+    return configured_user_data_directory("price_table")
+
+
+def set_configured_price_table_directory(directory: str | Path | None) -> Path | None:
+    """PATCH_054: remember (or clear with None) the regional unit-price table folder."""
+    return set_configured_user_data_directory("price_table", directory)
 
 
 def set_configured_json_directory(directory: str | Path | None) -> Path | None:

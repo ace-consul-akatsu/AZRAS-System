@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from pathlib import Path
-from services.project_export_paths import default_export_path, project_output_directory, find_json_directory, configured_price_table_directory, set_configured_price_table_directory
+from services.project_export_paths import default_export_path, project_output_directory, find_json_directory, configured_user_data_directory, set_configured_user_data_directory
 from services import regional_unit_price_table as RUPT
 from services.regional_profile_catalog import (
     load_construction_cost_database, build_user_profile, save_user_profile,
@@ -311,12 +311,31 @@ class Module5App(tk.Toplevel):
             tk.Entry(dlg, textvariable=v, bg=INPUT_BG, width=40 if k == "source_note" else 24).grid(
                 row=i, column=1, sticky="w", padx=8, pady=3)
             vars_[k] = v
-        ttk.Label(dlg, foreground="#555", wraplength=420, justify="left", text=ui(
+        # PATCH_055: the save folder is shown and can be changed here.
+        folder_var = tk.StringVar(value=str(self._user_folder("regional_profile")))
+        ttk.Label(dlg, text=ui("保存先", "Folder")).grid(row=len(rows), column=0, sticky="w", padx=8, pady=3)
+        _ff = ttk.Frame(dlg)
+        _ff.grid(row=len(rows), column=1, sticky="ew", padx=8, pady=3)
+        tk.Entry(_ff, textvariable=folder_var, width=46, state="readonly").pack(side="left", fill="x", expand=True)
+
+        def _change_folder():
+            p = self.change_user_folder("regional_profile", parent=dlg)
+            if p is not None:
+                folder_var.set(str(p))
+
+        def _default_folder():
+            self.reset_user_folder("regional_profile")
+            folder_var.set(str(self._user_folder("regional_profile")))
+        ttk.Button(_ff, text=ui("変更…", "Change…"), command=_change_folder).pack(side="left", padx=(4, 0))
+        ttk.Button(_ff, text=ui("既定に戻す", "Use default"), command=_default_folder).pack(side="left", padx=(4, 0))
+        ttk.Label(dlg, foreground="#555", wraplength=520, justify="left", text=ui(
             "初期値は現在の画面の値です。指数・緯度経度を確認してから保存してください。"
-            "保存先: data/regional_profiles/。保存後は一覧に表示され、近い都市の自動選択にも使われます。",
+            "保存後は一覧に表示され、近い都市の自動選択にも使われます。"
+            "既定の保存先（ソフト内 data\\regional_profiles）は、完全版zipでフォルダーを差し替えると消えます。ソフトの外のフォルダーを選ぶと残ります。",
             "Defaults are the values currently on screen; check the indices and coordinates before saving. "
-            "Saved in data/regional_profiles/. It then appears in the list and is used by the nearest-city selection.")
-        ).grid(row=len(rows), column=0, columnspan=2, sticky="w", padx=8, pady=(6, 4))
+            "It then appears in the list and is used by the nearest-city selection. "
+            "The default folder (data\\regional_profiles in the application) is lost when the application folder is replaced; choose a folder outside it to keep the file.")
+        ).grid(row=len(rows) + 1, column=0, columnspan=2, sticky="w", padx=8, pady=(6, 4))
 
         def _save():
             try:
@@ -331,14 +350,15 @@ class Module5App(tk.Toplevel):
                                         f"'{profile['location_key']}' is a built-in profile and cannot be replaced. Use another city name."),
                                      parent=dlg)
                 return
-            target = user_profile_path(self.root_dir, profile["country"], profile["city"])
+            _folder = Path(folder_var.get())
+            target = user_profile_path(self.root_dir, profile["country"], profile["city"], _folder)
             if target.exists() and not messagebox.askyesno(
                     ui("地域プロファイル追加", "Add Regional Profile"),
                     ui(f"同じ名前のプロファイルがあります。上書きしますか？\n\n{target.name}",
                        f"A profile with this name already exists. Overwrite it?\n\n{target.name}"), parent=dlg):
                 return
             try:
-                path = save_user_profile(self.root_dir, profile, builtin)
+                path = save_user_profile(self.root_dir, profile, builtin, folder=_folder)
             except Exception as exc:
                 messagebox.showerror(ui("地域プロファイル追加", "Add Regional Profile"),
                                      friendly_exception_text(exc, self.i18n.language), parent=dlg)
@@ -353,7 +373,7 @@ class Module5App(tk.Toplevel):
                                 ui(f"保存して選択しました。\n{path}", f"Saved and selected.\n{path}"), parent=self)
 
         btns = ttk.Frame(dlg)
-        btns.grid(row=len(rows) + 1, column=0, columnspan=2, sticky="e", padx=8, pady=8)
+        btns.grid(row=len(rows) + 2, column=0, columnspan=2, sticky="e", padx=8, pady=8)
         ttk.Button(btns, text=ui("保存して選択", "Save and select"), command=_save).pack(side="left", padx=4)
         ttk.Button(btns, text=ui("キャンセル", "Cancel"), command=dlg.destroy).pack(side="left", padx=4)
         dlg.grab_set()
@@ -662,6 +682,8 @@ class Module5App(tk.Toplevel):
         # PATCH_054: where the tables are read from / saved to.
         ttk.Label(ptable,textvariable=self.price_table_folder,foreground="#555",wraplength=900,justify="left").grid(row=4,column=0,sticky="w",padx=8,pady=3)
         ttk.Button(ptable,text=ui("地域単価表の保存先を変更","Change Price Table Folder"),command=self.change_price_table_folder).grid(row=4,column=1,sticky="ew",padx=8,pady=3)
+        # PATCH_055: every user-data folder in one place.
+        ttk.Button(ptable,text=ui("ユーザーデータの保存先（一覧）","User Data Folders (all)"),command=self.show_user_data_folders).grid(row=5,column=1,sticky="ew",padx=8,pady=3)
         ptable.columnconfigure(0,weight=1)
         self._refresh_price_table_status()
         self._refresh_price_table_folder()
@@ -1223,9 +1245,19 @@ class Module5App(tk.Toplevel):
             messagebox.showerror("Error",friendly_exception_text(exc,self.i18n.language))
 
     def _regional_cost_directory(self) -> Path:
-        p=self.root_dir / "data" / "regional_cost"
+        # PATCH_055: where imported/edited regional-cost JSON is written
+        # (chosen folder, else the built-in data/regional_cost).
+        p=self._user_folder("regional_cost")
         p.mkdir(parents=True,exist_ok=True)
         return p
+
+    def _regional_cost_read_directories(self):
+        """PATCH_055: chosen folder first, then the built-in data/regional_cost."""
+        out=[]
+        for p in (configured_user_data_directory("regional_cost"),self.root_dir/"data"/"regional_cost"):
+            if p is not None and Path(p).is_dir() and all(Path(p).resolve()!=Path(q).resolve() for q in out):
+                out.append(Path(p))
+        return out
 
     def import_regional_cost_dataset(self):
         """PATCH 062: import a versioned regional cost JSON without changing program code."""
@@ -1276,10 +1308,14 @@ class Module5App(tk.Toplevel):
             )
             return
 
+        # PATCH_055: confirm (or change) the save folder first.
+        folder=self._ask_save_folder("regional_cost",self._ui("地域単価JSONの保存先","Regional-cost JSON folder"))
+        if folder is None:
+            return
         # Never overwrite another version silently. Filename includes region/date.
         safe_region=re.sub(r"[^A-Za-z0-9_-]+","_",region).strip("_")
         safe_date=re.sub(r"[^0-9]+","_",str(raw.get("data_date") or "")).strip("_")
-        dest=self._regional_cost_directory() / f"{safe_region}_{safe_date}.json"
+        dest=folder / f"{safe_region}_{safe_date}.json"
         if dest.exists():
             ans=messagebox.askyesno(
                 self._ui("地域単価JSON","Regional-Cost JSON"),
@@ -1304,7 +1340,7 @@ class Module5App(tk.Toplevel):
         }
         stem=stem_map.get(region)
         if stem:
-            canonical=self._regional_cost_directory() / f"{stem}_{str(raw.get('data_date') or '').replace('-','_')}.json"
+            canonical=folder / f"{stem}_{str(raw.get('data_date') or '').replace('-','_')}.json"
             if canonical!=dest:
                 canonical.write_text(json.dumps(raw,ensure_ascii=False,indent=2),encoding="utf-8")
                 try:
@@ -1390,9 +1426,8 @@ class Module5App(tk.Toplevel):
         stem=stem_map.get(region)
         if not stem:
             return None
-        folder=self._regional_cost_directory()
         candidates=[]
-        for p in folder.glob(f"{stem}_*.json"):
+        for p in [q for folder in self._regional_cost_read_directories() for q in folder.glob(f"{stem}_*.json")]:
             try:
                 raw=json.loads(p.read_text(encoding="utf-8"))
             except Exception:
@@ -1704,7 +1739,11 @@ class Module5App(tk.Toplevel):
                 messagebox.showerror(self._ui("地域単価編集","Regional Unit-Cost Editor"),self._ui("この地域の保存ファイル名規則が未設定です。","No save-file naming rule is configured for this region."),parent=dialog)
                 return
 
-            target=self._regional_cost_directory() / f"{stem}_{d.replace('-','_')}.json"
+            # PATCH_055: confirm (or change) the save folder first.
+            _folder=self._ask_save_folder("regional_cost",self._ui("地域単価JSONの保存先","Regional-cost JSON folder"))
+            if _folder is None:
+                return
+            target=_folder / f"{stem}_{d.replace('-','_')}.json"
             if target.exists() and target != current_path:
                 if not messagebox.askyesno(
                     "地域単価編集",
@@ -3037,78 +3076,159 @@ The returned numeric price is the current AZRAS planning price basis only when s
     # (<JSON folder>/Regional_Unit_Price_Tables).  See
     # services/regional_unit_price_table.py for the rules.
     # ------------------------------------------------------------------
-    def _price_table_dir(self):
-        # PATCH_054: a folder chosen by the user (remembered in the AZRAS
-        # storage settings) wins; otherwise <Project JSON folder>/Regional_Unit_Price_Tables.
-        chosen=configured_price_table_directory()
+    # PATCH_055: user data folders the user can choose (地域単価表 / 地域単価JSON /
+    # 地域プロファイル).  Same mechanism for all three; the choice is kept in the
+    # AZRAS storage settings, a chosen folder is used exactly as chosen, and
+    # the default folders stay readable so earlier files are still found.
+    def _user_folder_info(self, kind):
+        ui=self._ui
+        return {
+            "price_table":{
+                "name":ui("地域単価表","Regional price table"),
+                "message":ui("地域単価表をこのフォルダーに保存します。同じ地域の表があればこのフォルダーから読み込み、追加・新しい版を保存します。",
+                             "The regional price table is saved in this folder. An existing table of this region is read from, and updated in, this folder."),
+                "note":ui("選んだフォルダーは次回以降の「適用」「登録」「内容を確認」でも使います（3工法の案件で同じフォルダーを使ってください）。",
+                          "The chosen folder is also used later by Apply, Register and View (use the same folder for all construction methods)."),
+                "ok":ui("この保存先で登録","Register in this folder"),
+                "default":lambda: RUPT.table_directory(find_json_directory(self.root_dir)),
+                "default_label":ui("<Project JSON保存フォルダー>\\Regional_Unit_Price_Tables","<Project JSON folder>\\Regional_Unit_Price_Tables"),
+            },
+            "regional_cost":{
+                "name":ui("地域単価JSON（手動取込・編集）","Regional-cost JSON (manual import / edit)"),
+                "message":ui("取り込んだ／編集した地域単価JSONをこのフォルダーに保存します。Module 5の計算は、このフォルダーとソフト内蔵の data\\regional_cost の両方から同じ地域の最新 data_date を採用します。",
+                             "Imported / edited regional-cost JSON is saved in this folder. Module 5 uses the latest data_date of the region from this folder and from the built-in data\\regional_cost."),
+                "note":ui("ソフト本体のフォルダー内（既定）に保存すると、完全版zipでフォルダーを差し替えたときに消えます。ソフトの外のフォルダーを選ぶと残ります。",
+                          "Files saved inside the application folder (default) are lost when the folder is replaced with a full-version zip. Choose a folder outside the application to keep them."),
+                "ok":ui("この保存先に保存","Save in this folder"),
+                "default":lambda: self.root_dir/"data"/"regional_cost",
+                "default_label":ui("ソフト内 data\\regional_cost","data\\regional_cost in the application"),
+            },
+            "regional_profile":{
+                "name":ui("地域プロファイル（追加分）","Regional profiles (added)"),
+                "message":ui("追加した地域プロファイルをこのフォルダーに保存します。代表地域プロファイルの一覧には、このフォルダーとソフト内 data\\regional_profiles の両方のプロファイルが表示されます。",
+                             "Added regional profiles are saved in this folder. The profile list shows profiles from this folder and from data\\regional_profiles in the application."),
+                "note":ui("ソフト本体のフォルダー内（既定）に保存すると、完全版zipでフォルダーを差し替えたときに消えます。ソフトの外のフォルダーを選ぶと残ります。",
+                          "Files saved inside the application folder (default) are lost when the folder is replaced with a full-version zip. Choose a folder outside the application to keep them."),
+                "ok":ui("この保存先に保存","Save in this folder"),
+                "default":lambda: self.root_dir/"data"/"regional_profiles",
+                "default_label":ui("ソフト内 data\\regional_profiles","data\\regional_profiles in the application"),
+            },
+        }[kind]
+
+    def _user_folder(self, kind):
+        chosen=configured_user_data_directory(kind)
         if chosen is not None:
             return chosen
-        return RUPT.table_directory(find_json_directory(self.root_dir))
+        return Path(self._user_folder_info(kind)["default"]())
 
-    def _refresh_price_table_folder(self):
-        try:
-            folder=self._price_table_dir()
-            mark=self._ui("（指定）","(chosen)") if configured_price_table_directory() is not None else self._ui("（既定）","(default)")
-            self.price_table_folder.set(self._ui("保存先","Folder")+f"{mark}: {folder}")
-        except Exception as exc:
-            self.price_table_folder.set(self._ui("保存先: 不明","Folder: unknown")+f" ({exc})")
+    def _user_folder_text(self, kind):
+        mark=self._ui("（指定）","(chosen)") if configured_user_data_directory(kind) is not None else self._ui("（既定）","(default)")
+        return f"{mark}: {self._user_folder(kind)}"
 
-    def change_price_table_folder(self, parent=None):
-        """PATCH_054: choose the regional unit-price table folder. Returns the Path or None."""
+    def change_user_folder(self, kind, parent=None):
+        """Choose the folder for one kind of user data. Returns the Path or None."""
         parent=parent or self
+        info=self._user_folder_info(kind)
         try:
-            current=self._price_table_dir()
+            current=self._user_folder(kind)
         except Exception:
             current=None
         chosen=filedialog.askdirectory(parent=parent,initialdir=str(current) if current else None,mustexist=False,
-                                       title=self._ui("地域単価表の保存先フォルダーを選択","Choose the regional price table folder"))
+                                       title=self._ui(f"{info['name']}の保存先フォルダーを選択",f"Choose the folder: {info['name']}"))
         if not chosen:
             return None
         try:
-            path=set_configured_price_table_directory(chosen)
+            path=set_configured_user_data_directory(kind,chosen)
         except Exception as exc:
-            messagebox.showerror(self._ui("地域単価表の保存先","Regional price table folder"),
-                                 friendly_exception_text(exc,self.i18n.language),parent=parent)
+            messagebox.showerror(info["name"],friendly_exception_text(exc,self.i18n.language),parent=parent)
             return None
-        self._refresh_price_table_folder()
+        self._after_user_folder_change(kind)
         return path
 
-    def _ask_price_table_folder(self, title):
-        """PATCH_054: confirm (or change) the folder before a table is saved.
+    def reset_user_folder(self, kind):
+        set_configured_user_data_directory(kind,None)
+        self._after_user_folder_change(kind)
 
-        Returns the folder Path, or None when cancelled.
-        """
+    def _after_user_folder_change(self, kind):
+        if kind=="price_table":
+            self._refresh_price_table_folder()
+        elif kind in {"regional_profile","regional_cost"}:
+            # Profiles may come from either folder; refresh the list.
+            try:
+                self._reload_location_profiles()
+            except Exception:
+                pass
+
+    def _ask_save_folder(self, kind, title):
+        """Confirm (or change) the folder before saving. Returns the Path, or None when cancelled."""
+        info=self._user_folder_info(kind)
         result={"path":None}
         dlg=tk.Toplevel(self); dlg.title(title); dlg.transient(self)
-        folder_var=tk.StringVar(value=str(self._price_table_dir()))
-        ttk.Label(dlg,text=self._ui("地域単価表をこのフォルダーに保存します。同じ地域の表があればこのフォルダーから読み込み、追加・新しい版を保存します。",
-                                    "The regional price table is saved in this folder. An existing table of this region is read from, and updated in, this folder."),
-                  wraplength=620,justify="left").grid(row=0,column=0,columnspan=3,sticky="w",padx=10,pady=(10,6))
+        folder_var=tk.StringVar(value=str(self._user_folder(kind)))
+        ttk.Label(dlg,text=info["message"],wraplength=620,justify="left").grid(row=0,column=0,columnspan=3,sticky="w",padx=10,pady=(10,6))
         ttk.Label(dlg,text=self._ui("保存先","Folder")).grid(row=1,column=0,sticky="w",padx=10)
         ent=tk.Entry(dlg,textvariable=folder_var,width=80,state="readonly"); ent.grid(row=1,column=1,sticky="ew",padx=4,pady=4)
         def _browse():
-            p=self.change_price_table_folder(parent=dlg)
+            p=self.change_user_folder(kind,parent=dlg)
             if p is not None:
                 folder_var.set(str(p))
         ttk.Button(dlg,text=self._ui("変更…","Change…"),command=_browse).grid(row=1,column=2,padx=10)
         def _default():
-            set_configured_price_table_directory(None)
-            self._refresh_price_table_folder()
-            folder_var.set(str(self._price_table_dir()))
-        ttk.Label(dlg,text=self._ui("選んだフォルダーは次回以降の「適用」「登録」「内容を確認」でも使います（3工法の案件で同じフォルダーを使ってください）。",
-                                    "The chosen folder is also used later by Apply, Register and View (use the same folder for all construction methods)."),
-                  foreground="#8B4513",wraplength=620,justify="left").grid(row=2,column=0,columnspan=3,sticky="w",padx=10,pady=(2,6))
+            self.reset_user_folder(kind)
+            folder_var.set(str(self._user_folder(kind)))
+        ttk.Label(dlg,text=info["note"],foreground="#8B4513",wraplength=620,justify="left").grid(row=2,column=0,columnspan=3,sticky="w",padx=10,pady=(2,6))
         btns=ttk.Frame(dlg); btns.grid(row=3,column=0,columnspan=3,sticky="e",padx=10,pady=(4,10))
         def _ok():
             result["path"]=Path(folder_var.get()); dlg.destroy()
         ttk.Button(btns,text=self._ui("既定に戻す","Use default"),command=_default).pack(side="left",padx=4)
-        ttk.Button(btns,text=self._ui("この保存先で登録","Register in this folder"),command=_ok).pack(side="left",padx=4)
+        ttk.Button(btns,text=info["ok"],command=_ok).pack(side="left",padx=4)
         ttk.Button(btns,text=self._ui("キャンセル","Cancel"),command=dlg.destroy).pack(side="left",padx=4)
         dlg.columnconfigure(1,weight=1)
         dlg.grab_set(); dlg.wait_window()
         if result["path"] is not None:
             result["path"].mkdir(parents=True,exist_ok=True)
         return result["path"]
+
+    def show_user_data_folders(self):
+        """PATCH_055: one window listing every folder the user can choose."""
+        win=tk.Toplevel(self); win.title(self._ui("ユーザーデータの保存先","User data folders")); win.transient(self)
+        ttk.Label(win,text=self._ui(
+            "Module 5で作る・取り込むデータの保存先です。案件ごとのデータ（AI依頼書・回答・CSV等）は、開いているProject JSONと同じフォルダーに保存されるため、ここには出てきません。",
+            "Folders for data Module 5 creates or imports. Project data (AI requests/responses, CSV, ...) is always saved beside the open Project JSON and is not listed here."),
+            wraplength=760,justify="left").grid(row=0,column=0,columnspan=3,sticky="w",padx=10,pady=(10,8))
+        rows={}
+        for i,kind in enumerate(("price_table","regional_cost","regional_profile"),start=1):
+            info=self._user_folder_info(kind)
+            ttk.Label(win,text=info["name"]).grid(row=i*2-1,column=0,sticky="w",padx=10,pady=(6,0))
+            var=tk.StringVar(value=self._user_folder_text(kind)); rows[kind]=var
+            ttk.Label(win,textvariable=var,foreground="#555",wraplength=640,justify="left").grid(row=i*2,column=0,sticky="w",padx=24)
+            def _chg(k=kind):
+                self.change_user_folder(k,parent=win); rows[k].set(self._user_folder_text(k))
+            def _dflt(k=kind):
+                self.reset_user_folder(k); rows[k].set(self._user_folder_text(k))
+            ttk.Button(win,text=self._ui("変更…","Change…"),command=_chg).grid(row=i*2,column=1,padx=4)
+            ttk.Button(win,text=self._ui("既定に戻す","Use default"),command=_dflt).grid(row=i*2,column=2,padx=(4,10))
+        ttk.Button(win,text=self._ui("閉じる","Close"),command=win.destroy).grid(row=8,column=0,columnspan=3,sticky="e",padx=10,pady=10)
+
+    # --- PATCH_054 names kept (dev_checks and other callers use them) ---
+    def _price_table_dir(self):
+        # PATCH_054: a folder chosen by the user (remembered in the AZRAS
+        # storage settings) wins; otherwise <Project JSON folder>/Regional_Unit_Price_Tables.
+        return self._user_folder("price_table")
+
+    def _refresh_price_table_folder(self):
+        try:
+            self.price_table_folder.set(self._ui("保存先","Folder")+self._user_folder_text("price_table"))
+        except Exception as exc:
+            self.price_table_folder.set(self._ui("保存先: 不明","Folder: unknown")+f" ({exc})")
+
+    def change_price_table_folder(self, parent=None):
+        """PATCH_054: choose the regional unit-price table folder. Returns the Path or None."""
+        return self.change_user_folder("price_table",parent=parent)
+
+    def _ask_price_table_folder(self, title):
+        """PATCH_054: confirm (or change) the folder before a table is saved."""
+        return self._ask_save_folder("price_table",title)
 
     def _price_table_overlay_ref(self):
         ov=self._current_ai_cost_overlay() or {}

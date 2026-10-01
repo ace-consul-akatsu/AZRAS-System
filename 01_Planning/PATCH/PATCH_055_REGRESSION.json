@@ -1,0 +1,17 @@
+{
+  "patch": "PATCH_055",
+  "product": "01 AZRAS Planning",
+  "version": "2.2.0",
+  "date_utc": "261001",
+  "requests": ["choose the folder for regional-cost JSON and added regional profiles like the price table", "audit other fixed save locations incl. 02 Evaluation / 03 Compare"],
+  "root_cause": "both were written only to data/regional_cost and data/regional_profiles inside the application folder",
+  "audit": {
+    "01_Planning": "only the price table (PATCH_054) was fixed to the Module 0 JSON folder; only these two were fixed to the application folder; everything else is beside the open Project JSON or chosen in a save dialog",
+    "02_Evaluation_patch14": "no fixed save location; no change",
+    "03_Compare_patch10": "no fixed save location; no change"
+  },
+  "new_files": ["dev_checks/patch_055_user_data_folders_self_check.py"],
+  "negative_tests": ["cancel in the folder dialog imports nothing", "built-in data/regional_cost still searched", "price-table and Project JSON settings untouched"],
+  "results": {"dev_checks": "37/37 PASS (GUI checks run under Xvfb)", "pyflakes": "warning set unchanged"},
+  "unchanged": ["default folders when none is chosen", "file names and content", "regional price table (PATCH_052/054)", "PATCH_053"]
+}

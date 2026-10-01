@@ -154,7 +154,7 @@ def _profile_to_location(raw: dict[str, Any], source: str, path: Path) -> dict[s
     if c:
         loc["latitude"], loc["longitude"] = c
     if source == "regional_cost_dataset":
-        loc["dataset_file"] = f"data/{REGIONAL_COST_DIR}/{path.name}"
+        loc["dataset_file"] = str(path.resolve())
     for k in ("source_note", "note_ja", "created_utc"):
         if raw.get(k):
             loc[k] = raw.get(k)
@@ -162,7 +162,49 @@ def _profile_to_location(raw: dict[str, Any], source: str, path: Path) -> dict[s
 
 
 def _user_profile_dir(root_dir: Path) -> Path:
+    """Default folder for user profiles (inside the application)."""
     return Path(root_dir) / "data" / USER_PROFILE_DIR
+
+
+def _configured(kind: str) -> Path | None:
+    try:
+        from services.project_export_paths import configured_user_data_directory
+        return configured_user_data_directory(kind)
+    except Exception:
+        return None
+
+
+def user_profile_directory(root_dir: str | Path) -> Path:
+    """PATCH_055: folder new user profiles are saved in (chosen folder, else default)."""
+    return _configured("regional_profile") or _user_profile_dir(Path(root_dir))
+
+
+def profile_read_folders(root_dir: str | Path) -> list[tuple[str, Path, str]]:
+    """PATCH_055: every folder profiles are read from.
+
+    The default folders are always read as well, so files saved before a
+    folder was chosen are still found.
+    """
+    root = Path(root_dir)
+    out: list[tuple[str, Path, str]] = []
+    seen: set[str] = set()
+    for source, folder, key_field in (
+        ("user_profile", _configured("regional_profile"), "location_key"),
+        ("user_profile", _user_profile_dir(root), "location_key"),
+        ("regional_cost_dataset", _configured("regional_cost"), "region_key"),
+        ("regional_cost_dataset", root / "data" / REGIONAL_COST_DIR, "region_key"),
+    ):
+        if folder is None:
+            continue
+        try:
+            k = str(Path(folder).resolve()).casefold()
+        except Exception:
+            k = str(folder).casefold()
+        if f"{source}|{k}" in seen:
+            continue
+        seen.add(f"{source}|{k}")
+        out.append((source, Path(folder), key_field))
+    return out
 
 
 def load_extra_profiles(root_dir: str | Path, builtin_keys: set[str]) -> tuple[dict[str, Any], list[dict[str, str]]]:
@@ -170,11 +212,7 @@ def load_extra_profiles(root_dir: str | Path, builtin_keys: set[str]) -> tuple[d
     root = Path(root_dir)
     found: dict[str, Any] = {}
     errors: list[dict[str, str]] = []
-    sources = (
-        ("user_profile", _user_profile_dir(root), "location_key"),
-        ("regional_cost_dataset", root / "data" / REGIONAL_COST_DIR, "region_key"),
-    )
-    for source, folder, key_field in sources:
+    for source, folder, key_field in profile_read_folders(root):
         if not folder.is_dir():
             continue
         for p in sorted(folder.glob("*.json")):
@@ -221,8 +259,9 @@ def _safe_name(text: str) -> str:
     return s or "profile"
 
 
-def user_profile_path(root_dir: str | Path, country: str, city: str) -> Path:
-    return _user_profile_dir(Path(root_dir)) / f"{_safe_name(country)}_{_safe_name(city)}.json"
+def user_profile_path(root_dir: str | Path, country: str, city: str, folder: str | Path | None = None) -> Path:
+    base = Path(folder) if folder is not None else user_profile_directory(root_dir)
+    return base / f"{_safe_name(country)}_{_safe_name(city)}.json"
 
 
 def build_user_profile(country: str, city: str, latitude: Any, longitude: Any, currency: str,
@@ -267,12 +306,13 @@ def build_user_profile(country: str, city: str, latitude: Any, longitude: Any, c
     }
 
 
-def save_user_profile(root_dir: str | Path, profile: dict[str, Any], builtin_keys: set[str]) -> Path:
+def save_user_profile(root_dir: str | Path, profile: dict[str, Any], builtin_keys: set[str],
+                      folder: str | Path | None = None) -> Path:
     """Write a user profile.  A built-in profile name is refused (ValueError)."""
     key = str(profile.get("location_key") or "")
     if key in builtin_keys:
         raise ValueError(f"'{key}' is a built-in profile and cannot be replaced")
-    path = user_profile_path(root_dir, profile["country"], profile["city"])
+    path = user_profile_path(root_dir, profile["country"], profile["city"], folder)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(profile, ensure_ascii=False, indent=2), encoding="utf-8")
     return path

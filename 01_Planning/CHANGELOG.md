@@ -1,3 +1,11 @@
+## v2.2.0 PATCH_055 — 2026-10-01 UTC
+- Module 5: the save folder can be chosen for 地域単価JSON（手動取込・編集） and 地域プロファイル（追加分）, the same way as the PATCH_054 地域単価表. Before, both were written only inside the application folder (`data\regional_cost`, `data\regional_profiles`) and were lost when the folder was replaced with a full-version zip.
+- Saving confirms the folder first (「この保存先に保存」 / 「変更…」 / 「既定に戻す」 / 「キャンセル」; the profile dialog shows it as a row). The choice is remembered in `storage_settings.json` (`regional_cost_user_directory`, `regional_profile_directory`).
+- The chosen folder AND the default folder are both read, so earlier files and the shipped datasets are still found: Module 5 latest `data_date`, the engine dataset loader, the profile list and the automatic recalculation.
+- New 「ユーザーデータの保存先（一覧）」 window (three folders, change / default).
+- Audit: 01 Planning, 02 Evaluation and 03 Compare have no other save location fixed to the Module 0 Project JSON folder or to the application folder (everything else is saved beside the open Project JSON or through a save dialog).
+- Added dev_checks/patch_055_user_data_folders_self_check.py.
+
 ## v2.2.0 PATCH_054 — 2026-10-01 UTC
 - Module 5 地域単価表: the save folder can be chosen. Before, the table was always saved in `<Project JSON folder set in Module 0>/Regional_Unit_Price_Tables` (AppData setting), which could be a different place from the folder the Project was opened from (e.g. Dropbox\…\260923_JSON instead of C:\AZRAS_v2.2.0\JSON).
 - 「AI採用単価を地域単価表へ登録」 now first shows the folder: 「この保存先で登録」 / 「変更…」 / 「既定に戻す」 / 「キャンセル」. The choice is remembered (`storage_settings.json` → `regional_price_table_directory`, used exactly as chosen) and used by 適用 / 登録 / 内容を確認.

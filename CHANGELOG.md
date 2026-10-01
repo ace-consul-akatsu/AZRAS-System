@@ -2,6 +2,32 @@
 
 This file records changes to the AZRAS System suite as a whole. Detailed patch notes and regression records of each product are in its `PATCH/` folder.
 
+## v2.2.0 patch update — 2026-10-01 (Planning PATCH_053–055)
+
+Planning only; found while pricing the AZRAS terrace-house sample for a site in Kasugai, Aichi. No product version change; the patch numbers are:
+
+| Product | Version | Patch |
+|---|---|---|
+| AZRAS Installer | 5.0.4 | PATCH_004 |
+| AZRAS Planning | 2.2.0 | PATCH_055 |
+| AZRAS Evaluation | 2.2.0 | PATCH_014 |
+| AZRAS Compare | 2.2.0 | PATCH_010 |
+
+### Fixed
+
+- **Planning — representative regional profile kept (PATCH_053).** In Module 5 a profile picked from the list (e.g. Japan / Nagoya) jumped back to the automatic one (Japan / Tokyo) at once: the window's focus handler re-applied the automatic profile, and its indices, on every focus change while Module 5 was unsaved. A list choice is now a manual choice, kept until *Back to automatic selection* and saved with Module 5; typed indices are no longer reset by focus changes.
+
+### Added
+
+- **Planning — nearest regional profile (PATCH_053).** The automatic profile is the nearest profile city in the Project's country, measured from the Project coordinates (Kasugai → Nagoya, about 12 km), instead of the country's reference city. Within 100 km it counts as the Project's region; farther away, or outside the country when the country has no profile, the distance is shown with a warning. Built-in profiles got city coordinates; indices and prices are unchanged.
+- **Planning — more regional profiles (PATCH_053).** The profile list is built from the profiles on disk: user profiles added with the new *Add regional profile* dialog, and regional-cost datasets for a new region. Built-in profiles cannot be replaced.
+- **Planning — choosable save folders (PATCH_054, PATCH_055).** The regional unit-price table (PATCH_052), regional-cost JSON imported or edited by hand, and added regional profiles were saved in fixed places — the table under the Project JSON folder set in Module 0, the other two inside the application folder, where a full-version replacement deleted them. Saving now shows the folder (*save here / change / use default / cancel*); the choice is remembered in the AZRAS storage settings, and the default folders are still read so earlier files and the shipped datasets keep working. A *User data folders* window lists all three.
+- Self-checks for each change above; `tests/run_all.py` passes 85/85.
+
+### Checked
+
+- Save locations across all products: apart from the three above, every file is saved beside the open Project JSON or in a location chosen in a save dialog. Evaluation and Compare needed no change.
+
 ## v2.2.0 patch update — 2026-10-01
 
 No product version change; the patch numbers are:
