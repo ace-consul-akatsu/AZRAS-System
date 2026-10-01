@@ -178,7 +178,10 @@ def _auto_recalculate(module_key: str, project: dict[str, Any], root_dir: Path) 
 
         elif module_key == "module5":
             from services.construction_cost_engine_v9_4 import calculate_construction_cost
-            db = _load_json(root_dir, "construction_cost_database_v9_4.json")
+            # PATCH_053: include user-added / dataset regional profiles, so a
+            # Project saved with such a profile can still be recalculated.
+            from services.regional_profile_catalog import load_construction_cost_database
+            db = load_construction_cost_database(root_dir)
             # PATCH_038: AI Cost Provider prices are Project inputs, not shared
             # regional DB data. Reattach the saved overlay before automatic
             # recalculation so upstream changes do not silently erase the prices.

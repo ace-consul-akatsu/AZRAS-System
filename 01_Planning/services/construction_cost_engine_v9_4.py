@@ -2083,6 +2083,9 @@ def unicodedata_nfkc(value: str) -> str:
     return unicodedata.normalize("NFKC",str(value or ""))
 
 
+_NEAREST_REGIONAL_MATCH_KM=100.0  # PATCH_053: same value as services.regional_profile_catalog
+
+
 def resolve_location_profile_from_project(project: dict[str,Any], database: dict[str,Any]) -> dict[str,Any]:
     """PATCH 459: resolve all registered regional representative cities."""
     common=project.get("common",{}) or {}
@@ -2149,6 +2152,28 @@ def resolve_location_profile_from_project(project: dict[str,Any], database: dict
     # PATCH_039: remember whether the key came from a real city match.
     _city_matched_key=key
 
+    # PATCH_053: nearest profile by great-circle distance.  When the city name
+    # itself is not a registered profile, the Project coordinates (Module 0:
+    # common.latitude/longitude) select the nearest profile in the same
+    # country - "2-18-7 Matsukawadomachi, Kasugai-shi, Aichi-ken" -> Nagoya
+    # (about 15 km) instead of the country reference city Tokyo.  If the
+    # country has no profile at all, the nearest profile anywhere is chosen
+    # and reported as outside the country.  Without coordinates the older
+    # alias / prefecture / country-reference fallbacks below still apply.
+    _nearest_km=None
+    _nearest_scope=None
+    if not key:
+        from services.regional_profile_catalog import nearest_location, project_coordinates
+        _pc=project_coordinates(project)
+        if _pc:
+            _k,_d=nearest_location(locations,_pc[0],_pc[1],nc or None) if nc else (None,None)
+            if _k:
+                key,_nearest_km,_nearest_scope=_k,_d,"in_country"
+            else:
+                _k,_d=nearest_location(locations,_pc[0],_pc[1],None)
+                if _k:
+                    key,_nearest_km,_nearest_scope=_k,_d,"outside_country"
+
     # Address fallback for projects where city field is not standardized.
     if not key and nc=="japan":
         for token,candidate in (("tokyo","Japan / Tokyo"),("sapporo","Japan / Sapporo"),("nagoya","Japan / Nagoya")):
@@ -2172,6 +2197,17 @@ def resolve_location_profile_from_project(project: dict[str,Any], database: dict
             if _pref in _raw_place and _cand in locations:
                 key=_cand; _prefecture_hit=_pref
                 break
+        # PATCH_053: romanised addresses ("Kasugai-shi, Aichi-ken").  Whole
+        # words only, so a short name such as "mie" never matches inside
+        # another word.
+        if not key:
+            _words=set(re.findall(r"[a-z]+",_raw_place.casefold()))
+            for _pref,_cand in (("aichi","Japan / Nagoya"),("gifu","Japan / Nagoya"),("mie","Japan / Nagoya"),
+                                ("hokkaido","Japan / Sapporo"),("tokyo","Japan / Tokyo"),("kanagawa","Japan / Tokyo"),
+                                ("saitama","Japan / Tokyo"),("chiba","Japan / Tokyo")):
+                if _pref in _words and _cand in locations:
+                    key=_cand; _prefecture_hit=_pref
+                    break
 
     # PATCH 429: Project location is the initial regional-cost selector.  A project
     # city does not have to be one of the representative cities embedded in the
@@ -2206,6 +2242,10 @@ def resolve_location_profile_from_project(project: dict[str,Any], database: dict
     # be able to say so instead of presenting it as the project region.
     if key and key==_city_matched_key:
         match_level="matched_city"
+    elif key and _nearest_scope=="in_country":
+        match_level="nearest_in_country"
+    elif key and _nearest_scope=="outside_country":
+        match_level="nearest_outside_country"
     elif key and _prefecture_hit:
         match_level="matched_prefecture"
     elif key:
@@ -2218,7 +2258,10 @@ def resolve_location_profile_from_project(project: dict[str,Any], database: dict
         "match_level":match_level,
         "profile_is_project_city":match_level=="matched_city",
         "profile_is_country_fallback":match_level=="country_reference_fallback",
-        "profile_is_regional_match":match_level in {"matched_city","matched_prefecture"},
+        "profile_is_regional_match":(match_level in {"matched_city","matched_prefecture"}
+                                     or (match_level=="nearest_in_country" and _nearest_km is not None
+                                         and _nearest_km<=_NEAREST_REGIONAL_MATCH_KM)),
+        "nearest_distance_km":_nearest_km,
         "matched_alias":_alias_hit,
         "matched_prefecture":_prefecture_hit,
         "country":country,
