@@ -1,0 +1,13 @@
+{
+  "patch": "PATCH_054",
+  "product": "01 AZRAS Planning",
+  "version": "2.2.0",
+  "date_utc": "261001",
+  "request": "regional unit-price table was saved in an unexpected folder; allow choosing the folder at registration",
+  "root_cause": "table folder = <configured Project JSON folder (AppData storage setting)>/Regional_Unit_Price_Tables, independent of where the open Project JSON is",
+  "new_files": ["dev_checks/patch_054_price_table_folder_self_check.py"],
+  "changed_tests": ["dev_checks/patch_052_regional_unit_price_table_self_check.py: answers the new folder dialog (one line)"],
+  "negative_tests": ["cancel in the folder dialog saves nothing", "Project JSON folder setting untouched", "'use default' clears the choice"],
+  "results": {"dev_checks": "36/36 PASS (GUI checks run under Xvfb)", "pyflakes": "warning set unchanged"},
+  "unchanged": ["Project JSON folder setting", "default table folder when none is chosen", "table file name / content / versioning (PATCH_052)", "PATCH_053"]
+}

@@ -1,3 +1,15 @@
+## v2.2.0 PATCH_054 — 2026-10-01 UTC
+- Module 5 地域単価表: the save folder can be chosen. Before, the table was always saved in `<Project JSON folder set in Module 0>/Regional_Unit_Price_Tables` (AppData setting), which could be a different place from the folder the Project was opened from (e.g. Dropbox\…\260923_JSON instead of C:\AZRAS_v2.2.0\JSON).
+- 「AI採用単価を地域単価表へ登録」 now first shows the folder: 「この保存先で登録」 / 「変更…」 / 「既定に戻す」 / 「キャンセル」. The choice is remembered (`storage_settings.json` → `regional_price_table_directory`, used exactly as chosen) and used by 適用 / 登録 / 内容を確認.
+- The panel shows the current folder (指定 / 既定) with a new 「地域単価表の保存先を変更」 button; 適用 explains how to point to another folder when no table is found. The Project JSON folder setting is not changed.
+- Added dev_checks/patch_054_price_table_folder_self_check.py; the PATCH_052 check answers the new folder dialog.
+
+## v2.2.0 PATCH_053 — 2026-10-01 UTC
+- Module 5 代表地域プロファイル: a profile picked from the list (e.g. Japan / Nagoya) jumped back to the automatic one (Japan / Tokyo). Cause: the window's `<FocusIn>` handler re-applied the automatic profile — and its indices — on every focus change while Module 5 was unsaved. A list choice is now a manual choice, kept until the new 「自動選択に戻す」 button, and saved as `location_selection_mode` in the Module 5 snapshot; in automatic mode the profile is re-applied only when the Project or its location changes (typed indices are no longer reset by focus changes).
+- Automatic selection: nearest profile in the Project's country by `common.latitude/longitude` (Kasugai → Nagoya, about 12 km). Within 100 km it is a regional match (no warning; regional unit-price table allowed without asking); farther, or outside the country when the country has no profile, the header shows the distance and a warning. Without coordinates a romanised prefecture ("Aichi-ken") now also resolves; otherwise the older fallbacks are unchanged. Built-in city profiles got coordinates; indices and prices unchanged.
+- Profile list built from disk: `data/regional_profiles/*.json` (new 「地域プロファイル追加」 dialog) and `data/regional_cost/*.json` datasets with a new `region_key`. Built-in profiles cannot be replaced. New `services/regional_profile_catalog.py`; Module 2 and the automatic Module 5 recalculation load the same catalog.
+- Added dev_checks/patch_053_regional_profile_selection_self_check.py.
+
 ## v2.2.0 PATCH_052 — 2026-10-01 UTC
 - Module 5: new 地域単価表 (regional unit-price table) panel — apply / register adopted AI prices / view / remove. One standalone versioned table per region in `<JSON folder>/Regional_Unit_Price_Tables/` (file `AZRAS_UNIT_PRICE_TABLE_<region>_<YYYY-MM>.json`), outside every Project folder. Matching by item + spec + unit + scale class; unregistered items only are sent to AI research; registered prices are never overwritten.
 - Engine: price_basis_fingerprint records the table reference; new basis tokens regional_unit_price_table / regional_unit_price_table_with_ai_items / mixed_regional_unit_price_table_and_regional_database. Table prices display as provisional (yellow).

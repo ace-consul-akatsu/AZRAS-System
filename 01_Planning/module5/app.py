@@ -8,8 +8,12 @@ from datetime import datetime, timezone
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from pathlib import Path
-from services.project_export_paths import default_export_path, project_output_directory, find_json_directory
+from services.project_export_paths import default_export_path, project_output_directory, find_json_directory, configured_price_table_directory, set_configured_price_table_directory
 from services import regional_unit_price_table as RUPT
+from services.regional_profile_catalog import (
+    load_construction_cost_database, build_user_profile, save_user_profile,
+    builtin_location_keys, user_profile_path,
+)
 
 from core.i18n import I18N
 from core.error_text import friendly_exception_text
@@ -79,6 +83,7 @@ class Module5App(tk.Toplevel):
         # The raw AI response is not copied into AZRAS and no global unit-cost DB is written.
         self.ai_cost_session=None
         self.ai_cost_session_status=tk.StringVar(value=("AI概算単価: 未取込" if language=="ja" else "AI approximate prices: Not imported"))
+        self.price_table_folder=tk.StringVar(value="")  # PATCH_054
         self.price_table_status=tk.StringVar(value=("地域単価表: 未適用" if language=="ja" else "Regional price table: not applied"))
         # PATCH 420: make incomplete pricing visible beside the total itself.
         self.total_completeness_notice=tk.StringVar(value="")
@@ -102,9 +107,13 @@ class Module5App(tk.Toplevel):
         }
         self.custom_conditions=[]
         self.condition_matrix=self._default_condition_matrix()
-        self.db=json.loads(
-            (self.root_dir/"data"/"construction_cost_database_v9_4.json")
-            .read_text(encoding="utf-8"))
+        # PATCH_053: built-in profiles + user-added profiles + regional-cost
+        # datasets found on disk (the profile list is no longer fixed).
+        self.db=load_construction_cost_database(self.root_dir)
+        # PATCH_053: "auto" = profile follows the Project location (nearest
+        # profile); "manual" = the user picked it and nothing may replace it.
+        self._location_selection_mode="auto"
+        self._auto_profile_fingerprint=None
         for key,val in self.db["rates"].items():
             self.rates[key]=tk.StringVar(value=str(val))
         if self.project_context is not None and self.project_context.path is not None:
@@ -192,13 +201,162 @@ class Module5App(tk.Toplevel):
         saved = (project.get("module_outputs") or {}).get("module5")
         if isinstance(saved, dict) and saved:
             return False
+        # PATCH_053: this runs on every <FocusIn> of the window.  Before, it
+        # re-applied the automatic profile each time, so a profile the user
+        # had just picked from the list (and any index typed by hand) was
+        # replaced the moment focus returned to the window.  A manual choice
+        # is now kept, and the automatic profile is applied only when the
+        # Project or its location actually changed.
+        if self._location_selection_mode == "manual":
+            return False
+        fingerprint = self._project_location_fingerprint()
+        if fingerprint == self._auto_profile_fingerprint:
+            return False
         resolved = resolve_location_profile_from_project(project, self.db)
         key = resolved.get("location_key") or resolved.get("fallback_location_key")
         if key and key in (self.db.get("locations") or {}):
+            self._auto_profile_fingerprint = fingerprint
             self.location.set(str(key))
             self.apply_location()
+            self._refresh_project_cost_location()
             return True
         return False
+
+    def _project_location_fingerprint(self):
+        """PATCH_053: identity of the Project + its location fields."""
+        project = self.project if isinstance(self.project, dict) else {}
+        common = project.get("common") or {}
+        locobj = common.get("location") if isinstance(common.get("location"), dict) else {}
+        fields = ("country", "city", "project_location", "address", "latitude", "longitude")
+        return (str(self.project_path or ""),) + tuple(
+            str(common.get(k) if common.get(k) not in (None, "") else locobj.get(k, "")) for k in fields)
+
+    def _on_location_selected(self, event=None):
+        """PATCH_053: a profile picked from the list is a manual choice."""
+        self._location_selection_mode = "manual"
+        self.apply_location()
+        self._refresh_project_cost_location()
+
+    def reset_location_to_auto(self):
+        """PATCH_053: give the profile back to the automatic (nearest) selection."""
+        self._location_selection_mode = "auto"
+        self._auto_profile_fingerprint = None
+        if not self._apply_project_location_initial_profile():
+            project = self.project if isinstance(self.project, dict) else {}
+            resolved = resolve_location_profile_from_project(project, self.db)
+            key = resolved.get("location_key") or resolved.get("fallback_location_key")
+            if key and key in (self.db.get("locations") or {}):
+                self.location.set(str(key))
+                self.apply_location()
+        self._refresh_project_cost_location()
+
+    def _reload_location_profiles(self, select_key=None):
+        """PATCH_053: re-read the profile catalog and refresh the list."""
+        current = select_key or self.location.get()
+        overlays = {k: v.get("_session_ai_unit_cost_overlay")
+                    for k, v in (self.db.get("locations") or {}).items()
+                    if isinstance(v, dict) and v.get("_session_ai_unit_cost_overlay") is not None}
+        fresh = load_construction_cost_database(self.root_dir)
+        for k, ov in overlays.items():
+            if k in fresh.get("locations", {}):
+                fresh["locations"][k]["_session_ai_unit_cost_overlay"] = ov
+        self.db["locations"] = fresh["locations"]
+        self.db["_regional_profile_catalog"] = fresh.get("_regional_profile_catalog")
+        cb = getattr(self, "location_cb", None)
+        if cb is not None:
+            try:
+                cb.configure(values=list(self.db["locations"].keys()))
+            except tk.TclError:
+                pass
+        if current in self.db["locations"]:
+            self.location.set(current)
+
+    def open_add_location_profile_dialog(self):
+        """PATCH_053: add a regional profile for a city that is not in the list."""
+        ui = self._ui
+        dlg = tk.Toplevel(self)
+        dlg.title(ui("地域プロファイル追加", "Add Regional Profile"))
+        dlg.transient(self)
+        common = (self.project.get("common") or {}) if isinstance(self.project, dict) else {}
+        locobj = common.get("location") if isinstance(common.get("location"), dict) else {}
+        cur = (self.db.get("locations") or {}).get(self.location.get(), {}) or {}
+        defaults = {
+            "country": str(common.get("country") or locobj.get("country") or ""),
+            "city": "",
+            "latitude": str(common.get("latitude") if common.get("latitude") not in (None, "") else locobj.get("latitude", "")),
+            "longitude": str(common.get("longitude") if common.get("longitude") not in (None, "") else locobj.get("longitude", "")),
+            "currency": str(self.currency.get() or cur.get("currency") or "JPY"),
+            "year": str(self.cost_year.get() or cur.get("year") or ""),
+            "material_index": str(self.material_index.get() or ""),
+            "labor_index": str(self.labor_index.get() or ""),
+            "productivity_index": str(self.productivity_index.get() or ""),
+            "source_note": "",
+        }
+        rows = (
+            ("country", ui("国（英語表記 例: Japan）", "Country (e.g. Japan)")),
+            ("city", ui("都市（英語表記 例: Kasugai）", "City (e.g. Kasugai)")),
+            ("latitude", ui("緯度", "Latitude")),
+            ("longitude", ui("経度", "Longitude")),
+            ("currency", ui("通貨（3文字 例: JPY）", "Currency (3 letters, e.g. JPY)")),
+            ("year", ui("単価年度", "Cost year")),
+            ("material_index", ui("資材指数", "Material index")),
+            ("labor_index", ui("労務指数", "Labor index")),
+            ("productivity_index", ui("施工生産性指数", "Productivity index")),
+            ("source_note", ui("根拠・出典メモ", "Basis / source note")),
+        )
+        vars_ = {}
+        for i, (k, label) in enumerate(rows):
+            ttk.Label(dlg, text=label).grid(row=i, column=0, sticky="w", padx=8, pady=3)
+            v = tk.StringVar(value=defaults.get(k, ""))
+            tk.Entry(dlg, textvariable=v, bg=INPUT_BG, width=40 if k == "source_note" else 24).grid(
+                row=i, column=1, sticky="w", padx=8, pady=3)
+            vars_[k] = v
+        ttk.Label(dlg, foreground="#555", wraplength=420, justify="left", text=ui(
+            "初期値は現在の画面の値です。指数・緯度経度を確認してから保存してください。"
+            "保存先: data/regional_profiles/。保存後は一覧に表示され、近い都市の自動選択にも使われます。",
+            "Defaults are the values currently on screen; check the indices and coordinates before saving. "
+            "Saved in data/regional_profiles/. It then appears in the list and is used by the nearest-city selection.")
+        ).grid(row=len(rows), column=0, columnspan=2, sticky="w", padx=8, pady=(6, 4))
+
+        def _save():
+            try:
+                profile = build_user_profile(**{k: v.get() for k, v in vars_.items()})
+            except ValueError as exc:
+                messagebox.showerror(ui("地域プロファイル追加", "Add Regional Profile"), str(exc), parent=dlg)
+                return
+            builtin = builtin_location_keys(self.root_dir)
+            if profile["location_key"] in builtin:
+                messagebox.showerror(ui("地域プロファイル追加", "Add Regional Profile"),
+                                     ui(f"「{profile['location_key']}」は標準プロファイルのため上書きできません。都市名を変えてください。",
+                                        f"'{profile['location_key']}' is a built-in profile and cannot be replaced. Use another city name."),
+                                     parent=dlg)
+                return
+            target = user_profile_path(self.root_dir, profile["country"], profile["city"])
+            if target.exists() and not messagebox.askyesno(
+                    ui("地域プロファイル追加", "Add Regional Profile"),
+                    ui(f"同じ名前のプロファイルがあります。上書きしますか？\n\n{target.name}",
+                       f"A profile with this name already exists. Overwrite it?\n\n{target.name}"), parent=dlg):
+                return
+            try:
+                path = save_user_profile(self.root_dir, profile, builtin)
+            except Exception as exc:
+                messagebox.showerror(ui("地域プロファイル追加", "Add Regional Profile"),
+                                     friendly_exception_text(exc, self.i18n.language), parent=dlg)
+                return
+            self._reload_location_profiles(select_key=profile["location_key"])
+            self._location_selection_mode = "manual"
+            self.location.set(profile["location_key"])
+            self.apply_location()
+            self._refresh_project_cost_location()
+            dlg.destroy()
+            messagebox.showinfo(ui("地域プロファイル追加", "Add Regional Profile"),
+                                ui(f"保存して選択しました。\n{path}", f"Saved and selected.\n{path}"), parent=self)
+
+        btns = ttk.Frame(dlg)
+        btns.grid(row=len(rows) + 1, column=0, columnspan=2, sticky="e", padx=8, pady=8)
+        ttk.Button(btns, text=ui("保存して選択", "Save and select"), command=_save).pack(side="left", padx=4)
+        ttk.Button(btns, text=ui("キャンセル", "Cancel"), command=dlg.destroy).pack(side="left", padx=4)
+        dlg.grab_set()
 
     def refresh_project_from_context(self, event=None):
         """Synchronize the active Project JSON even when its path did not change.
@@ -349,9 +507,18 @@ class Module5App(tk.Toplevel):
                                  values=list(self.db["locations"].keys()),
                                  state="readonly",width=28)
         location_cb.grid(row=1,column=1,padx=5,pady=4)
-        location_cb.bind("<<ComboboxSelected>>",lambda e:self.apply_location())
+        self.location_cb=location_cb
+        # PATCH_053: a selection from the list is a manual choice that the
+        # automatic (FocusIn) profile no longer overwrites.
+        location_cb.bind("<<ComboboxSelected>>",self._on_location_selected)
         ttk.Button(conditions,text=t("apply_location_cost"),
                    command=self.apply_location).grid(row=1,column=2,padx=5)
+        _profile_tools=ttk.Frame(conditions)
+        _profile_tools.grid(row=1,column=3,columnspan=6,sticky="w",padx=5)
+        ttk.Button(_profile_tools,text=ui("自動選択に戻す","Back to automatic selection"),
+                   command=self.reset_location_to_auto).pack(side="left",padx=(0,5))
+        ttk.Button(_profile_tools,text=ui("地域プロファイル追加","Add regional profile"),
+                   command=self.open_add_location_profile_dialog).pack(side="left")
 
         labels_vars=[
             ("currency",self.currency),("cost_year",self.cost_year),
@@ -492,8 +659,12 @@ class Module5App(tk.Toplevel):
         ttk.Button(ptable,text=ui("AI採用単価を地域単価表へ登録","Register Adopted AI Prices in Table"),command=self.register_regional_price_table).grid(row=1,column=1,sticky="ew",padx=8,pady=3)
         ttk.Button(ptable,text=ui("地域単価表の内容を確認","View Regional Price Table"),command=self.show_regional_price_table).grid(row=2,column=1,sticky="ew",padx=8,pady=3)
         ttk.Button(ptable,text=ui("地域単価表の適用を解除","Remove Regional Price Table"),command=self.clear_regional_price_table).grid(row=3,column=1,sticky="ew",padx=8,pady=3)
+        # PATCH_054: where the tables are read from / saved to.
+        ttk.Label(ptable,textvariable=self.price_table_folder,foreground="#555",wraplength=900,justify="left").grid(row=4,column=0,sticky="w",padx=8,pady=3)
+        ttk.Button(ptable,text=ui("地域単価表の保存先を変更","Change Price Table Folder"),command=self.change_price_table_folder).grid(row=4,column=1,sticky="ew",padx=8,pady=3)
         ptable.columnconfigure(0,weight=1)
         self._refresh_price_table_status()
+        self._refresh_price_table_folder()
 
         soil_handling=ttk.LabelFrame(upper_panel,text=ui("根切土の現場内仮置場","On-site Excavated-Soil Stockpile"))
         soil_handling.pack(fill="x",padx=10,pady=5)
@@ -708,6 +879,12 @@ class Module5App(tk.Toplevel):
         self.user_notes = dict(saved.get("_user_notes") or {})
         snapshot = saved.get("_input_snapshot") or {}
         location = snapshot.get("location")
+        # PATCH_053: a saved Module 5 is authoritative; remember how its
+        # profile was chosen (older Projects have no field -> treated as manual).
+        self._location_selection_mode = str(snapshot.get("location_selection_mode") or ("manual" if location else "auto"))
+        if location and location not in (self.db.get("locations") or {}):
+            # Saved with a profile file that is not on this computer.
+            self._reload_location_profiles()
         if location:
             self.location.set(str(location))
             # PATCH 418: synchronize all location-derived UI/runtime fields when
@@ -1030,6 +1207,9 @@ class Module5App(tk.Toplevel):
             self._refresh_project_state_notice()
             self._refresh_project_cost_location()
             # PATCH 056: registered project location -> Module 5 cost profile.
+            # PATCH_053: a newly chosen Project starts in automatic mode.
+            self._location_selection_mode="auto"
+            self._auto_profile_fingerprint=self._project_location_fingerprint()
             _resolved=resolve_location_profile_from_project(self.project,self.db)
             _auto_key=_resolved.get("location_key")
             if _auto_key:
@@ -1038,6 +1218,7 @@ class Module5App(tk.Toplevel):
             elif _resolved.get("fallback_location_key"):
                 self.location.set(str(_resolved["fallback_location_key"]))
                 self.apply_location()
+            self._refresh_project_cost_location()
         except Exception as exc:
             messagebox.showerror("Error",friendly_exception_text(exc,self.i18n.language))
 
@@ -1771,6 +1952,13 @@ class Module5App(tk.Toplevel):
             return "matched_prefecture_representative_city"
         if level=="country_reference_fallback" and selected==str(resolved.get("location_key") or ""):
             return "country_reference_fallback_not_project_city"
+        # PATCH_053: nearest profile by distance from the Project coordinates.
+        if level=="nearest_in_country" and selected==str(resolved.get("location_key") or ""):
+            if resolved.get("profile_is_regional_match"):
+                return "nearest_profile_in_country"
+            return "nearest_profile_in_country_distant"
+        if level=="nearest_outside_country" and selected==str(resolved.get("location_key") or ""):
+            return "nearest_profile_outside_country"
         if selected and selected!=str(resolved.get("location_key") or ""):
             return "manually_selected_profile"
         return "unresolved_profile"
@@ -1795,6 +1983,31 @@ class Module5App(tk.Toplevel):
                         f"The project address resolves to {_key} (currently selected: {self.location.get()}). "
                         "If this was not intended, switch the regional profile and recalculate.")
             return ""
+        if basis in {"nearest_profile_in_country","nearest_profile_in_country_distant","nearest_profile_outside_country"}:
+            try:
+                _res=resolve_location_profile_from_project(self.project,self.db) if isinstance(self.project,dict) else {}
+            except Exception:
+                _res={}
+            _km=_res.get("nearest_distance_km")
+            _kmtxt=(f"約{_km:,.0f}km" if self.i18n.language=="ja" else f"about {_km:,.0f} km") if isinstance(_km,(int,float)) else "-"
+            _sel=self.location.get()
+            if basis=="nearest_profile_in_country":
+                return (f"近隣プロファイル {_sel} を自動選択（所在地から{_kmtxt}）。"
+                        if self.i18n.language=="ja" else
+                        f"Nearest profile {_sel} selected automatically ({_kmtxt} from the project).")
+            if basis=="nearest_profile_in_country_distant":
+                return (f"国内で最も近いプロファイル {_sel} を自動選択（所在地から{_kmtxt}）。距離があるため、"
+                        "地域係数・生産性・工期は参考値として扱い、単価はAI概算単価／現地見積で確定してください。"
+                        "近い都市のデータがあれば「地域プロファイル追加」で登録できます。"
+                        if self.i18n.language=="ja" else
+                        f"Nearest profile in the country, {_sel}, selected automatically ({_kmtxt} away). Treat the regional "
+                        "indices, productivity and duration as reference values and settle unit prices from the AI cost provider "
+                        "or a local quotation. A closer city can be registered with 'Add regional profile'.")
+            return (f"この国のプロファイルが無いため、国外で最も近い {_sel} を自動選択（所在地から{_kmtxt}）。通貨・地域係数を確認し、"
+                    "「地域プロファイル追加」で案件国のプロファイルを登録してください。"
+                    if self.i18n.language=="ja" else
+                    f"No profile exists for this country; the nearest profile abroad, {_sel}, was selected ({_kmtxt} away). "
+                    "Check the currency and indices and register a profile for the project country with 'Add regional profile'.")
         if basis!="country_reference_fallback_not_project_city":
             return ""
         return (f"代表プロファイル {self.location.get()} は案件所在地の都市ではありません（国の基準都市による自動選択）。"
@@ -2825,7 +3038,77 @@ The returned numeric price is the current AZRAS planning price basis only when s
     # services/regional_unit_price_table.py for the rules.
     # ------------------------------------------------------------------
     def _price_table_dir(self):
+        # PATCH_054: a folder chosen by the user (remembered in the AZRAS
+        # storage settings) wins; otherwise <Project JSON folder>/Regional_Unit_Price_Tables.
+        chosen=configured_price_table_directory()
+        if chosen is not None:
+            return chosen
         return RUPT.table_directory(find_json_directory(self.root_dir))
+
+    def _refresh_price_table_folder(self):
+        try:
+            folder=self._price_table_dir()
+            mark=self._ui("（指定）","(chosen)") if configured_price_table_directory() is not None else self._ui("（既定）","(default)")
+            self.price_table_folder.set(self._ui("保存先","Folder")+f"{mark}: {folder}")
+        except Exception as exc:
+            self.price_table_folder.set(self._ui("保存先: 不明","Folder: unknown")+f" ({exc})")
+
+    def change_price_table_folder(self, parent=None):
+        """PATCH_054: choose the regional unit-price table folder. Returns the Path or None."""
+        parent=parent or self
+        try:
+            current=self._price_table_dir()
+        except Exception:
+            current=None
+        chosen=filedialog.askdirectory(parent=parent,initialdir=str(current) if current else None,mustexist=False,
+                                       title=self._ui("地域単価表の保存先フォルダーを選択","Choose the regional price table folder"))
+        if not chosen:
+            return None
+        try:
+            path=set_configured_price_table_directory(chosen)
+        except Exception as exc:
+            messagebox.showerror(self._ui("地域単価表の保存先","Regional price table folder"),
+                                 friendly_exception_text(exc,self.i18n.language),parent=parent)
+            return None
+        self._refresh_price_table_folder()
+        return path
+
+    def _ask_price_table_folder(self, title):
+        """PATCH_054: confirm (or change) the folder before a table is saved.
+
+        Returns the folder Path, or None when cancelled.
+        """
+        result={"path":None}
+        dlg=tk.Toplevel(self); dlg.title(title); dlg.transient(self)
+        folder_var=tk.StringVar(value=str(self._price_table_dir()))
+        ttk.Label(dlg,text=self._ui("地域単価表をこのフォルダーに保存します。同じ地域の表があればこのフォルダーから読み込み、追加・新しい版を保存します。",
+                                    "The regional price table is saved in this folder. An existing table of this region is read from, and updated in, this folder."),
+                  wraplength=620,justify="left").grid(row=0,column=0,columnspan=3,sticky="w",padx=10,pady=(10,6))
+        ttk.Label(dlg,text=self._ui("保存先","Folder")).grid(row=1,column=0,sticky="w",padx=10)
+        ent=tk.Entry(dlg,textvariable=folder_var,width=80,state="readonly"); ent.grid(row=1,column=1,sticky="ew",padx=4,pady=4)
+        def _browse():
+            p=self.change_price_table_folder(parent=dlg)
+            if p is not None:
+                folder_var.set(str(p))
+        ttk.Button(dlg,text=self._ui("変更…","Change…"),command=_browse).grid(row=1,column=2,padx=10)
+        def _default():
+            set_configured_price_table_directory(None)
+            self._refresh_price_table_folder()
+            folder_var.set(str(self._price_table_dir()))
+        ttk.Label(dlg,text=self._ui("選んだフォルダーは次回以降の「適用」「登録」「内容を確認」でも使います（3工法の案件で同じフォルダーを使ってください）。",
+                                    "The chosen folder is also used later by Apply, Register and View (use the same folder for all construction methods)."),
+                  foreground="#8B4513",wraplength=620,justify="left").grid(row=2,column=0,columnspan=3,sticky="w",padx=10,pady=(2,6))
+        btns=ttk.Frame(dlg); btns.grid(row=3,column=0,columnspan=3,sticky="e",padx=10,pady=(4,10))
+        def _ok():
+            result["path"]=Path(folder_var.get()); dlg.destroy()
+        ttk.Button(btns,text=self._ui("既定に戻す","Use default"),command=_default).pack(side="left",padx=4)
+        ttk.Button(btns,text=self._ui("この保存先で登録","Register in this folder"),command=_ok).pack(side="left",padx=4)
+        ttk.Button(btns,text=self._ui("キャンセル","Cancel"),command=dlg.destroy).pack(side="left",padx=4)
+        dlg.columnconfigure(1,weight=1)
+        dlg.grab_set(); dlg.wait_window()
+        if result["path"] is not None:
+            result["path"].mkdir(parents=True,exist_ok=True)
+        return result["path"]
 
     def _price_table_overlay_ref(self):
         ov=self._current_ai_cost_overlay() or {}
@@ -2886,7 +3169,7 @@ The returned numeric price is the current AZRAS planning price basis only when s
         except Exception:
             messagebox.showwarning(title,self._ui("先に『図面解析・数量計算』を実行してください。","Run Drawing Analysis / Quantity Calculation first."),parent=self); return False
         basis=self._cost_profile_match_basis()
-        if basis in {"matched_project_city","matched_prefecture_representative_city"}:
+        if basis in {"matched_project_city","matched_prefecture_representative_city","nearest_profile_in_country"}:
             return True
         if basis=="manually_selected_profile":
             msg=self._ui(f"地域プロファイル「{self.location.get()}」は手動で選ばれています。\nこの案件を「{self.location.get()}」の地域単価表で扱ってよいですか？",
@@ -2959,10 +3242,12 @@ The returned numeric price is the current AZRAS planning price basis only when s
             messagebox.showinfo(title,self._ui(
                 f"「{self.location.get()}」の地域単価表はまだありません。\n\n"
                 "通常どおり①〜⑥でAI調査を行い、終了後に「AI採用単価を地域単価表へ登録」を押すと、この地域の表が作られます。\n\n"
-                f"保存先: {folder}",
+                f"保存先: {folder}\n\n"
+                "別のフォルダーに表がある場合は「地域単価表の保存先を変更」でそのフォルダーを選んでください。",
                 f"There is no regional price table for '{self.location.get()}' yet.\n\n"
                 "Run AI research steps 1-6 as usual, then press 'Register Adopted AI Prices in Table' to create it.\n\n"
-                f"Folder: {folder}"),parent=self)
+                f"Folder: {folder}\n\n"
+                "If the table is in another folder, choose it with 'Change Price Table Folder'."),parent=self)
             return
         try:
             res,replaced=self._apply_price_table_path(path)
@@ -3001,7 +3286,10 @@ The returned numeric price is the current AZRAS planning price basis only when s
             messagebox.showinfo(title,self._ui("登録できるAI採用単価がありません。①〜⑥のAI調査を終えてから押してください。",
                                                "There are no adopted AI prices to register. Finish AI research steps 1-6 first."),parent=self); return
         region=self.location.get(); currency=str(self.currency.get() or "JPY").upper()
-        folder=self._price_table_dir()
+        # PATCH_054: the user confirms or changes the folder before saving.
+        folder=self._ask_price_table_folder(title)
+        if folder is None:
+            return
         try:
             tables=RUPT.list_tables(folder,region)
             cost_items,equipment,gfa,method=self._price_table_needs()
@@ -4655,6 +4943,7 @@ The returned numeric price is the current AZRAS planning price basis only when s
                 self.result,
                 {
     "location": self.location.get(),
+    "location_selection_mode": self._location_selection_mode,
     "settings": self.settings(),
     "equipment_selection": self.equipment_selection(),
     "custom_conditions": list(self.custom_conditions),

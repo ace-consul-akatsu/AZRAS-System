@@ -111,6 +111,39 @@ def configured_json_directory() -> Path | None:
         return None
 
 
+def configured_price_table_directory() -> Path | None:
+    """PATCH_054: folder chosen for the regional unit-price tables (地域単価表).
+
+    None when the user has not chosen one; the caller then uses the default
+    ``<Project JSON folder>/Regional_Unit_Price_Tables``.  The folder is used
+    exactly as chosen (no sub-folder is added).
+    """
+    raw = load_storage_settings().get("regional_price_table_directory")
+    if not raw:
+        return None
+    try:
+        path = Path(str(raw)).expanduser()
+        path.mkdir(parents=True, exist_ok=True)
+        return path
+    except Exception:
+        return None
+
+
+def set_configured_price_table_directory(directory: str | Path | None) -> Path | None:
+    """PATCH_054: remember (or clear with None) the regional unit-price table folder."""
+    settings = load_storage_settings()
+    if directory:
+        path = Path(directory).expanduser().resolve()
+        path.mkdir(parents=True, exist_ok=True)
+        settings["regional_price_table_directory"] = str(path)
+    else:
+        settings.pop("regional_price_table_directory", None)
+        path = None
+    settings["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    save_storage_settings(settings)
+    return path
+
+
 def set_configured_json_directory(directory: str | Path | None) -> Path | None:
     settings = load_storage_settings()
     if directory:

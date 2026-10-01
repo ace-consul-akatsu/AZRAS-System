@@ -133,6 +133,7 @@ if have_display:
         tmp = Path(tempfile.mkdtemp())
         folder = R.table_directory(tmp)
         app._price_table_dir = lambda: folder
+        app._ask_price_table_folder = lambda title: folder  # PATCH_054: folder dialog answered "register here"
         app.refresh_project_from_context = lambda *a, **k: None
         app._cost_profile_match_basis = lambda: "matched_project_city"
         app._authoritative_project_cost_location = lambda: "Kasugai"
