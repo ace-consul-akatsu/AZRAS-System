@@ -1,4 +1,4 @@
-# AZRAS System v2.2.0
+# AZRAS System v2.2.0 — Experimental Research Release
 
 **English** | [日本語](README.ja.md)
 
@@ -7,9 +7,57 @@
 -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+> **This repository is an experimental, AI-assisted software development record. It is not production-ready software.**
+> A cross-audit of v2.2.0 found known inconsistencies in the calculation results. They are intentionally documented below as part of the research record.
+> **Estimated construction costs and construction-method comparisons from this release must not be used for design, construction, investment or business decisions.**
+
 AZRAS System is an open-source desktop suite for planning, evaluating and comparing buildings over a **200-year life cycle**. It starts from construction drawings printed to PDF and carries a project through quantity takeoff, environmental and energy analysis, repair/renewal/demolition scenarios and long-term business evaluation, then compares construction methods, specifications and locations side by side.
 
 It is provided free of charge on the premise of use for **AI research and business purposes**.
+
+## Status of this release — published unfinished, on purpose
+
+AZRAS was developed from June 2026 by an architect with no programming background, entirely through conversations with several AIs (ChatGPT, Claude, Gemini, Meta AI and others). The four products now total about 90,000 lines of Python, built up over more than 600 patches.
+
+To verify the results, the same building (same floor plan, same exterior) was processed in three construction methods — **2×6**, **AZRAS** and **RC Rahmen** (the drawings are in [examples/](examples/)) — and ChatGPT and Claude were asked to cross-audit the final Project JSON files. The audit found numerous defects, although each earlier fix had been reported by the AIs as complete, had passed their audits, and the full test suite (`tests/run_all.py`, 85/85) was passing.
+
+When asked directly, both AIs named the same root cause: fixes had been made symptom by symptom in conversation, while the structure underneath — the same values stored in several places, two separate construction-cost calculations, matching by item names — let the same kinds of errors come back through other paths.
+
+A finished version will take more time. This release is therefore published **deliberately in its unfinished state**:
+
+- as a lesson and a development history for future work,
+- as research material on the current limits of AI-assisted software development, and
+- as a fixed, citable record of what AI could and could not do as of 2026.
+
+Release path: **GitHub release → automatic archiving on Zenodo → DOI**.
+
+### Three things kept separate
+
+1. **The architectural concept** — the AZRAS building system and the RC Upright Method (patent JP 2005-240511). The software defects below are **not** findings about the validity of the construction method.
+2. **The software implementation** — this release, with the known limitations below.
+3. **The AI development experiment** — the record of how the software was built with AI, and where that process broke down.
+
+### Known limitations (confirmed in the cross-audit)
+
+- **Geometry differs between modules:** for the same building, the canonical window area was 55.74 m² while the Module 2 input was 0 m².
+- **Quantities silently dropped:** insulation quantities were aggregated for the roof only; wall insulation was missing.
+- **Price tables:** tables with the same version name had different contents.
+- **Duplicate calculation paths:** two separate pieces of code performed the same construction-cost calculation.
+- **Method-independent items priced by method:** the unit price of the same window differed by 28% between construction methods.
+- **Unit-price scope:** some material-only unit prices were treated as if they included installation. **This is part of the reason the AZRAS method currently shows a lower total.**
+- **Overall effect:** for the same building, the estimated total shifted by several million yen.
+- **The audits were also wrong:** several of the AIs' own audit findings turned out to be untrue when checked against the code.
+
+Some of these were partly fixed in later development builds (October 2026). Those builds are not part of this release, and the root cause remains.
+
+### What would be needed (not yet implemented)
+
+- **One canonical owner** for geometry, openings, quantities, prices and construction method. Every module reads from it and keeps no copy of its own; AI answers and old snapshots are kept only as evidence.
+- **Automatic invariant checks** — e.g. window total = sum by orientation; every Module 1 quantity is either costed or excluded with a reason. Saving, Evaluation and Compare stop on any contradiction.
+- **Regression tests with known answers**, using the 2×6, RC and AZRAS cases as reference fixtures.
+- **Design rules decided and written down before implementation**, not inside conversations.
+
+The conversations in which ChatGPT and Claude acknowledged the root cause are published in English as [When AI Says "Done"](docs/en/07_AZRAS_When_AI_Says_Done_EN.pdf). An earlier episode of the same kind (September 2026) is recorded in the official development history below.
 
 ## What it does
 
@@ -66,6 +114,7 @@ Detailed documents in English and Japanese (Word):
 | How AZRAS can be developed further | [EN](docs/en/05_AZRAS_Further_Development_v2_2_0_EN.docx) | [JA](docs/ja/05_AZRAS_Further_Development_v2_2_0_JA.docx) |
 | Official development history, June – 7 Sep 2026 | [EN](docs/en/06_AZRAS_Official_Development_History_v2_0_EN.docx) | [JA](docs/ja/06_AZRAS_Official_Development_History_v2_0_JA.docx) |
 | Official development history, update from 7 Sep 2026 | [EN](docs/en/06_AZRAS_Official_Development_History_v2_4_EN.docx) | [JA](docs/ja/06_AZRAS_Official_Development_History_v2_4_JA.docx) |
+| When AI Says "Done" — the conversations in which ChatGPT and Claude acknowledged the root cause (PDF) | [EN](docs/en/07_AZRAS_When_AI_Says_Done_EN.pdf) | — (original conversations are in Japanese) |
 
 ## Sample data
 
@@ -97,6 +146,8 @@ If you use AZRAS System in research, please cite it. GitHub's **"Cite this repos
 A DOI will be added here once the release is archived on Zenodo.
 
 ## Disclaimer
+
+**This release is a research record.** The cost and comparison results in particular contain the known errors listed above.
 
 All calculation, analysis and comparison results are reference information for planning, comparison and research. They do not guarantee design performance, structural safety, legal compliance, costs, construction periods or investment outcomes, and agreement among several AIs does not guarantee correctness. Users must verify inputs, AI answers and results themselves and consult qualified professionals for important decisions.
 
