@@ -2,9 +2,7 @@
 
 **English** | [日本語](README.ja.md)
 
-<!-- After Zenodo issues the DOI, replace XXXXXXX (the "all versions" concept DOI) and uncomment:
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
--->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23554330.svg)](https://doi.org/10.5281/zenodo.23554330)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 > **This repository is an experimental, AI-assisted software development record. It is not production-ready software.**
@@ -136,7 +134,7 @@ The DOI above is for version 2.2.0 of the dataset; https://doi.org/10.5281/zenod
 
 If you use AZRAS System in research, please cite it. GitHub's **"Cite this repository"** button (from [CITATION.cff](CITATION.cff)) gives APA and BibTeX formats.
 
-> Akatsu, M. (2026). *AZRAS System* (Version 2.2.0) [Computer software]. ACE Comprehensive Consulting Co., Ltd. https://github.com/ace-consul-akatsu/AZRAS-System
+> Akatsu, M. (2026). *AZRAS System* (Version 2.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23554331
 
 ```bibtex
 @software{akatsu_azras_system_2026,
@@ -144,12 +142,13 @@ If you use AZRAS System in research, please cite it. GitHub's **"Cite this repos
   title     = {AZRAS System},
   version   = {2.2.0},
   year      = {2026},
-  publisher = {ACE Comprehensive Consulting Co., Ltd.},
-  url       = {https://github.com/ace-consul-akatsu/AZRAS-System}
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23554331},
+  url       = {https://doi.org/10.5281/zenodo.23554331}
 }
 ```
 
-The software DOI will be added here once this release is archived on Zenodo. The sample data has its own DOI (see [Sample data](#sample-data)).
+The DOI above is for version 2.2.0. To cite the software regardless of version, use the concept DOI https://doi.org/10.5281/zenodo.23554330, which always resolves to the latest version. The sample data has its own DOI (see [Sample data](#sample-data)).
 
 ## Disclaimer
 

@@ -2,9 +2,7 @@
 
 [English](README.md) | **日本語**
 
-<!-- Zenodo で DOI が発行されたら XXXXXXX（全バージョン共通の Concept DOI）を置き換えて、コメントを外してください:
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
--->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23554330.svg)](https://doi.org/10.5281/zenodo.23554330)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 > **本リポジトリは、AIとの共同によるソフトウェア開発の実験記録です。実務で使える完成品ではありません。**
@@ -136,7 +134,7 @@ v2.2.0 で最後まで処理したサンプルプロジェクト一式（保存�
 
 研究で AZRAS System を利用した場合は、引用をお願いします。GitHub の **「Cite this repository」** ボタン（[CITATION.cff](CITATION.cff) から生成）で APA・BibTeX 形式を取得できます。
 
-> Akatsu, M. (2026). *AZRAS System* (Version 2.2.0) [Computer software]. ACE Comprehensive Consulting Co., Ltd. https://github.com/ace-consul-akatsu/AZRAS-System
+> Akatsu, M. (2026). *AZRAS System* (Version 2.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23554331
 
 ```bibtex
 @software{akatsu_azras_system_2026,
@@ -144,12 +142,13 @@ v2.2.0 で最後まで処理したサンプルプロジェクト一式（保存�
   title     = {AZRAS System},
   version   = {2.2.0},
   year      = {2026},
-  publisher = {ACE Comprehensive Consulting Co., Ltd.},
-  url       = {https://github.com/ace-consul-akatsu/AZRAS-System}
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23554331},
+  url       = {https://doi.org/10.5281/zenodo.23554331}
 }
 ```
 
-ソフトの DOI は、本リリースが Zenodo に保存された後にここへ追記します。サンプルデータには別の DOI があります（[サンプルデータ](#サンプルデータ)を参照）。
+上の DOI は 2.2.0 版を指します。版を問わずソフトを引用する場合は、常に最新版を指す Concept DOI（https://doi.org/10.5281/zenodo.23554330）をお使いください。サンプルデータには別の DOI があります（[サンプルデータ](#サンプルデータ)を参照）。
 
 ## 免責
 

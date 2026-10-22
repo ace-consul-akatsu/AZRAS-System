@@ -4,7 +4,7 @@ This file records changes to the AZRAS System suite as a whole. Detailed patch n
 
 ## v2.2.0 — 2026-10-22 (public release, archived on Zenodo)
 
-First release of AZRAS System published as a GitHub release and archived on Zenodo with a DOI. The code is that of the 2026-10-01 patch update below; this entry adds only the release records. It is published as an **experimental research record** with the known limitations listed in README.md: estimated construction costs and construction-method comparisons from this release must not be used for design, construction, investment or business decisions.
+First release of AZRAS System published as a GitHub release and archived on Zenodo with a DOI: https://doi.org/10.5281/zenodo.23554331 (all versions: https://doi.org/10.5281/zenodo.23554330). The code is that of the 2026-10-01 patch update below; this entry adds only the release records. It is published as an **experimental research record** with the known limitations listed in README.md: estimated construction costs and construction-method comparisons from this release must not be used for design, construction, investment or business decisions.
 
 | Product | Version | Patch |
 |---|---|---|
