@@ -124,7 +124,13 @@ Drawing sets of the same building plan in three construction methods, printed to
 - [Timber 2×6](examples/261001_0150_2x6.pdf)
 - [Conventional RC frame](examples/261001_0150_RC_Rahmen.pdf)
 
-The complete sample projects processed with v2.2.0 — Project JSON with saved results, regional variants, and the full multi-AI takeoff round with the independent answers of ChatGPT, Claude and Meta AI — are published as a separate dataset on Zenodo (CC BY 4.0). <!-- Add the dataset DOI here after registration. -->
+The complete sample projects processed with v2.2.0 — Project JSON with saved results, regional variants, and the full multi-AI takeoff round with the independent answers of ChatGPT, Claude and Meta AI — are published as a separate dataset on Zenodo (CC BY 4.0):
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23552513.svg)](https://doi.org/10.5281/zenodo.23552513)
+
+> Akatsu, M. (2026). *AZRAS System v2.2.0 — Sample Projects and Multi-AI Responses* (Version 2.2.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23552513
+
+The DOI above is for version 2.2.0 of the dataset; https://doi.org/10.5281/zenodo.23552512 always resolves to its latest version. The three drawings in the dataset are byte-identical to the files in [examples/](examples/) (SHA-256 in [examples/README.md](examples/README.md)).
 
 ## How to cite
 
@@ -143,7 +149,7 @@ If you use AZRAS System in research, please cite it. GitHub's **"Cite this repos
 }
 ```
 
-A DOI will be added here once the release is archived on Zenodo.
+The software DOI will be added here once this release is archived on Zenodo. The sample data has its own DOI (see [Sample data](#sample-data)).
 
 ## Disclaimer
 

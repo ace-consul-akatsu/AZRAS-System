@@ -124,7 +124,13 @@ Windows 用の実行ファイル（EXE）は `build_AZRAS_Planning.bat`・`build
 - [木造 2×6](examples/261001_0150_2x6.pdf)
 - [一般RCラーメン](examples/261001_0150_RC_Rahmen.pdf)
 
-v2.2.0 で最後まで処理したサンプルプロジェクト一式（保存済み結果を含む Project JSON、地域別バリエーション、ChatGPT・Claude・Meta AI の独立回答を含む複数AI積算ラウンド）は、別のデータセットとして Zenodo で公開しています（CC BY 4.0）。<!-- 登録後、ここにデータセットの DOI を追記します。 -->
+v2.2.0 で最後まで処理したサンプルプロジェクト一式（保存済み結果を含む Project JSON、地域別バリエーション、ChatGPT・Claude・Meta AI の独立回答を含む複数AI積算ラウンド）は、別のデータセットとして Zenodo で公開しています（CC BY 4.0）。
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23552513.svg)](https://doi.org/10.5281/zenodo.23552513)
+
+> Akatsu, M. (2026). *AZRAS System v2.2.0 — Sample Projects and Multi-AI Responses* (Version 2.2.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23552513
+
+上の DOI はデータセットの 2.2.0 版を指します。https://doi.org/10.5281/zenodo.23552512 は常に最新版を指します。データセット内の図面3点は [examples/](examples/) のファイルとバイト単位で同一です（SHA-256 は [examples/README.md](examples/README.md) に記載）。
 
 ## 引用方法
 
@@ -143,7 +149,7 @@ v2.2.0 で最後まで処理したサンプルプロジェクト一式（保存�
 }
 ```
 
-Zenodo への登録後、ここに DOI を追記します。
+ソフトの DOI は、本リリースが Zenodo に保存された後にここへ追記します。サンプルデータには別の DOI があります（[サンプルデータ](#サンプルデータ)を参照）。
 
 ## 免責
 

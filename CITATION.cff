@@ -16,14 +16,19 @@ abstract: >-
   can be resent to multiple AIs at later dates, with SHA-256 hashes
   preserving drawing identity, to observe longitudinal changes in AI
   drawing-reading capability. v2.2.0 comprises four products: Installer,
-  Planning, Evaluation and Compare.
+  Planning, Evaluation and Compare. This release is an experimental research
+  record of AI-assisted software development and is not production-ready: a
+  cross-audit found known inconsistencies in the calculation results, which
+  are documented in README.md; estimated construction costs and
+  construction-method comparisons from this release must not be used for
+  design, construction, investment or business decisions.
 authors:
   - family-names: "Akatsu"
     given-names: "Makito"
     affiliation: "ACE Comprehensive Consulting Co., Ltd."
     # orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"   # add after obtaining an ORCID iD
 version: 2.2.0
-date-released: 2026-09-24   # set to the day the v2.2.0 GitHub release is created
+date-released: 2026-10-22
 license: MIT
 repository-code: "https://github.com/ace-consul-akatsu/AZRAS-System"
 url: "https://ace-consul-akatsu.github.io"
@@ -39,4 +44,18 @@ keywords:
   - life cycle cost
   - construction method comparison
   - AZRAS
-# doi: 10.5281/zenodo.XXXXXXX   # add manually after Zenodo issues the DOI (Zenodo does not edit this file)
+# doi: 10.5281/zenodo.XXXXXXX   # software DOI: add after Zenodo archives the v2.2.0 release (Zenodo does not edit this file)
+references:
+  - type: data
+    title: "AZRAS System v2.2.0 — Sample Projects and Multi-AI Responses"
+    authors:
+      - family-names: "Akatsu"
+        given-names: "Makito"
+        affiliation: "ACE Comprehensive Consulting Co., Ltd."
+    version: 2.2.0
+    date-released: 2026-10-22
+    publisher:
+      name: "Zenodo"
+    doi: 10.5281/zenodo.23552513
+    license: CC-BY-4.0
+    url: "https://doi.org/10.5281/zenodo.23552513"

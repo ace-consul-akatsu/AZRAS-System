@@ -2,6 +2,24 @@
 
 This file records changes to the AZRAS System suite as a whole. Detailed patch notes and regression records of each product are in its `PATCH/` folder.
 
+## v2.2.0 — 2026-10-22 (public release, archived on Zenodo)
+
+First release of AZRAS System published as a GitHub release and archived on Zenodo with a DOI. The code is that of the 2026-10-01 patch update below; this entry adds only the release records. It is published as an **experimental research record** with the known limitations listed in README.md: estimated construction costs and construction-method comparisons from this release must not be used for design, construction, investment or business decisions.
+
+| Product | Version | Patch |
+|---|---|---|
+| AZRAS Installer | 5.0.4 | PATCH_004 |
+| AZRAS Planning | 2.2.0 | PATCH_055 |
+| AZRAS Evaluation | 2.2.0 | PATCH_014 |
+| AZRAS Compare | 2.2.0 | PATCH_010 |
+
+**Exception to the re-baseline rule.** The suite's rule is that when any product's patch number reaches 50, all products are cross-audited and re-baselined to the next minor version (v2.3.0). Planning is at PATCH_055, so this release is published as v2.2.0 as a deliberate exception to that rule; the cross-audit and re-baseline to v2.3.0 follow in the next release.
+
+### Added
+
+- **Sample data on Zenodo.** The three terrace-house sample projects (AZRAS, timber 2×6, conventional RC frame) processed with this release — Project JSON with saved results, seven regional variants, the multi-AI takeoff round with the independent answers of ChatGPT, Claude and Meta AI, the AI approximate-cost round and the 8,760-hour comparison — are published as a separate dataset (CC BY 4.0): https://doi.org/10.5281/zenodo.23552513. Its drawings are byte-identical to `examples/`.
+- **Release records.** README (English and Japanese), `CITATION.cff` and `.zenodo.json` carry the release date and the dataset DOI; `.zenodo.json` links the software to the dataset (`isSupplementedBy`). README, `CITATION.cff` and `.zenodo.json` state the research-record status.
+
 ## v2.2.0 patch update — 2026-10-01 (Planning PATCH_053–055)
 
 Planning only; found while pricing the AZRAS terrace-house sample for a site in Kasugai, Aichi. No product version change; the patch numbers are:
